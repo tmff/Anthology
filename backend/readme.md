@@ -23,16 +23,15 @@ To work in this directory please use a virtual enviroment with python 3.8, these
 
 Thanks!
 
-<h2>Usefull commands</h2>
+<h2>Useful commands</h2>
 
-Start Server
+<h3>Start Server</h3>
 
 python manage.py runserver
 
 Go to localhost:8000 in web browser to see this, to specify port add it as an arguement in the previous command
 
-Create App
-
+<h3>Create App</h3>
 
 python manage.py startapp yourappnamehere
 
