@@ -1,22 +1,30 @@
-To work in this directory please use a virtual enviroment.
-1. pip install pipenv
-2. pipenv shell
-3. pipenv install django
-4. pipenv install psycopg2-binary       (if this doenst work try without -binary)
 
+<h1>Backend Setup</h1>
 
-Postgresql:
-Install Postrgesql
+To work in this directory please use a virtual enviroment with python 3.8, these commands are unix ones they will be similar on windows but not too bad.
 
-Create database named userdb
+<h2>Setting up virtual enviroment with django and postgresql library</h2>
 
-Create user named anth with password eevee
+<ol>
+    <li>pip install pipenv</li>
+    <li>pipenv install django</li>
+    <li>pipenv install psycopg2-binary(if this doenst work try without -binary)</li>
+</ol>
 
-Start postgresql server
+<h2>Postgresql setup</h2>
+
+<ol>
+    <li>Install Postrgesql</li>
+    <li>Create database named userdb</li>
+    <li>Create user named anth with password eevee</li>
+    <li>Start postgresql server on your machine, im sure we will change this once we have made a proper </li>
+</ol>
+
 
 Thanks!
 
-Usefull commands:
+<h2>Usefull commands</h2>
+
 Start Server
 
 python manage.py runserver
@@ -27,3 +35,4 @@ Create App
 
 
 python manage.py startapp yourappnamehere
+
