@@ -15,7 +15,7 @@ To work in this directory please use a virtual enviroment with python 3.8, these
 
 <ol>
     <li>Install Postrgesql</li>
-    <li>Create database named userdb</li>
+    <li>Create database named usersdb</li>
     <li>Create user named anth with password eevee</li>
     <li>Start postgresql server on your machine, im sure we will change this once we have made a proper </li>
 </ol>
