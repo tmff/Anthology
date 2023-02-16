@@ -7,7 +7,7 @@ To work in this directory please use a virtual enviroment with python 3.10, thes
 
 <ol>
     <li>pip install pipenv</li>
-    <li>pipenv install django</li>
+    <li>pipenv install django --python 3.10</li>
     <li>pipenv shell</li>
     <li>pipenv install psycopg2-binary(if this doenst work try without -binary)</li>
 </ol>
