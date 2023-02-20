@@ -26,6 +26,8 @@ before_script:
 
 build-react:
   stage: build
+  tags:
+    - node
   script:
   - echo "Compiling React..."
   - cd $BASE_DIR/poemfrontend
