@@ -35,3 +35,19 @@ build-react:
   - npm run build
   - cd $BASE_DIR
   - echo "React compilation complete."
+
+build-django:
+  image: python:3.10
+  stage: build
+  tags: 
+    - python
+  script:
+  - echo "Compiling Python..."
+  - cd $BASE_DIR/backend
+  - pip install pipenv
+  - pipenv install django --python 3.10
+  - pipenv shell
+  - pipenv install psycopg2-binary
+  - python manage.py runserver
+  - cd $BASE_DIR
+  - echo "Python compilation complete."
