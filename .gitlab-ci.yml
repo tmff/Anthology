@@ -25,20 +25,10 @@ before_script:
 
 build-react:
   stage: build
-  before_script:
-  - export NVM_DIR="$BASE_DIR/.nvm"
-  - git clone https://github.com/nvm-sh/nvm.git 
-  - mv nvm $NVM_DIR
-  - chmod -R 744 $NVM_DIR
-  - git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
-  - cd $BASE_DIR
-  - "$NVM_DIR/nvm.sh" 
-  - nvm install node
-  - "ls -al $NVM_DIR"
   script:
   - echo "Compiling React..."
   - cd $BASE_DIR/poemfrontend
   - npm install
   - npm run build
-  - cd ..
+  - cd $BASE_DIR
   - echo "React compilation complete."
