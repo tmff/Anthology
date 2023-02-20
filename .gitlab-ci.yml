@@ -22,11 +22,11 @@ stages:          # List of stages for jobs, and their order of execution
   - deploy
 before_script:
   - export BASE_DIR="`pwd`"
-  - export NVM_DIR="$BASE_DIR/.nvm"
 
 build-react:
   stage: build
   before_script:
+  - export NVM_DIR="$BASE_DIR/.nvm"
   - git clone https://github.com/nvm-sh/nvm.git 
   - mv nvm $NVM_DIR
   - chmod -R 744 $NVM_DIR
