@@ -46,7 +46,6 @@ build-django:
   - cd $BASE_DIR/backend
   - pip install pipenv
   - pipenv install django --python 3.10
-  - pipenv shell
   - pipenv install psycopg2-binary
   - python manage.py runserver
   - cd $BASE_DIR
