@@ -20,8 +20,8 @@ stages:          # List of stages for jobs, and their order of execution
   - check
   - build
   - deploy
-before-script:
-  - export NVM_DIR="`pwd`/.nvm"
+before_script:
+  - export NVM_DIR=`pwd`/.nvm
 
 install-node:
   stage: check
