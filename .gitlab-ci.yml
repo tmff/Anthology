@@ -22,13 +22,14 @@ stages:          # List of stages for jobs, and their order of execution
   - deploy
 before_script:
   - export BASE_DIR="`pwd`"
+  - export NPM="/home/ec2-user/.nvm/node/v16.19.1/bin/npm"
 
 build-react:
   stage: build
   script:
   - echo "Compiling React..."
   - cd $BASE_DIR/poemfrontend
-  - npm install
-  - npm run build
+  - $NPM install
+  - $NPM run build
   - cd $BASE_DIR
   - echo "React compilation complete."
