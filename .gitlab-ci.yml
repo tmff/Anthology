@@ -32,11 +32,12 @@ build-react:
   - chmod -R 744 $NVM_DIR
   - git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
   - cd $BASE_DIR
-  - "$NVM_DIR/nvm.sh install node"
+  - "$NVM_DIR/nvm.sh" 
+  - nvm install node
   - "ls -al $NVM_DIR"
   script:
   - echo "Compiling React..."
-  - cd poemfrontend
+  - cd $BASE_DIR/poemfrontend
   - npm install
   - npm run build
   - cd ..
