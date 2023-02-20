@@ -31,7 +31,7 @@ install-node:
   - mv nvm $NVM_DIR
   - chmod 755 $NVM_DIR
   - git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
-  - ls -al
+  - ls -al $NVM_DIR
   - cd $BASE_DIR
   - "$NVM_DIR/nvm.sh install node"
 
