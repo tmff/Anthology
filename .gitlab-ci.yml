@@ -29,7 +29,7 @@ install-node:
   script:
   - git clone https://github.com/nvm-sh/nvm.git
   - mv nvm $NVM_DIR
-  - chmod 755 $NVM_DIR
+  - chmod -R 744 $NVM_DIR
   - git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
   - ls -al $NVM_DIR
   - cd $BASE_DIR
