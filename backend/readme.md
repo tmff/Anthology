@@ -1,4 +1,3 @@
-
 <h1>Backend Setup</h1>
 
 To work in this directory please use a virtual enviroment with python 3.10, these commands are unix ones they will be similar on windows but not too bad.
@@ -21,6 +20,9 @@ To work in this directory please use a virtual enviroment with python 3.10, thes
     <li>Start postgresql server on your machine, im sure we will change this once we have made a proper </li>
 </ol>
 
+<h3>To start the postgres server on WSL:</h3>
+
+`sudo -u postgres psql postgres`
 
 Thanks!
 
