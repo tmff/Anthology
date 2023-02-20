@@ -46,6 +46,6 @@ build-django:
   - cd $BASE_DIR/backend
   - pip install pipenv
   - pipenv install
-  - python manage.py runserver
+  - pipenv run python manage.py check
   - cd $BASE_DIR
   - echo "Python compilation complete."
