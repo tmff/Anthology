@@ -44,6 +44,7 @@ build-django:
   script:
   - echo "Compiling Python..."
   - cd $BASE_DIR/backend
+  - pip install pipenv
   - pipenv install
   - python manage.py runserver
   - cd $BASE_DIR
