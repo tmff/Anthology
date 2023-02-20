@@ -44,9 +44,7 @@ build-django:
   script:
   - echo "Compiling Python..."
   - cd $BASE_DIR/backend
-  - pip install pipenv
-  - pipenv install django --python 3.10
-  - pipenv install psycopg2-binary
+  - pipenv install
   - python manage.py runserver
   - cd $BASE_DIR
   - echo "Python compilation complete."
