@@ -8,13 +8,11 @@
   background: linear-gradient(#1eece8, #9198e5);
 }
 
-/*
-h1.appTitle {
-  flex: auto;
-  position: relative;
+/* For the Anthology title */
+.app-title {
+  text-transform: capitalize;
   vertical-align: top;
 }
-*/
 
 .auth-form-container, .login-form, .register-form {
   display: flex;

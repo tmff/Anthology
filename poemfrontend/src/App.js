@@ -12,10 +12,14 @@ function App() {
   }
   return (
    <div className="App">
+    <head>
+      <div className="app-title"><h1>Anthology</h1></div>
+    </head>
     {
       currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />
     }
    </div>
+
 
 
    /* DEFAULT REACT APP BS
