@@ -60,6 +60,8 @@ migrations-django:
   script:
   - echo "Running Django migrations..."
   - cd $BASE_DIR/backend
+  - pip install pipenv
+  - pipenv install
   - pipenv run python manage.py makemigrations
   - pipenv run python manage.py migrate
   - pipenv run python manage.py check
