@@ -8,17 +8,21 @@
   background: linear-gradient(#1eece8, #9198e5);
 }
 
-/* For the Anthology title */
+/* Doesn't fUCKIng work
+* For the Anthology title
 .app-title {
   text-transform: capitalize;
   vertical-align: top;
 }
+*/
 
+/* consistent formatting */
 .auth-form-container, .login-form, .register-form {
   display: flex;
   flex-direction: column;
 }
 
+/* allows scaling for different devices */
 @media screen and (min-width: 600px) {
   .auth-form-container {
     padding: 5rem;
@@ -34,7 +38,7 @@ label {
   padding: 0.25rem 0;
 }
 
-/* For the input field */
+/* For the 'input' of the input field */
 input {
   margin: 0.5rem 0;
   padding: 1rem;
@@ -52,6 +56,7 @@ button {
   color: #9198e5;
 }
 
+/* Button to switch between Login/Register */
 .link-btn {
   background: none;
   color: whitesmoke;
