@@ -18,11 +18,12 @@ export const Register = (props) => {
                 <input
                     value={name}
                     name="name"
-                    id="email"
+                    id="name"
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Full Name"
                 />
-                <label htmlFor="email">email</label>
+                <br />
+                <label htmlFor="email">Email</label>
                 <input
                     value={email}
                     name="email"
@@ -31,7 +32,8 @@ export const Register = (props) => {
                     type="email"
                     placeholder="example@gmail.com"
                 />
-                <label htmlFor="password">password</label>
+                <br />
+                <label htmlFor="password">Password</label>
                 <input
                     value={pwd}
                     name="password"
@@ -40,7 +42,7 @@ export const Register = (props) => {
                     type="password"
                     placeholder="********"
                 />
-                <button type="submit">Log In</button>
+                <button type="submit">Register Account</button>
             </form>
             <button 
                 className="link-btn"
@@ -50,5 +52,5 @@ export const Register = (props) => {
         </div>
 
     )
-    
+
 }

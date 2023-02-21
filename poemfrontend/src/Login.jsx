@@ -19,18 +19,20 @@ export const Login = (props) => {
                     onChange={(e) => setEmail(e.target.value)}
                     type="email"
                     placeholder="example@gmail.com"
-                    id="password"
-                    name="password"
+                    id="email"
+                    name="email"
                 />
+                <br/>
                 <label htmlFor="password">password</label>
                 <input
-                    value={pass}
+                    value={pwd}
                     onChange={(e) => setPwd(e.target.value)}
                     type="password"
                     placeholder="********"
                     id="password"
                     name="password"
                 />
+                <button type="submit">Log In</button>
             </form>
             <button
                 className="link-btn"
