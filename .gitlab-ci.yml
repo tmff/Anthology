@@ -30,13 +30,11 @@ check-django:
   stage: check
   tags: 
   - python
-  before_script:
-  - cd $BASE_DIR/backend
-  - pip install pipenv
-  - pipenv install
   script:
   - echo "Checking the Django project..."
   - cd $BASE_DIR/backend
+  - pip install pipenv
+  - pipenv install
   - pipenv run python manage.py check
   - cd $BASE_DIR
   - echo "Django checks complete."
