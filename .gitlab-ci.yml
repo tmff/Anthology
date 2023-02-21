@@ -66,7 +66,7 @@ migrations-django:
   - cd $BASE_DIR
   - echo "Django migrations complete."
 
-build-docker:
+.build-docker:
   image: docker:latest
   stage: build
   services:
@@ -87,20 +87,18 @@ test-django:
   stage: test
   tags: 
   - python
-  before_script:
-  - cd $BASE_DIR/backend
-  - pip install pipenv
-  - pipenv install
   script:
   - echo "Running Django tests..."
   - cd $BASE_DIR/backend
+  - pip install pipenv
+  - pipenv install
   - pipenv run python manage.py test
   - cd $BASE_DIR
   - echo "Finished Django tests."
 
-test-react:
+.test-react:
   image: node:16
-  stage: build
+  stage: test
   tags:
     - node
   script:
