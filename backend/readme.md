@@ -21,9 +21,9 @@ To work in this directory please use a virtual enviroment with python 3.10, thes
     <li>Start postgresql server on your machine, im sure we will change this once we have made a proper </li>
 </ol>
 
-<h3>To start the postgres server on WSL:</h3>
+<h3>To start the postgres server</h3>
 
-`sudo -u postgres psql postgres`
+`sudo service postgresql start`
 
 Thanks!
 
