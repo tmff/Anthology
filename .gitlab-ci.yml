@@ -52,7 +52,7 @@ build-react:
   - cd $BASE_DIR
   - echo "React compilation complete."
 
-.migrations-django:
+migrations-django:
   image: python:3.10
   stage: build
   tags:
