@@ -34,9 +34,10 @@ check-django:
   - echo "Checking the Django project..."
   - cd $BASE_DIR/backend
   - pip install pipenv
-  - pipenv install
-  - pipenv sync
-  - pipenv run pip freeze
+  - pipenv install django
+  - pipenv install psycopg2-binary
+  - pipenv install djangorestframework
+  - pipenv install django-cors-headers
   - pipenv run python manage.py check
   - cd $BASE_DIR
   - echo "Django checks complete."
