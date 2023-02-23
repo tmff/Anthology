@@ -34,10 +34,7 @@ check-django:
   - echo "Checking the Django project..."
   - cd $BASE_DIR/backend
   - pip install pipenv
-  - pipenv install django
-  - pipenv install psycopg2-binary
-  - pipenv install djangorestframework
-  - pipenv install django-cors-headers
+  - pipenv install 
   - pipenv run python manage.py check
   - cd $BASE_DIR
   - echo "Django checks complete."
@@ -55,7 +52,7 @@ build-react:
   - cd $BASE_DIR
   - echo "React compilation complete."
 
-migrations-django:
+.migrations-django:
   image: python:3.10
   stage: build
   tags:
@@ -71,7 +68,7 @@ migrations-django:
   - cd $BASE_DIR
   - echo "Django migrations complete."
 
-.build-docker:
+build-docker-django:
   image: docker:latest
   stage: build
   services:
@@ -84,10 +81,21 @@ migrations-django:
   - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
   - echo "Building the docker image..."
-  - docker build --pull -t ${CI_REGISTRY_IMAGE}
-  - docker push "$CI_REGISTRY_IMAGE"
+  - docker build --pull -t ${CI_REGISTRY_IMAGE}_django
+  - docker push ${CI_REGISTRY_IMAGE}_django
 
-test-django:
+deploy-docker-django:
+  image: docker:latest
+  stage: deploy
+  variables:
+    DOCKER_PORT: 8000
+  services:
+  - docker:dind
+  script:
+  - docker 
+  - docker run -dp ${DOCKER_PORT}:${DOCKER_PORT} ${CI_REGISTRY_NAME}_django
+
+.test-django:
   image: python:3.10
   stage: test
   tags: 
