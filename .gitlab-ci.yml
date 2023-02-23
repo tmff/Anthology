@@ -128,5 +128,5 @@ deploy-git:
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker pull ${CI_REGISTRY_IMAGE}:latest"
   script:
     - scp -o StrictHostKeyChecking=no -i $RSA -r . $VM_USER@$VM:~/team-project-deployment 
-    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "sed -i '5s|teamproject|$CI_IMG|' ~/team-project-deployment/docker/app.yml"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "sed -i '4s|teamproject|$CI_IMG|' ~/team-project-deployment/docker/app.yml"
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker compose -f ~/team-project-deployment/docker/app.yml up -d"
