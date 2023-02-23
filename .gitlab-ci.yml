@@ -35,7 +35,7 @@ check-django:
   - cd $BASE_DIR/backend
   - pip install pipenv
   - pipenv install
-  - pipenv graph
+  - pipenv sync
   - pipenv run python manage.py check
   - cd $BASE_DIR
   - echo "Django checks complete."
