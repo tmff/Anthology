@@ -8,14 +8,25 @@ export const Register = (props) => {
     const [pwd2, setPwd2] = useState('');
     const [name, setName] = useState('');
     const [lastname, setLastName] = useState('');
+    const [submitResult,setSubmitResult] = useState('');
+    //Probably a better way to do this
+    const [usernameMissing,setUsernameMissing] = useState('');
+    const [pwdMissing,setPwdMissing] = useState('');
+    const [pwd2Missing,setPwd2Missing] = useState('');
+    const [emailMissing,setEmailMissing] = useState('');
 
+
+    const errorStyle = {
+        color: 'red',
+        fontWeight: 'bold',
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(email);
     }
 
     function registerUser(){
+        resetMissing();
         axios.post('/register',{
             username: username,
             password: pwd,
@@ -23,8 +34,39 @@ export const Register = (props) => {
             email: email,
             first_name: name,
             last_name: lastname,
-        }).then(res => {console.log(res)})
-        .catch((err) => console.log(err.toJSON()))
+        }).then(res => console.log("test"))
+        .catch((err) => {
+            if(err.response){
+                if(err.response.status == 400){
+                    handleMissingElements(err.response.data);
+                }
+                else{
+                    setSubmitResult(err.response.data.detail);
+                }
+            }
+            else if(err.request){
+                //console.log(err.request.username);
+            }
+        }
+        )
+    }
+
+    function resetMissing(){
+        setEmailMissing('');
+        setUsernameMissing('');
+        setPwdMissing('');
+        setPwd2Missing('');
+    }
+
+    function handleMissingElements(data){
+        if(data.email)
+            setEmailMissing(data.email);
+        if(data.username)
+            setUsernameMissing(data.username);
+        if(data.password)
+            setPwdMissing(data.password);
+        if(data.password2)
+            setPwd2Missing(data.password2);
     }
 
     return (
@@ -48,6 +90,7 @@ export const Register = (props) => {
                     placeholder="Last Name"
                 />
                 <label htmlFor="email">Email</label>
+                <label style = {errorStyle} htmlFor="email">{emailMissing}</label>
                 <input
                     value={email}
                     name="email"
@@ -57,6 +100,7 @@ export const Register = (props) => {
                     placeholder="example@gmail.com"
                 />
                 <label htmlFor="username">Username</label>
+                <label style = {errorStyle} htmlFor="username">{usernameMissing}</label>
                 <input
                     value={username}
                     name="username"
@@ -66,6 +110,7 @@ export const Register = (props) => {
                     placeholder="username"
                 />
                 <label htmlFor="password">Password</label>
+                <label style = {errorStyle} htmlFor="password">{pwdMissing}</label>
                 <input
                     value={pwd}
                     name="password"
@@ -75,6 +120,7 @@ export const Register = (props) => {
                     placeholder="********"
                 />
                 <label htmlFor="passwordConf">Confirm Password</label>
+                <label style = {errorStyle} htmlFor="passwordConf">{pwd2Missing}</label>
                 <input
                     value={pwd2}
                     name="password confirmation"
@@ -84,12 +130,13 @@ export const Register = (props) => {
                     placeholder="********"
                 />
                 <button type="submit" onClick={registerUser}>Register Account</button>
+                <h3>{submitResult}</h3>
             </form>
             <button 
                 className="link-btn"
                 onClick={() => props.onFormSwitch('login')}>
                     Already have an account? Login here!
-                </button>
+            </button>
         </div>
     )
 

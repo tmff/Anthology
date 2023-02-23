@@ -12,9 +12,6 @@ const api = axios.create({
 
 function App() {
 
-  api.get('/api/poems/1').then(res => {
-    console.log(res)
-  }).catch((err) => console.log(err))
 
   const [currentForm, setCurrentForm] = useState('login');
 
