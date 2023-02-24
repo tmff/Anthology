@@ -85,7 +85,7 @@ build-docker:
   script:
   - echo "Building the docker image..."
   - cd ${BASE_DIR}/backend
-  - docker build --pull -t ${CI_REGISTRY_IMAGE} --platform amd64 .
+  - docker buildx build --pull -t ${CI_REGISTRY_IMAGE} --platform amd64 .
   # - docker push "$CI_REGISTRY_IMAGE"
 
 test-django:
