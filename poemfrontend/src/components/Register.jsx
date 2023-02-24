@@ -37,7 +37,7 @@ export const Register = (props) => {
         }).then(res => console.log("test"))
         .catch((err) => {
             if(err.response){
-                if(err.response.status == 400){
+                if(err.response.status === 400){
                     handleMissingElements(err.response.data);
                 }
                 else{

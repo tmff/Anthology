@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from rest_framework.authtoken import views
+from rest_framework.authtoken import views as authviews
 from poem import views
 
 router = routers.DefaultRouter()
@@ -27,5 +27,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include(router.urls)),
     path('',include('poem.urls')),
-    ##path('api-token-auth', views.obtain_auth_token),
+    path('api-token-auth', authviews.obtain_auth_token),
 ]
