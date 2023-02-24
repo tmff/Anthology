@@ -86,7 +86,7 @@ build-docker:
   - echo "Building the docker image..."
   - cd ${BASE_DIR}/backend
   - docker build --pull -t ${CI_REGISTRY_IMAGE} .
-  - docker push "$CI_REGISTRY_IMAGE"
+  # - docker push "$CI_REGISTRY_IMAGE"
 
 test-django:
   image: python:3.10
