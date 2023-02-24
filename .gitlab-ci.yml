@@ -73,7 +73,7 @@ build-react:
   - cd $BASE_DIR
   - echo "Django migrations complete."
 
-.build-docker:
+build-docker:
   image: docker:latest
   stage: build
   services:
