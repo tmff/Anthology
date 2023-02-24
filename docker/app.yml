@@ -13,5 +13,6 @@ services:
       - 127.0.0.1:5432:5432
   teamproject-app:
     image: teamproject
+    platform: 'linux/arm64/v8'
     ports: 
       - 8000:8000
