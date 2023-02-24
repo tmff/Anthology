@@ -1,5 +1,5 @@
 #!/bin/sh
-FROM --platform=linux/amd64 python:3.10
+FROM --platform=amd64 python:3.10
 WORKDIR .
 COPY . . 
 RUN pip install pipenv
