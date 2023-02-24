@@ -5,8 +5,9 @@ services:
     volumes:
       - ~/volumes/teamproject/postgresql/:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=teamproject
-      - POSTGRES_PASSWORD=
+      - POSTGRES_DB=usersdb
+      - POSTGRES_USER=anth
+      - POSTGRES_PASSWORD=eevee
       - POSTGRES_HOST_AUTH_METHOD=trust
     ports:
       - 127.0.0.1:5432:5432
