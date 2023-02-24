@@ -13,7 +13,7 @@ export const Login = (props) => {
         <div className="auth-form-container">
             <h2>Login</h2>
             <form className="login-form" onSubmit={handleSubmit}>
-                <label htmlFor="email">email</label>
+                <label htmlFor="email"><b>Email</b></label>
                 <input
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -23,7 +23,7 @@ export const Login = (props) => {
                     name="email"
                 />
                 <br/>
-                <label htmlFor="password">password</label>
+                <label htmlFor="password"><b>Password</b></label>
                 <input
                     value={pwd}
                     onChange={(e) => setPwd(e.target.value)}

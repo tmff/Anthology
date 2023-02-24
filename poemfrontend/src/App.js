@@ -20,9 +20,12 @@ function App() {
   }
   return (
    <div className="App">
-    <head>
-      <div className="app-title"><h1>Anthology</h1></div>
-    </head>
+    <header />
+      <div className='app-header'>
+        <div className='app-Title'>
+          Anthology
+        </div>
+      </div>
     {
       currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />
     }
