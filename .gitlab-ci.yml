@@ -85,8 +85,9 @@ build-docker:
   script:
   - echo "Building the docker image..."
   - cd ${BASE_DIR}/backend
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   - docker buildx build --pull -t ${CI_REGISTRY_IMAGE} --platform linux/arm64 .
-  # - docker push "$CI_REGISTRY_IMAGE"
+  - docker push ${CI_REGISTRY_IMAGE}:latest
 
 test-django:
   image: python:3.10
