@@ -82,8 +82,6 @@ build-docker:
     DOCKER_HOST: 'tcp://docker:2375'
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
-  before_script:
-  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
   - echo "Building the docker image..."
   - cd ${BASE_DIR}/backend
