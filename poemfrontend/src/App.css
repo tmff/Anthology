@@ -28,8 +28,8 @@
   }
 }
 
-/* allows scaling for different devices */
-@media screen and (min-width: 600px) {
+/* Standard location for Anthology title*/
+@media screen and (min-width: 700px) {
   .app-Title {
     /* Placeholder font from Google Fonts, we can pick one later */
     @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');
@@ -38,8 +38,25 @@
     font-weight: 700;
     text-transform: capitalize;
     font-size: 60px;
-    position: sticky; top:35%; left: 5%; /* position of app title should be centered this way*/
+    position: fixed; top:35%; left: 5%; /* Allows title to scroll down the page with user */
   }
+}
+
+/* Centers title in top-middle of Login/Register form when screen is below certain size*/
+@media screen and (max-width:699px) {
+  .app-Title {
+    /* Placeholder font from Google Fonts, we can pick one later */
+    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');
+    animation: fadeEffect 2s;
+    font-family: 'Libre-Baskerville', serif;
+    font-weight: 700;
+    text-transform: capitalize;
+    font-size: 30px;
+    position: absolute; top:20px ; left: 40%; 
+  }
+}
+
+@media screen and (min-width: 600px) {
   .auth-form-container {
     padding: 5rem;
     border: 1px solid white;
