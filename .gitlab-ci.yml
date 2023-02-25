@@ -86,8 +86,10 @@ build-docker:
   - echo "Building the docker image..."
   - cd ${BASE_DIR}/backend
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  - docker buildx build --pull -t ${CI_REGISTRY_IMAGE} --platform linux/arm64 .
-  - docker push ${CI_REGISTRY_IMAGE}:latest
+  - docker build --pull -t ${CI_REGISTRY_IMAGE}_frontend --platform linux/arm64 .
+  - docker build --pull -t ${CI_REGISTRY_IMAGE}_backend --platform linux/arm64 .
+  - docker push ${CI_REGISTRY_IMAGE}_frontend:latest
+  - docker push ${CI_REGISTRY_IMAGE}_backend:latest
 
 test-django:
   image: python:3.10
@@ -127,9 +129,10 @@ deploy-git:
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker volume rm $(docker volume ls -q) || true"
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "rm -rf ~/team-project-deployment || true"
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
-    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker pull ${CI_REGISTRY_IMAGE}:latest"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker pull ${CI_REGISTRY_IMAGE}_frontend:latest"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker pull ${CI_REGISTRY_IMAGE}_backend:latest"
   script:
     - scp -o StrictHostKeyChecking=no -i $RSA -r . $VM_USER@$VM:~/team-project-deployment 
-    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "sed -i '15s|teamproject|$CI_IMG|' ~/team-project-deployment/docker/app.yml"
-    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker push ${CI_REGISTRY_IMAGE}:latest"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "sed -i '13s|teamproject|$CI_IMG|' ~/team-project-deployment/docker/app.yml"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "sed -i '19s|teamproject|$CI_IMG|' ~/team-project-deployment/docker/app.yml"
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker compose -f ~/team-project-deployment/docker/app.yml up -d"
