@@ -17,7 +17,8 @@
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
 
 variables:
-  CI_IMG: "\"${CI_REGISTRY_IMAGE}:latest\""
+  CI_FRONTEND_IMG: "\"${CI_REGISTRY_IMAGE}_frontend:latest\""
+  CI_BACKEND_IMG: "\"${CI_REGISTRY_IMAGE}_backend:latest\""
 stages:          # List of stages for jobs, and their order of execution
   - check
   - build
@@ -133,6 +134,6 @@ deploy-git:
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker pull ${CI_REGISTRY_IMAGE}"
   script:
     - scp -o StrictHostKeyChecking=no -i $RSA -r . $VM_USER@$VM:~/team-project-deployment 
-    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "sed -i '13s|teamproject|$CI_IMG|' ~/team-project-deployment/docker/app.yml"
-    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "sed -i '19s|teamproject|$CI_IMG|' ~/team-project-deployment/docker/app.yml"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "sed -i '13s|teamproject|$CI_FRONTEND_IMG|' ~/team-project-deployment/docker/app.yml"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "sed -i '19s|teamproject|$CI_BACKEND_IMG|' ~/team-project-deployment/docker/app.yml"
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker compose -f ~/team-project-deployment/docker/app.yml up -d"
