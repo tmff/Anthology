@@ -34,7 +34,7 @@ export const Register = (props) => {
             email: email,
             first_name: name,
             last_name: lastname,
-        }).then(res => console.log("test"))
+        }).then(res => console.log(res.response.status))
         .catch((err) => {
             if(err.response){
                 if(err.response.status === 400){
