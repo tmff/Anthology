@@ -10,20 +10,27 @@ const api = axios.create({
 })
 
 
+
+
 function App() {
 
-
+  console.log(api.length);
   const [currentForm, setCurrentForm] = useState('login');
 
   const toggleForm = (formName) => {
     setCurrentForm(formName);
   }
+
+  /* app-header is redundant for now,
+  *  kind of a future proof for if we want to add anything to form header
+  */
+ 
   return (
    <div className="App">
     <header />
-      <div className='app-header'>
+      <div className='app-header'> 
         <div className='app-Title'>
-          Anthology
+          Anthology.
         </div>
       </div>
     {

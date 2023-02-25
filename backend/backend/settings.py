@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework.authtoken',
     'corsheaders',
     'rest_framework',
     'poem',
@@ -83,6 +84,7 @@ DATABASES = {
         'NAME': 'usersdb', 
         'USER': 'anth', 
         'PASSWORD': 'eevee',
+        ##'HOST':'localhost',
         'HOST': 'teamproject-postgresql', 
         'PORT': '5432',
     }
