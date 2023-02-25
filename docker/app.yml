@@ -10,13 +10,13 @@ services:
       - 'POSTGRES_PASSWORD=eevee'
       - 'POSTGRES_HOST_AUTH_METHOD=trust'
   teamproject-app:
-    image: teamproject_backend
+    image: teamproject:backend
     depends_on:
       - teamproject-postgresql
     ports: 
       - '8000:8000'
   teamproject-frontend:
-    image: teamproject_frontend
+    image: teamproject:frontend
     depends_on:
       - teamproject-app
     ports:

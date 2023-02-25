@@ -17,8 +17,7 @@
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
 
 variables:
-  CI_FRONTEND_IMG: "\"${CI_REGISTRY_IMAGE}_frontend:latest\""
-  CI_BACKEND_IMG: "\"${CI_REGISTRY_IMAGE}_backend:latest\""
+  CI_IMG: "\"${CI_REGISTRY_IMAGE}\""
 stages:          # List of stages for jobs, and their order of execution
   - check
   - build
@@ -45,7 +44,7 @@ check-django:
   - cd $BASE_DIR
   - echo "Django checks complete."
 
-build-react:
+.build-react:
   image: node:16
   stage: build
   tags:
@@ -87,10 +86,8 @@ build-docker:
   - echo "Building the docker image..."
   - cd ${BASE_DIR}/backend
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  - docker build --pull -t ${CI_REGISTRY_IMAGE}_frontend --platform linux/arm64 .
-  - docker tag ${CI_REGISTRY_IMAGE}_frontend ${CI_REGISTRY_IMAGE}
-  - docker build --pull -t ${CI_REGISTRY_IMAGE}_backend --platform linux/arm64 .
-  - docker tag ${CI_REGISTRY_IMAGE}_backend ${CI_REGISTRY_IMAGE}
+  - docker build --pull -t ${CI_REGISTRY_IMAGE}:frontend --platform linux/arm64 .
+  - docker build --pull -t ${CI_REGISTRY_IMAGE}:backend --platform linux/arm64 .
   - docker push ${CI_REGISTRY_IMAGE}
 
 test-django:
@@ -134,6 +131,6 @@ deploy-git:
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker pull ${CI_REGISTRY_IMAGE}"
   script:
     - scp -o StrictHostKeyChecking=no -i $RSA -r . $VM_USER@$VM:~/team-project-deployment 
-    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "sed -i '13s|teamproject_frontend|$CI_FRONTEND_IMG|' ~/team-project-deployment/docker/app.yml"
-    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "sed -i '19s|teamproject_backend|$CI_BACKEND_IMG|' ~/team-project-deployment/docker/app.yml"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "sed -i '13s|teamproject|$CI_IMG|' ~/team-project-deployment/docker/app.yml"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "sed -i '19s|teamproject|$CI_IMG|' ~/team-project-deployment/docker/app.yml"
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker compose -f ~/team-project-deployment/docker/app.yml up -d"
