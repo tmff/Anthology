@@ -87,8 +87,10 @@ build-docker:
   - cd ${BASE_DIR}/backend
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   - docker build --pull -t ${CI_REGISTRY_IMAGE}_frontend --platform linux/arm64 .
+  - docker tag ${CI_REGISTRY_IMAGE}_frontend ${CI_REGISTRY_IMAGE}
   - docker build --pull -t ${CI_REGISTRY_IMAGE}_backend --platform linux/arm64 .
-  - docker image push --all-tags ${CI_REGISTRY_IMAGE}
+  - docker tag ${CI_REGISTRY_IMAGE}_backend ${CI_REGISTRY_IMAGE}
+  - docker push ${CI_REGISTRY_IMAGE}
 
 test-django:
   image: python:3.10
