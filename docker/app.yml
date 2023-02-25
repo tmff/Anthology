@@ -5,10 +5,10 @@ services:
     volumes:
       - ~/volumes/teamproject/postgresql/:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: usersdb
-      POSTGRES_USER: anth
-      POSTGRES_PASSWORD: eevee
-      POSTGRES_HOST_AUTH_METHOD: trust
+      - 'POSTGRES_DB=usersdb'
+      - 'POSTGRES_USER=anth'
+      - 'POSTGRES_PASSWORD=eevee'
+      - 'POSTGRES_HOST_AUTH_METHOD=trust'
   teamproject-app:
     image: teamproject_backend
     depends_on:
