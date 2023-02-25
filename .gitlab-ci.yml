@@ -84,11 +84,10 @@ build-docker:
     DOCKER_TLS_CERTDIR: ""
   script:
   - echo "Building the docker image..."
-  - cd ${BASE_DIR}/backend
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  - docker build --pull -t ${CI_REGISTRY_IMAGE}:frontend --platform linux/arm64 .
+  - docker build --pull -t ${CI_REGISTRY_IMAGE}:frontend --platform linux/arm64 ./poemfrontend/
   - docker push ${CI_REGISTRY_IMAGE}:frontend
-  - docker build --pull -t ${CI_REGISTRY_IMAGE}:backend --platform linux/arm64 .
+  - docker build --pull -t ${CI_REGISTRY_IMAGE}:backend --platform linux/arm64 ./backend/
   - docker push ${CI_REGISTRY_IMAGE}:backend
 
 test-django:
