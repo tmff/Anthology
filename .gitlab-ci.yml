@@ -17,7 +17,7 @@
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
 
 variables:
-  CI_IMG: "\"${CI_REGISTRY_IMAGE}\""
+  CI_IMG: "${CI_REGISTRY_IMAGE}"
 stages:          # List of stages for jobs, and their order of execution
   - check
   - build
