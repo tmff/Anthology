@@ -38,7 +38,7 @@
     font-weight: 700;
     text-transform: capitalize;
     font-size: 60px;
-    position: absolute; top:35%; left: 5%; /* position of app title should be centered this way*/
+    position: sticky; top:35%; left: 5%; /* position of app title should be centered this way*/
   }
   .auth-form-container {
     padding: 5rem;
