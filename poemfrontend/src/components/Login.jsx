@@ -30,7 +30,7 @@ export const Login = (props) => {
         axios.post('/api-token-auth',{
             username: username,
             password: pwd
-        }).then(res => cookies.set('Token',res.data.token))
+        }).then(res => cookies.set('Token',res.data.token),props.stateChanger(false))
         .catch(err => handleLoginErrors(err.response))
         //.then(res => cookies.set("token",res.response.data))
 
