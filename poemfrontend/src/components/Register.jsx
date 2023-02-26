@@ -59,7 +59,7 @@ export const Register = (props) => {
         axios.post('/api-token-auth',{
             username: username,
             password: pwd
-        }).then(res => cookies.set('Token',res.data.token),props.setInLogin(false))
+        }).then(res => cookies.set('Token',res.data.token),props.stateChanger(false))
         .catch(err => console.log(err))
         //.then(res => cookies.set("token",res.response.data))
 
