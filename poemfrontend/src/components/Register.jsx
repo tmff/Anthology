@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
+import Cookies from 'universal-cookie';
+
 
 export const Register = (props) => {
     const [email, setEmail] = useState('');
@@ -15,6 +17,7 @@ export const Register = (props) => {
     const [pwd2Missing,setPwd2Missing] = useState('');
     const [emailMissing,setEmailMissing] = useState('');
 
+    const cookies = new Cookies();
 
     const errorStyle = {
         color: 'red',
@@ -34,7 +37,7 @@ export const Register = (props) => {
             email: email,
             first_name: name,
             last_name: lastname,
-        }).then(res => console.log(res.response.status))
+        }).then(setLoginToken())
         .catch((err) => {
             if(err.response){
                 if(err.response.status === 400){
@@ -49,6 +52,17 @@ export const Register = (props) => {
             }
         }
         )
+    }
+
+    function setLoginToken(){
+        //set label to error
+        axios.post('/api-token-auth',{
+            username: username,
+            password: pwd
+        }).then(res => cookies.set('Token',res.data.token),props.setInLogin(false))
+        .catch(err => console.log(err))
+        //.then(res => cookies.set("token",res.response.data))
+
     }
 
     function resetMissing(){
