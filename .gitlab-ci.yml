@@ -19,7 +19,7 @@
 variables:
   CI_IMG: teamproject
   CI_FULL_IMG: "${CI_REGISTRY_IMAGE}/${CI_IMG}"
-  REPLACE_CMD: "sed -e s/image: ${CI_IMG}/image: ${CI_FULL_IMG}"
+  REPLACE_CMD: "sed -i \"s/image: ${CI_IMG}/image: ${CI_FULL_IMG}/g\" ~/team-project-deployment/docker/app.yml"
 stages:          # List of stages for jobs, and their order of execution
   - check
   - build
@@ -130,7 +130,6 @@ deploy-git:
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker pull ${CI_FULL_IMG}:frontend"
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker pull ${CI_FULL_IMG}:backend"
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "${FULL_REPLACE_CMD}"
-    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "cat ~/team-project-deployment/docker/app.yml"
   script:
     - scp -o StrictHostKeyChecking=no -i $RSA -r . $VM_USER@$VM:~/team-project-deployment
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker compose -f ~/team-project-deployment/docker/app.yml up -d"
