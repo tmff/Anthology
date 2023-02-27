@@ -12,6 +12,7 @@ services:
   teamproject-app:
     image: teamproject:backend
     restart: unless-stopped
+    tty: true
     depends_on:
       - teamproject-postgresql
     ports: 
