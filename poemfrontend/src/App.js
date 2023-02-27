@@ -1,5 +1,6 @@
 //import logo from './logo.svg';
 import './App.css';
+import Sidebar from './Sidebar';
 import { Login } from './components/Login';
 import { Register } from './components/Register';
 import { useState} from 'react';
@@ -25,12 +26,6 @@ function App() {
     setCurrentForm(formName);
   }
 
-
-
-
-
-
-
   /* app-header is redundant for now,
   *  kind of a future proof for if we want to add anything to form header
   */
@@ -51,10 +46,13 @@ function App() {
     );
   }
   return(
-    <div className='App'>
-      <h1>other shit goes here</h1>
+    <div className='App' id='outer-container'>
+      <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'}/>
+      <div id='page-wrap'>
+        <h1>other shit goes here</h1>   
+      </div>
     </div>
-  )
+  );
  
 }
 
