@@ -1,9 +1,16 @@
+#outer-container {
+    justify-content: left;
+    align-content: left;
+}
+
+
+
 .bm-burger-button {
     position: fixed;
-    width: 36px;
-    height: 30px;
-    left: 36px;
-    top: 36px;
+    width: 25px;
+    height: 20px;
+    left: 25px;
+    top: 25px;
 }
 
 .bm-burger-bars {
@@ -11,7 +18,7 @@
 }
 
 .bm-burger-bars-hover {
-    background: #a90000;
+    background: #a7a7a7;
 }
 
 .bm-cross-button {

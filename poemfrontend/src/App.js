@@ -32,13 +32,13 @@ function App() {
   */
   if(inLogin){
     return (
-    <div className="App">
+    <div className='App'>
       <header />
-        <div className='app-header'> 
-          <div className='app-Title'>
-            Anthology.
-          </div>
+      <div className='app-header'> 
+        <div className='app-Title'>
+          Anthology.
         </div>
+      </div>
       {
         currentForm === "login" ? <Login onFormSwitch={toggleForm} stateChanger={setInLogin} /> : <Register onFormSwitch={toggleForm} stateChanger = {setInLogin} />
       }
@@ -48,10 +48,10 @@ function App() {
   }
   return(
     <div className='App' id='outer-container'>
-      <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'}/>
-      <div id='page-wrap'>
-        <h1>other shit goes here</h1>   
+      <div id='sidebar'>
+        <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'}/>
       </div>
+      <h1>other shit goes here</h1>
     </div>
   );
  
