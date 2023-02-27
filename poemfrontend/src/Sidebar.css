@@ -1,9 +1,10 @@
 #outer-container {
-    justify-content: left;
-    align-content: left;
+    justify-self: left;
+    align-self: left;
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }
-
-
 
 .bm-burger-button {
     position: fixed;

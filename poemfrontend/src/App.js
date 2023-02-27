@@ -34,25 +34,29 @@ function App() {
     return (
     <div className='App'>
       <header />
+
       <div className='app-header'> 
         <div className='app-Title'>
           Anthology.
         </div>
       </div>
+
       {
         currentForm === "login" ? <Login onFormSwitch={toggleForm} stateChanger={setInLogin} /> : <Register onFormSwitch={toggleForm} stateChanger = {setInLogin} />
       }
     </div>
-      
     );
   }
   return(
-    <div className='App' id='outer-container'>
-      <div id='sidebar'>
-        <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'}/>
-      </div>
+    <div className='App'>
       <h1>other shit goes here</h1>
+      <div id='outer-container'>
+        <div id='sidebar'>
+          <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'}/>
+        </div>
+      </div>
     </div>
+
   );
  
 }
