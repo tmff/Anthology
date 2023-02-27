@@ -87,8 +87,8 @@ DATABASES = {
         'NAME': 'usersdb', 
         'USER': 'anth', 
         'PASSWORD': 'eevee',
-        ##'HOST':'localhost',
-        'HOST': 'teamproject-postgresql', 
+        'HOST':'localhost',
+        ##'HOST': 'teamproject-postgresql', 
         'PORT': '5432',
     }
 }

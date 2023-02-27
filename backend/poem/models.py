@@ -21,6 +21,7 @@ class Poem(models.Model):
     content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)  # TODO - should not be null but it's half 10 in the evening and i need sleep
     time_created = models.DateTimeField(default=datetime.datetime.now)
+    is_published = models.BooleanField(default=False)
 
 
     def __str__(self):
