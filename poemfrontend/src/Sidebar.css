@@ -20,7 +20,7 @@
 }
 
 .bm-cross {
-    background: #373a47;
+    background: #bdc3c7;
 }
 
 .bm-menu-wrap {
@@ -29,20 +29,23 @@
 }
 
 .bm-menu {
-    background: linear-gradient(#1eece8, #9198e5);
+    background: #21cbda;
     padding: 2.5em 1.5em 0;
     font-size: 1.15em;
 }
 
+.bm-morph-shape {
+    fill: #158994;
+}
+
 .bm-item-list {
-    color: #b8b7ad;
     padding: 0.8em;
 }
 
 .bm-item {
     display: inline-block;
-    color: #ffffffbc;
     font-weight: bold;
+    color: #ffffff;
     margin-bottom: 10px;
     text-align: left;
     text-decoration: none;
@@ -50,7 +53,6 @@
 }
 
 .bm-item:hover {
-    color: #ffffff;
     text-decoration: underline;
 }
 

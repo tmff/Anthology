@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import Cookies from 'universal-cookie';
+import '../LogReg.css'
 
 export const Login = (props) => {
     const [username, setUsername] = useState('');

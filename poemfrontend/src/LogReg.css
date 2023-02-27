@@ -1,0 +1,45 @@
+/* consistent formatting */
+.auth-form-container, .login-form, .register-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+@media screen and (min-width: 600px) {
+    .auth-form-container {
+      padding: 5rem;
+      border: 1px solid white;
+      border-radius: 10px;
+      margin: 0.5rem;
+    }  
+  }
+  
+  /* For the input field name*/
+  label {
+    text-align: left;
+    padding: 0.25rem 0;
+  }
+  
+  /* For the 'input' of the input field */
+  input {
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+  }
+  
+  /* For the Login/Register form buttons */
+  button {
+    border: none;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #9198e5;
+  }
+  
+  /* Button to switch between Login/Register */
+  .link-btn {
+    background: none;
+    color: whitesmoke;
+    text-decoration: underline;
+  }
