@@ -22,5 +22,5 @@ export default props => {
                 Profile
             </a>
         </Menu>
-    )
-}
+    );
+};

@@ -8,9 +8,6 @@
   background: linear-gradient(#1eece8, #9198e5);
 }
 
-/* Doesn't fUCKIng work
-* For the Anthology title */
-
 /* consistent formatting */
 .auth-form-container, .login-form, .register-form {
   display: flex;
