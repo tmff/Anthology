@@ -18,6 +18,8 @@
 
 variables:
   CI_IMG: teamproject
+  CI_FULL_IMG: "${CI_REGISTRY_IMAGE}/${CI_IMG}"
+  REPLACE_CMD: "sed -e s/image: ${CI_IMG}/image: %{CI_FULL_IMG}"
 stages:          # List of stages for jobs, and their order of execution
   - check
   - build
@@ -36,10 +38,7 @@ check-django:
   - echo "Checking the Django project..."
   - cd $BASE_DIR/backend
   - pip install pipenv
-  - pipenv install django
-  - pipenv install psycopg2-binary
-  - pipenv install djangorestframework
-  - pipenv install django-cors-headers
+  - pipenv install
   - pipenv run python manage.py check
   - cd $BASE_DIR
   - echo "Django checks complete."
@@ -130,6 +129,7 @@ deploy-git:
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker pull ${CI_REGISTRY_IMAGE}/${CI_IMG}:frontend"
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker pull ${CI_REGISTRY_IMAGE}/${CI_IMG}:backend"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM $FULL_REPLACE_CMD
   script:
     - scp -o StrictHostKeyChecking=no -i $RSA -r . $VM_USER@$VM:~/team-project-deployment
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker compose -f ~/team-project-deployment/docker/app.yml up -d"
