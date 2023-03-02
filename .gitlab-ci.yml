@@ -19,6 +19,7 @@
 variables:
   CI_IMG: teamproject
   CI_FULL_IMG: "${CI_REGISTRY_IMAGE}/${CI_IMG}"
+  REPLACE_CMD: "sed -i 's|image: teamproject|image: ${CI_FULL_IMG}|g' ~/team-project-deployment/docker/app.yml"
 stages:          # List of stages for jobs, and their order of execution
   - check
   - build
@@ -130,6 +131,13 @@ deploy-git:
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker pull ${CI_FULL_IMG}:backend"
   script:
     - scp -o StrictHostKeyChecking=no -i $RSA -r . $VM_USER@$VM:~/team-project-deployment
-    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "sed -i '13s|teamproject|$CI_FULL_IMG|' ~/team-project-deployment/docker/app.yml"
-    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "sed -i '21s|teamproject|$CI_FULL_IMG|' ~/team-project-deployment/docker/app.yml"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "${REPLACE_CMD}"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "echo HTTP_PROXY=http://teamproject-app:8000 >> ~/team-project-deployment/docker/.env"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "echo DJANGO_DEBUG=${DJANGO_DEBUG} >> ~/team-project-deployment/docker/.env"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "echo 'DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}' >> ~/team-project-deployment/docker/.env"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "echo POSTGRES_HOST=${POSTGRES_HOST} >> ~/team-project-deployment/docker/.env"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "echo POSTGRES_PORT=${POSTGRES_PORT} >> ~/team-project-deployment/docker/.env"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "echo POSTGRES_DB=${POSTGRES_DB} >> ~/team-project-deployment/docker/.env"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "echo POSTGRES_USER=${POSTGRES_USER} >> ~/team-project-deployment/docker/.env"
+    - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "echo POSTGRES_PASSWORD=${POSTGRES_PASSWORD} >> ~/team-project-deployment/docker/.env"
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker compose -f ~/team-project-deployment/docker/app.yml up -d"
