@@ -55,7 +55,8 @@ class Poem(models.Model):
 
 class Bookmark(models.Model):
  
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Do we replace with a "ghost" user?
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Do we replace with a "ghost" user? 
+                                                              # No
     poem = models.ForeignKey(Poem, on_delete=models.CASCADE)
 
 

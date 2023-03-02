@@ -21,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY",'django-insecure-3t9r2**#@lokjjh$s1zc^ist-b70wk_bcbw7vwmpg%5$^!v&50')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DJANGO_DEBUG")
+DEBUG = os.getenv("DJANGO_DEBUG",True)
 
 ALLOWED_HOSTS = [
     'teamproject-app',
@@ -85,11 +85,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv("POSTGRES_DB"),  
-        'USER': os.getenv("POSTGRES_USER"), 
-        'PASSWORD': os.getenv("POSTGRES_PASSWORD"), 
-        'HOST': os.getenv("POSTGRES_HOST"), 
-        'PORT': os.getenv("POSTGRES_PORT"), 
+        'NAME': os.getenv("POSTGRES_DB","usersdb"),  
+        'USER': os.getenv("POSTGRES_USER","anth"), 
+        'PASSWORD': os.getenv("POSTGRES_PASSWORD","eevee"), 
+        'HOST': os.getenv("POSTGRES_HOST","localhost"), 
+        'PORT': os.getenv("POSTGRES_PORT","5432"), 
     }
 }
 
