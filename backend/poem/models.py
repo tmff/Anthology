@@ -15,6 +15,10 @@ Consists of the following:
 - Author: the author of the poem as a User object.
 - Time created: when the poem was submitted to the database.
 """
+class Tag(models.Model):
+    name = models.CharField(max_length=120)
+
+
 class Poem(models.Model):
 
     title = models.CharField(max_length=120)
@@ -22,6 +26,7 @@ class Poem(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)  # TODO - should not be null but it's half 10 in the evening and i need sleep
     time_created = models.DateTimeField(default=datetime.datetime.now)
     is_published = models.BooleanField(default=False)
+    tags = models.ForeignKey(Tag, on_delete=models.SET_NULL,null = True)
 
 
     def __str__(self):
@@ -70,6 +75,6 @@ class Comment(models.Model):
 
 
 class Reply(Comment):
-
     parent_comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='parent_comment_to_reply')
+
 
