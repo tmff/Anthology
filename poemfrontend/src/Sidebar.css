@@ -1,3 +1,9 @@
+/* A lot of this code is provided in the react-burger-menu docs 
+ * which can be found here: https://www.npmjs.com/package/react-burger-menu
+ */
+
+
+ /* DONT TOUCH */
 #outer-container {
     justify-self: left;
     align-self: left;
@@ -31,6 +37,10 @@
     background: #373a47;
 }
 
+/*
+ * Sidebar wrapper styles
+ * Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
+ */
 .bm-menu-wrap {
     position: fixed;
     height: 100%;
@@ -42,6 +52,9 @@
     font-size: 1.15em;
 }
 
+/* 
+ * Required if we want to change the animation of the sidebar
+ */
 .bm-morph-shape {
     fill: #158994;
 }
