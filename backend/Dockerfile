@@ -1,11 +1,15 @@
 #!/bin/sh
 FROM python:3.10
-ENV PYTHONUNBUFFERED=1
-WORKDIR .
-COPY . . 
+
+# Set environment variables
+ENV PYTHONUNBUFFERED 1
+
+# Copy everything over
+WORKDIR /backend
+COPY . /backend
 RUN pip install pipenv
 RUN pipenv requirements > requirements.txt
-COPY requirements.txt .
+COPY requirements.txt /backend
 
 RUN pip install -r requirements.txt
 
