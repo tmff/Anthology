@@ -17,6 +17,11 @@ from .models import Poem
 class PoemView(viewsets.ModelViewSet):
     serializer_class = PoemSerializer
     queryset = Poem.objects.all()
+    def get(self, request, *args, **kwargs):
+        poem = Poem.objects.get(id=request.poem.id)
+        serializer = PoemSerializer(poem)
+        return Response(serializer.data)
+
 
 class UserDetailAPI(APIView):
     authentication_classes = (TokenAuthentication,)
@@ -26,6 +31,9 @@ class UserDetailAPI(APIView):
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
+
 class RegisterUserAPIView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
     serializer_class = RegisterSerializer
+
+
