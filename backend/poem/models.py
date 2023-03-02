@@ -16,7 +16,10 @@ Consists of the following:
 - Time created: when the poem was submitted to the database.
 """
 class Tag(models.Model):
-    name = models.CharField(max_length=120)
+    title = models.CharField(max_length=120)
+
+    def __str__(self):
+        return self.title
 
 
 class Poem(models.Model):
