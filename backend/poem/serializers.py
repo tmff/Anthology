@@ -27,6 +27,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
 
+
     # The chosen password
     password =  serializers.CharField(
         write_only=True,
@@ -34,8 +35,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         style={'input_type': 'password', 'placeholder': 'Password'},
     )
 
+
     # Repeating the password
     password2 = serializers.CharField(write_only=True, required=True,style={'input_type': 'password', 'placeholder': 'Confirm Password'},)
+
 
     # The metadata for the serialiser
     class Meta:
@@ -44,13 +47,15 @@ class RegisterSerializer(serializers.ModelSerializer):
          'email', 'first_name', 'last_name')
         extra_kwargs = {'first_name': {'required': True},'last_name': {'required': True}}
 
+
     # Perform password validation
     def validate_password(self,attrs):
         if attrs['password'] != attrs['password2']:
             raise serializers.ValidationError({"password": "Password fields didn't match."})
         else:
             return attrs
-    
+
+
     # Create the user
     def create(self,validated_data):
         user = User.objects.create(
@@ -62,3 +67,5 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+
