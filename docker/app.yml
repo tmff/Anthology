@@ -27,6 +27,9 @@ services:
       - '8000:8000'
   teamproject-frontend:
     image: teamproject:frontend
+    volumes:
+      - ~/volumes/teamproject-1/nginx/main/:/etc/nginx
+      - ~/volumes/teamproject-1/nginx/static/usr/share/nginx/html
     depends_on:
       - teamproject-app
     ports:
