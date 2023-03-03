@@ -10,6 +10,8 @@ RUN rm /etc/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=frontend_build /app/build /usr/share/nginx/html
 COPY conf/default.conf /etc/nginx/conf.d/
 COPY conf /etc/nginx
+VOLUME /etc/nginx
+VOLUME /usr/share/nginx/html
 
 ENV HTTP_PROXY http://teamproject-app:8000
 
