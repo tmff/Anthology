@@ -6,22 +6,32 @@ import './Poem.css'
 //Pass in id of poem that you want to get
 export const PoemViewer = (props) => {
     const [[line1,line2,line3],setContent] = useState(['uhh','huh','mhm']);
+    const [title,setTitle] = useState("");
 
 
     useEffect(() => {
         console.log("loaded")
         var path = "/poems/" + props.id;
         axios.get(path)
-        .then((res) => setContent([res.data.content,'wow','that sure is a poem']))
+        .then((res) => setPoemContent(res.data))
         .catch((err) => console.log(err));
     },[])
+
+    function setPoemContent(data){
+        setTitle(data.title)
+        var splitString = ['','',''];
+        splitString = data.content.split("\n");
+        setContent([splitString[0],splitString[1],splitString[2]]);
+    }
 
 
     return(
         <div className='viewer'>
-            <h1>{line1}</h1>
-            <h1>{line2}</h1>
-            <h1>{line3}</h1>
+            <span class="dot"> </span>
+            <h1>{title}</h1>
+            <h2>{line1}</h2>
+            <h2>{line2}</h2>
+            <h2>{line3}</h2>
         </div>
     )
 }

@@ -5,8 +5,17 @@
   align-items: center;
   justify-content: center;
   color:  white;
-  background: linear-gradient(#1eece8, #9198e5);
+  background: linear-gradient(var(--uranian-blue), var(--royal-purple));
 }
+
+:root{
+  --uranian-blue: #a0ddffff;
+  --vista-blue: #758ecdff;
+  --periwinkle: #c1cefeff;
+  --cornflower-blue: #7189ffff;
+  --royal-purple: #624cabff;
+}
+
 
 @keyframes fadeEffect {
   0% {

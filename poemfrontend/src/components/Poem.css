@@ -9,7 +9,18 @@
 
 
 .viewer{
-    padding: 150px;
-    border: 10px dashed var(--uranian-blue);
-    border-radius: 10px;
+    padding: 50px;
+    border: 10px solid var(--uranian-blue);
+    background-color: var(--vista-blue);
+    border-radius: 20px;
 }
+
+.dot {
+    height: 25px;
+    width: 25px;
+    position:relative;
+    top:-20px;
+    background-color: var(--uranian-blue);
+    border-radius: 50%;
+    display: inline-block;
+  }
