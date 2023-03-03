@@ -29,6 +29,7 @@ DEBUG = os.getenv("DJANGO_DEBUG",True)
 ALLOWED_HOSTS = [
     'teamproject-app',
     'localhost',
+    '0.0.0.0',
 ]
 
 
