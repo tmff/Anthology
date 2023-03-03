@@ -13,6 +13,6 @@ COPY conf /etc/nginx
 VOLUME /etc/nginx
 VOLUME /usr/share/nginx/html
 
-ENV HTTP_PROXY http://teamproject-app:8000
+ENV HTTPS_PROXY https://teamproject-app:8000
 
-EXPOSE 80
+EXPOSE 443
