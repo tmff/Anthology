@@ -49,7 +49,7 @@ export const Login = (props) => {
 
     return (
         <div className="auth-form-container">
-            <h2>Login</h2>
+            <h1>Login</h1>
             <form className="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="username"><b>Username</b></label>
                 <input
