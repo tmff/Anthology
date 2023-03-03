@@ -1,0 +1,15 @@
+
+:root{
+    --uranian-blue: #a0ddffff;
+    --vista-blue: #758ecdff;
+    --periwinkle: #c1cefeff;
+    --cornflower-blue: #7189ffff;
+    --royal-purple: #624cabff;
+}
+
+
+.viewer{
+    padding: 150px;
+    border: 10px dashed var(--uranian-blue);
+    border-radius: 10px;
+}
