@@ -10,7 +10,7 @@ from .models import Poem
 class PoemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Poem
-        fields = ('id','title','content','author','time_created')
+        fields = ('id','title','content')
 
 
 class UserSerializer(serializers.ModelSerializer):
