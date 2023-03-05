@@ -17,9 +17,10 @@ from .models import Poem
 class PoemView(viewsets.ModelViewSet):
     serializer_class = PoemSerializer
     queryset = Poem.objects.all()
+    authentication_classes = (TokenAuthentication,)
     def get(self, request, *args, **kwargs):
         poem = Poem.objects.get(id=request.poem.id)
-        serializer = PoemSerializer(poem)
+        serializer = PoemSerializer(poem,context={'request': request})
         return Response(serializer.data)
 
 

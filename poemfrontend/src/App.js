@@ -44,14 +44,9 @@ function App() {
     </div>
     );
   }
-  var token = cookies.get("Token");
-  if(token){
-    console.log("Token " + cookies.get("Token"));
-    axios.defaults.headers.common['Authorization'] = "Token " + cookies.get("Token");
-  }
   return(
     <div className='App'>
-      <PoemViewer id={1} />
+      <Writer />
       <div id='outer-container'>
         <div id='sidebar'>
           <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'}/>

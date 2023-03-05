@@ -9,15 +9,25 @@ export const Writer = (props) => {
     const [line2,setLine2] = useState('');
     const [line3,setLine3] = useState('');
 
+    const cookies = new Cookies();
+    const token = cookies.get("Token");
 
+    const config = {
+        headers:{
+            Authorization: "Token " + token
+        }
+    }
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Umm");
         var content = line1 + "\n" + line2 + "\n" + line3
+
         api.post("/poems/",{
             title:title,
             content:content
-        })
+        },config)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err))
         //Show post
     }
 
