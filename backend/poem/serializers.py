@@ -62,15 +62,16 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ('username', 'password', 'password2',
          'email', 'first_name', 'last_name')
         extra_kwargs = {'first_name': {'required': True},'last_name': {'required': True}}
+    
 
+    # Validate the password
+    def clean(self):
+        cleaned_data = super(RegisterSerializer, self).clean()
+        password = cleaned_data.get("password")
+        password2 = cleaned_data.get("password2")
 
-    # Perform password validation
-    def validate_password(self,attrs):
-        if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({"password": "Password fields didn't match."})
-        else:
-            return attrs
-
+        if (password != password2):
+            raise serializers.ValidationError("Your passwords do not match.")
 
     # Create the user
     def create(self,validated_data):
