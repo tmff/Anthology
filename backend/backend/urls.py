@@ -24,7 +24,7 @@ router.register(r'poems', views.PoemView,'todo')
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('django-admin/admin/', admin.site.urls),
     path('api/',include(router.urls)),
     path('',include('poem.urls')),
     path('api-token-auth', authviews.obtain_auth_token),

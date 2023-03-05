@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../js/Api"
 import React, { useState } from "react";
 import Cookies from 'universal-cookie';
 import '../LogReg.css'
@@ -31,7 +31,7 @@ export const Register = (props) => {
 
     function registerUser(){
         resetMissing();
-        axios.post('/register',{
+        api.post('/register',{
             username: username,
             password: pwd,
             password2: pwd2,
@@ -57,7 +57,7 @@ export const Register = (props) => {
 
     function setLoginToken(){
         //set label to error
-        axios.post('/api-token-auth',{
+        api.post('/api-token-auth',{
             username: username,
             password: pwd
         }).then(res => cookies.set('Token',res.data.token),props.stateChanger(false))

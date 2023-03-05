@@ -24,3 +24,17 @@
     border-radius: 50%;
     display: inline-block;
   }
+
+.label{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.inputf {
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+  }

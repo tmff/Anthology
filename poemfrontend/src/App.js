@@ -7,13 +7,9 @@ import { Register } from './components/Register';
 import { PoemViewer } from './components/PoemViewer';
 import { useState} from 'react';
 import axios from 'axios';
+import api from './js/Api'
 import Cookies from 'universal-cookie';
-
-const api = axios.create({
-  baseURL: 'http://localhost:8000'
-})
-
-
+import { Writer } from './components/Writer';
 
 
 function App() {
@@ -48,14 +44,9 @@ function App() {
     </div>
     );
   }
-  var token = cookies.get("Token");
-  if(token){
-    console.log("Token " + cookies.get("Token"));
-    axios.defaults.headers.common['Authorization'] = "Token " + cookies.get("Token");
-  }
   return(
     <div className='App'>
-      <PoemViewer id={2}/>
+      <Writer />
       <div id='outer-container'>
         <div id='sidebar'>
           <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'}/>
