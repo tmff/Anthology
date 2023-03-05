@@ -31,6 +31,8 @@ services:
       - ~/volumes/teamproject-1/nginx/data:/etc/ssl
     depends_on:
       - teamproject-app
+    environment:
+      API_ENDPOINT: ${API_ENDPOINT}
     ports:
       - '443:443'
       - '80:80'
