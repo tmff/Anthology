@@ -7,14 +7,9 @@ import { Register } from './components/Register';
 import { PoemViewer } from './components/PoemViewer';
 import { useState} from 'react';
 import axios from 'axios';
+import api from './js/Api'
 import Cookies from 'universal-cookie';
 import { Writer } from './components/Writer';
-
-const api = axios.create({
-  baseURL: 'http://localhost:8000'
-})
-
-
 
 
 function App() {
@@ -56,7 +51,7 @@ function App() {
   }
   return(
     <div className='App'>
-      <PoemViewer id={3} />
+      <PoemViewer id={1} />
       <div id='outer-container'>
         <div id='sidebar'>
           <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'}/>

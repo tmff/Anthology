@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from "../js/Api"
 import { useState} from 'react';
 import Cookies from 'universal-cookie';
 import './Poem.css'
@@ -14,7 +14,7 @@ export const Writer = (props) => {
         e.preventDefault();
         console.log("Umm");
         var content = line1 + "\n" + line2 + "\n" + line3
-        axios.post("/poems/",{
+        api.post("/poems/",{
             title:title,
             content:content
         })

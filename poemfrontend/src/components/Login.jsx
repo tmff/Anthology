@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../js/Api"
 import React, { useState } from "react";
 import Cookies from 'universal-cookie';
 import '../LogReg.css'
@@ -28,10 +28,13 @@ export const Login = (props) => {
         }
 
         
-        axios.post('/api-token-auth',{
+        api.post('/api-token-auth',{
             username: username,
             password: pwd
-        }).then(res => cookies.set('Token',res.data.token),props.stateChanger(false))
+        }).then(function (res) {
+            cookies.set('Token',res.data.token);
+            props.stateChanger(false);
+        })
         .catch(err => handleLoginErrors(err.response))
         //.then(res => cookies.set("token",res.response.data))
 

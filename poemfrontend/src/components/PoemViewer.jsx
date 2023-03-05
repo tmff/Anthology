@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from "../js/Api"
 import { useState, useEffect} from 'react';
 import Cookies from 'universal-cookie';
 import './Poem.css'
@@ -12,7 +12,7 @@ export const PoemViewer = (props) => {
     useEffect(() => {
         console.log("loaded")
         var path = "/poems/" + props.id;
-        axios.get(path)
+        api.get(path)
         .then((res) => setPoemContent(res.data))
         .catch((err) => console.log(err));
     },[])
