@@ -1,7 +1,13 @@
 #!/bin/sh
 FROM node:16 AS frontend_build
+ARG api_endpoint
 WORKDIR /app
 COPY . /app
+
+# Copy API endpoint to workspace
+RUN echo API_ENDPOINT=$api_endpoint > .env
+COPY .env /app
+
 RUN npm install
 RUN npm run build
 

@@ -9,7 +9,7 @@ echo "Building the backend image..."
 docker build --no-cache -t teamproject:backend ../backend/ 
 
 echo "Building the frontend image..."
-docker build --no-cache -t teamproject:frontend ../poemfrontend
+docker build --no-cache -t teamproject:frontend --build-arg api_endpoint=http://localhost/api ../poemfrontend
 
 echo "Running the composer..."
 docker compose -f ../docker/app.yml up -d
