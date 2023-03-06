@@ -11,6 +11,7 @@ import axios from 'axios';
 import api from './js/Api'
 import Cookies from 'universal-cookie';
 import { Writer } from './components/Writer';
+import { UserProfile } from './components/UserProfile';
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
     <div className='App'>
       <Writer />
       {/* <EditProfile/> */}
+      {/* <UserProfile /> */}
       <div id='outer-container'>
         <div id='sidebar'>
           <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'}/>
