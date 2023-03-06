@@ -6,7 +6,6 @@ COPY . /app
 
 # Use ENV keywords before compiling
 ENV API_ENDPOINT $api_endpoint
-ENV HTTPS_PROXY https://teamproject-app:8000
 
 RUN npm install
 RUN npm run build
@@ -17,5 +16,7 @@ COPY --from=frontend_build /app/build /usr/share/nginx/html
 COPY conf /etc/nginx
 VOLUME /etc/nginx
 VOLUME /usr/share/nginx/html
+
+ENV HTTPS_PROXY https://teamproject-app:8000
 
 EXPOSE 443
