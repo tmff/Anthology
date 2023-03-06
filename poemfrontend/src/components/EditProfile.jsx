@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './editProfile.css'
+import '../css/editProfile.css'
 import api from "../js/Api"
 import quill from "./profileImgs/IMG_0627.jpg"
 import insta from "./profileImgs/IMG_0629.PNG"

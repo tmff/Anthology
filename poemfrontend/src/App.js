@@ -1,7 +1,7 @@
 //import logo from './logo.svg';
 import React from 'react';
-import './App.css';
-import Sidebar from './Sidebar';
+import './css/App.css';
+import Sidebar from './components/Sidebar';
 import { Login } from './components/Login';
 import { Register } from './components/Register';
 import { PoemViewer } from './components/PoemViewer';

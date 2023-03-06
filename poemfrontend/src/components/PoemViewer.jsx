@@ -1,7 +1,7 @@
 import api from "../js/Api"
 import { useState, useEffect} from 'react';
 import Cookies from 'universal-cookie';
-import './Poem.css'
+import '../css/Poem.css'
 
 //Pass in id of poem that you want to get
 export const PoemViewer = (props) => {

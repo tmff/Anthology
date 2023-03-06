@@ -1,7 +1,7 @@
 import api from "../js/Api"
 import React, { useState } from "react";
 import Cookies from 'universal-cookie';
-import '../LogReg.css'
+import '../css/LogReg.css'
 
 export const Login = (props) => {
     const [username, setUsername] = useState('');
