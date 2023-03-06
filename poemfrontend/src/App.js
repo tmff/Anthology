@@ -5,6 +5,7 @@ import Sidebar from './Sidebar';
 import { Login } from './components/Login';
 import { Register } from './components/Register';
 import { PoemViewer } from './components/PoemViewer';
+import { EditProfile } from './components/EditProfile';
 import { useState} from 'react';
 import axios from 'axios';
 import api from './js/Api'
@@ -47,6 +48,7 @@ function App() {
   return(
     <div className='App'>
       <Writer />
+      {/* <EditProfile/> */}
       <div id='outer-container'>
         <div id='sidebar'>
           <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'}/>
