@@ -2,14 +2,13 @@
     text-align: center;
 }
 
-
 .username-title {
     position: absolute;
     top: 0%;
-    align-self: center;
     text-align: center;
+    justify-content: center;
 }
-
+/*
 .current-user-menu {
     position: absolute;
     top: 0%;
@@ -17,6 +16,9 @@
 }
 
 .current-user-profile {
+    position: absolute;
+    top: 0%;
+    right: 0%;
     padding-top: 10px;
     padding-right: 10px;
     width: 20%;
@@ -24,12 +26,15 @@
 }
 
 .dropdown {
-    position: relative;
+    position: absolute;
+    top: 20%;
+    right: 0%;
+    padding: 10px;
     display: inline-block;
 }
 
 .dropbtn {
-    background-color: var(--uranian-blue);
+    background-color: var(--royal-purple);
     color: #fff;
     padding: 16px;
     font-size: 16px;
@@ -39,7 +44,7 @@
 
 .dropbtn:hover, .dropbtn:focus {
     background-color: #fff;
-    color: var(--uranian-blue);
+    color: var(--royal-purple);
 
 }
 
@@ -66,3 +71,4 @@
 .show {
     display: block;
 }
+*/
