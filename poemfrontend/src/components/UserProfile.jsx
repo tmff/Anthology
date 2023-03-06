@@ -11,9 +11,7 @@ export const UserProfile = (props) => {
 
 
     function dropDown() {
-        <DropDown>
-            
-        </DropDown>
+        return 0;
     }
 
     return (
