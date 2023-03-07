@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics
 from .serializers import PoemSerializer,UserSerializer,RegisterSerializer
-from .models import Poem
+from .models import Poem, Profile
 # Create your views here.
 
 
@@ -26,6 +26,8 @@ class PoemView(viewsets.ModelViewSet):
 
 class PoemFriendListView(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
+    queryset = Profile.objects.all()
+    serializer_class = PoemSerializer
 
     def get(self, request, *args, **kwargs):
         
