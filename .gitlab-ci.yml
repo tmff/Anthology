@@ -84,7 +84,7 @@ build-docker:
   script:
   - echo "Building the docker image..."
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  - docker build --pull -t ${CI_FULL_IMG}:frontend --platform linux/arm64 ./poemfrontend/
+  - docker build --pull -t ${CI_FULL_IMG}:frontend --build-arg api_endpoint=$API_ENDPOINT --platform linux/arm64 ./poemfrontend/
   - docker push ${CI_FULL_IMG}:frontend
   - docker build --pull -t ${CI_FULL_IMG}:backend --platform linux/arm64 ./backend/
   - docker push ${CI_FULL_IMG}:backend

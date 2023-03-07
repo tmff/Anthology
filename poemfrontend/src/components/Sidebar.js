@@ -1,10 +1,9 @@
 import React from 'react';
-
-//import { slide as Menu } from 'react-burger-menu';
-import './Sidebar.css';
+import { slide as Menu } from 'react-burger-menu';
+import '../css/Sidebar.css';
 
 export default props => {
-    /*
+    
     return (
         <Menu>
             <a className='menu-item' href='/'>
@@ -24,7 +23,6 @@ export default props => {
             </a>
         </Menu>
     );
-    */
     
 };
 

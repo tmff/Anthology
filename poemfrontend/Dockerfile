@@ -1,7 +1,12 @@
 #!/bin/sh
 FROM node:16 AS frontend_build
+ARG api_endpoint
 WORKDIR /app
 COPY . /app
+
+# Use ENV keywords before compiling
+ENV API_ENDPOINT $api_endpoint
+
 RUN npm install
 RUN npm run build
 
