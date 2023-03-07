@@ -24,6 +24,23 @@ class PoemView(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+class PoemFriendListView(viewsets.ModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+
+    def get(self, request, *args, **kwargs):
+        
+        # Get the profile of the user and their friends
+        profile = Profile.objects.get(user=request.user)
+        friends = profile.friends
+
+        # Get all poems ordered by created date
+        poems = Poem.objects.filter(author__in=friends).order_by('time_created')[0:20].get()
+        
+        # Serialize all of the poems
+        serialized = [PoemSerializer(poem, context={'request': request}).data for poem in poems]
+        return Response(serialized)
+
+
 class UserDetailAPI(APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
