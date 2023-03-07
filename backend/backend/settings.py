@@ -30,8 +30,12 @@ ALLOWED_HOSTS = [
     'teamproject-app',
     'localhost',
     '0.0.0.0',
+    'team16-22.bham.team',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+        'https://team16-22.bham.team'
+]
 
 # Application definition
 
