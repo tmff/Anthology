@@ -48,14 +48,9 @@ function App() {
   }
   return(
     <div className='App'>
-<<<<<<< HEAD
-      {/* <Writer /> */}
-      <EditProfile/>
-=======
       <Writer />
       {/* <EditProfile/> */}
-      {/* <UserProfile /> */}
->>>>>>> e91e705a2bfe614201f3a181b32c123ab8c61228
+      {/* <UserProfile> */}
       <div id='outer-container'>
         <div id='sidebar'>
           <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'}/>
