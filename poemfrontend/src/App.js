@@ -47,8 +47,8 @@ function App() {
   }
   return(
     <div className='App'>
-      <Writer />
-      {/* <EditProfile/> */}
+      {/* <Writer /> */}
+      <EditProfile/>
       <div id='outer-container'>
         <div id='sidebar'>
           <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'}/>

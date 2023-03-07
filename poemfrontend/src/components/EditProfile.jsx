@@ -15,7 +15,7 @@ import person from "./profileImgs/IMG_0862.PNG"
 
 export const EditProfile = (props) => {
 
-    const [name, setName] = useState(["James Watson"]);
+    const [name, setName] = useState("James Watson");
     const [username, setUsername] = useState("@jameswatson");
     const [blurb, setBlurb] = useState("The next Michael Rosen");
 
@@ -57,15 +57,18 @@ export const EditProfile = (props) => {
     return (
         <div className="profileContainer">
 
-            {/* <div className="profilePicture">
-                <img src={person} alt="Profile picture"></img>
+            <div className="profilePicture">
+                {/* <img src={person} alt="Profile picture"></img> */}
+                <img><i class = "fa fa-user-circle-o"></i></img>
                 <button>
-                    <img src={quill} alt="Edit Profile Picture"> </img>
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/font-awesome.min.css"/>
+                    <i class="fa-solid fa-feather-pointed"></i>
+                    {/* <img src={quill} alt="Edit Profile Picture"> </img> */}
                     onClick = {editProfilePicture}
                 </button>
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
                <button class="btn"><i class="fa fa-home"></i></button>
-            </div>  */}
+            </div> 
             <div className="names">
                 <h4> {name} </h4>
                 <h4>{username}</h4>
