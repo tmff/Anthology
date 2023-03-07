@@ -34,7 +34,7 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'team16-22.bham.team'
+        'https://team16-22.bham.team'
 ]
 
 # Application definition
