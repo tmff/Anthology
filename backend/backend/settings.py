@@ -33,6 +33,9 @@ ALLOWED_HOSTS = [
     'team16-22.bham.team',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'team16-22.bham.team'
+]
 
 # Application definition
 
