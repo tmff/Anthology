@@ -119,6 +119,8 @@ deploy-git:
   image: alpine:latest
   stage: deploy
   when: on_success
+  only:
+    - react
   before_script: 
     - chmod og= $RSA
     - apk update && apk add openssh-client
