@@ -14,6 +14,7 @@ class TagAdmin(admin.ModelAdmin):
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
+    filter_horizontal = ('friends',)
 
 class UserAdmin(BaseUserAdmin):
     inlines = (ProfileInline,)
