@@ -10,11 +10,16 @@ export const PoemViewer = (props) => {
 
 
     useEffect(() => {
-        console.log("loaded")
-        var path = "/poems/" + props.id;
-        api.get(path)
-        .then((res) => setPoemContent(res.data))
-        .catch((err) => console.log(err));
+        if(!props.id){
+            setPoemContent(props.content);
+        }
+        else{
+            var path = "/poems/" + props.id;
+            api.get(path)
+            .then((res) => setPoemContent(res.data))
+            .catch((err) => console.log(err));
+            console.log("loaded")
+        }
     },[])
 
     function setPoemContent(data){
