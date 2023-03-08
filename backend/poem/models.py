@@ -7,6 +7,15 @@ from django.dispatch import receiver
 import datetime
 
 
+##access with freds_department = u.Author.department for example
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    friends = models.ManyToManyField('self')
+
+    def __str__(self):
+        return self.user.username
+    
+
 class Tag(models.Model):
     title = models.CharField(max_length=120)
 
@@ -81,14 +90,6 @@ class Comment(models.Model):
 
 class Reply(Comment):
     parent_comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='parent_comment_to_reply')
-
-##access with freds_department = u.Author.department for example
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    friends = models.ManyToManyField('self')
-
-    def __str__(self):
-        return self.user.username
 
 
 

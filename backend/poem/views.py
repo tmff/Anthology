@@ -8,7 +8,7 @@ from rest_framework import viewsets
 from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics
-from .serializers import PoemSerializer,UserSerializer,RegisterSerializer
+from .serializers import PoemSerializer,UserSerializer,RegisterSerializer, FriendsSerializer
 from .models import Poem, Profile
 # Create your views here.
 
@@ -24,23 +24,32 @@ class PoemView(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-class PoemFriendListView(viewsets.ModelViewSet):
+class FriendView(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     queryset = Profile.objects.all()
-    serializer_class = PoemSerializer
+    serializer_class = FriendsSerializer
 
-    def get(self, request, *args, **kwargs):
+
+class PoemFriendListView(viewsets.ModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = PoemSerializer
+    model = Poem
+
+    def get_queryset(self, *args, **kwargs):
         
         # Get the profile of the user and their friends
-        profile = Profile.objects.get(user=request.user)
-        friends = profile.friends
+        profile = Profile.objects.get(user=self.request.user.id)
+        friends = profile.friends.all()
+        friends_users = [friend.user for friend in friends]
 
         # Get all poems ordered by created date
-        poems = Poem.objects.filter(author__in=friends).order_by('time_created')[0:20].get()
+        try:
+            queryset = Poem.objects.filter(author__in=friends_users).order_by('time_created')[0:20]
+        except Poem.DoesNotExist:
+            return Poem.objects.none()
         
         # Serialize all of the poems
-        serialized = [PoemSerializer(poem, context={'request': request}).data for poem in poems]
-        return Response(serialized)
+        return queryset
 
 
 class UserDetailAPI(APIView):
