@@ -25,6 +25,16 @@ export async function loader() {
   return redirect("/friends");
 }
 
+export async function standardLoader() {
+
+  const cookies = new Cookies();
+
+  // If the user isn't logged in, redirect to the login page
+  if (cookies.get("Token") == null) return redirect("/login");
+
+  return null;
+}
+
 
 function App() {
 

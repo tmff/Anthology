@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './css/index.css';
-import App, { loader as appLoader } from './App';
+import App, { loader as appLoader, standardLoader } from './App';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Title } from './components/Greeting';
@@ -29,19 +29,23 @@ export const router = createBrowserRouter([
   },
   {
     path: "friends",
-    element: <Base component={ <Friends /> }></Base>
+    element: <Base component={ <Friends /> }></Base>,
+    loader: standardLoader,
   },
   {
     path: "write",
-    element: <Base component={ <Writer /> }></Base>
+    element: <Base component={ <Writer /> }></Base>,
+    loader: standardLoader,
   },
   {
     path: "search",
-    element: <Base component={ <Search /> }></Base>
+    element: <Base component={ <Search /> }></Base>,
+    loader: standardLoader,
   },
   {
     path: "edit-profile",
-    element: <Base component={ <EditProfile /> }></Base>
+    element: <Base component={ <EditProfile /> }></Base>,
+    loader: standardLoader,
   }
 ])
 
