@@ -1,7 +1,7 @@
-import api from "../js/Api"
+import api from "../../js/Api"
 import { useState} from 'react';
 import Cookies from 'universal-cookie';
-import '../css/Poem.css'
+import '../../css/Poem.css'
 
 export const Writer = (props) => {
     const [title,setTitle] = useState('');
