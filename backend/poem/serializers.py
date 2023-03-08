@@ -7,11 +7,18 @@ from django.contrib.auth.password_validation import validate_password
 from .models import Poem
 from rest_framework.authtoken.models import Token
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id','first_name','last_name','username']
 
 class PoemSerializer(serializers.ModelSerializer):
+    
+    author = UserSerializer(read_only=True)
+    
     class Meta:
         model = Poem
-        fields = ('id','title','content')
+        fields = ('id','title','content','author')
 
     def create(self,validated_data):
         user = None
@@ -29,10 +36,6 @@ class PoemSerializer(serializers.ModelSerializer):
     
 
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id','first_name','last_name','username']
     
 
 class RegisterSerializer(serializers.ModelSerializer):
