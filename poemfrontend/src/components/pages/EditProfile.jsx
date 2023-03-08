@@ -1,15 +1,6 @@
 import React, { useState } from "react";
-<<<<<<< HEAD:poemfrontend/src/components/EditProfile.jsx
-import '../css/editProfile.css'
-import api from "../js/Api"
-//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import quill from "./profileImgs/IMG_0627.jpg"
-=======
 import '../../css/editProfile.css'
 import api from "../../js/Api"
-
-
->>>>>>> 7c29d265a9252009282ce76c667e6ac75053d2a2:poemfrontend/src/components/pages/EditProfile.jsx
 
 export const EditProfile = (props) => {
 
