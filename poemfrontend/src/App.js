@@ -48,8 +48,8 @@ function App() {
   }
   return(
     <div className='App'>
-      <Writer />
-      {/* <EditProfile/> */}
+      {/* <Writer /> */}
+      <EditProfile/>
       {/* <UserProfile> */}
       <div id='outer-container'>
         <div id='sidebar'>
@@ -57,7 +57,6 @@ function App() {
         </div>
       </div>
     </div>
-
   );
  
 }
