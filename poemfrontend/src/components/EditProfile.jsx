@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import '../css/editProfile.css'
 import api from "../js/Api"
 import quill from "./profileImgs/IMG_0627.jpg"
-import insta from "./profileImgs/IMG_0629.PNG"
-import facebook from "./profileImgs/IMG_0630.PNG"
-import twitter from "./profileImgs/IMG_0633.PNG"
-import sun from "./profileImgs/IMG_0849.PNG"
-import moon from "./profileImgs/IMG_0852.PNG"
-import speaker from "./profileImgs/IMG_0853.PNG"
-import cog from "./profileImgs/IMG_0861.JPG"
-import person from "./profileImgs/IMG_0862.PNG"
+// import insta from "./profileImgs/IMG_0629.PNG"
+// import facebook from "./profileImgs/IMG_0630.PNG"
+// import twitter from "./profileImgs/IMG_0633.PNG"
+// import sun from "./profileImgs/IMG_0849.PNG"
+// import moon from "./profileImgs/IMG_0852.PNG"
+// import speaker from "./profileImgs/IMG_0853.PNG"
+// import cog from "./profileImgs/IMG_0861.JPG"
+// import person from "./profileImgs/IMG_0862.PNG"
 
 
 
 export const EditProfile = (props) => {
 
-    const [name, setName] = useState(["James Watson"]);
+    const [name, setName] = useState("James Watson");
     const [username, setUsername] = useState("@jameswatson");
     const [blurb, setBlurb] = useState("The next Michael Rosen");
 
@@ -57,15 +57,20 @@ export const EditProfile = (props) => {
     return (
         <div className="profileContainer">
 
-            {/* <div className="profilePicture">
-                <img src={person} alt="Profile picture"></img>
+            <div className="profilePicture">
+                {/* <img src={person} alt="Profile picture"></img> */}
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+                {/* <button class="btn"><i class="fa fa-user-circle-o"></i></button> */}
+                <i class="fa fa-user-circle-o"></i>
                 <button>
-                    <img src={quill} alt="Edit Profile Picture"> </img>
-                    onClick = {editProfilePicture}
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/font-awesome.min.css"/>
+                    <i class="fa fa-feather-pointed"></i>
+                    {/* <img src={quill} alt="Edit Profile Picture"> </img> */}
+                    {/* onClick = {editProfilePicture} */}
                 </button>
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-               <button class="btn"><i class="fa fa-home"></i></button>
-            </div>  */}
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+               {/* <button class="btn"><i class="fa fa-home"></i></button> */}
+            </div> 
             <div className="names">
                 <h4> {name} </h4>
                 <h4>{username}</h4>
@@ -101,7 +106,6 @@ export const EditProfile = (props) => {
 
             <div className="settings">
                 <h2> Settings
-                    {/* <img src={cog} alt="Settings"></img> */}
                     <i class="fa fa-cog"></i>
                 </h2>
                 <div>
@@ -114,20 +118,17 @@ export const EditProfile = (props) => {
                 </div>
 
                 <div>
-                    {/* <img src={sun} alt="Sun"></img> */}
                     <i class="fa fa-sun-o"></i>
                     <label class="switch">
                         <input type="checkbox" />
                         <span class="slider round"></span>
                     </label>
-                    {/* <img src={moon} alt="Moon"></img> */}
                     <i class="fa fa-moon-o"></i>
                 </div>
 
 
                 <div>
                     <label for="autoplay"> Auto-play poems</label>
-                    {/* <img src={speaker} alt="speaker"> </img> */}
                     <i class="fa fa-volume-up"></i>
                     <label name="autoplay" id="autoplay" class="switch">
                         <input type="checkbox" />

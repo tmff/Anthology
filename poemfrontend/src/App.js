@@ -50,7 +50,7 @@ function App() {
     <div className='App'>
       <Writer />
       {/* <EditProfile/> */}
-      {/* <UserProfile /> */}
+      {/* <UserProfile> */}
       <div id='outer-container'>
         <div id='sidebar'>
           <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'}/>
