@@ -12,6 +12,7 @@ import { Friends } from './components/pages/Friends';
 import { Writer } from './components/pages/Writer';
 import { Search } from './components/pages/Search';
 import { EditProfile } from './components/pages/EditProfile';
+import NotFoundPage  from './components/pages/NotFound';
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
     path: "edit-profile",
     element: <Base component={ <EditProfile /> }></Base>,
     loader: standardLoader,
+  },
+  {
+    path: "*",
+    element: <Base component= { <NotFoundPage />}></Base>,
   }
 ])
 
