@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import api from "../js/Api";
-import '../css/UserProfile.css';
+import api from "../../js/Api";
+import '../../css/UserProfile.css';
 
 export const UserProfile = (props) => {
     const [username, setUsername] = useState('');
