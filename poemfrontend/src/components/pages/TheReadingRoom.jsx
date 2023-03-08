@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentDots, faHeart, faPaperPlane, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 
-import '../css/ReadingRoom.css';
+import '../../css/ReadingRoom.css';
 
 
 export const TheReadingRoom = (props) => {
