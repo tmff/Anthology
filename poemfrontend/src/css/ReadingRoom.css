@@ -1,0 +1,149 @@
+h1,
+h4 {
+  text-align: center;
+}
+
+h3 {
+  text-align: left;
+}
+.highlight {
+  color:  #055c6b;
+  font-weight: bold;
+}
+
+/* Styling for poem tags */
+.poem-tags {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* Styling for each poem tag */
+.poem-tag {
+  display: inline-block;
+  margin-right: 15px;
+  margin-bottom: 10px;
+}
+
+/* Styling for poem tag links */
+.poem-tag-link {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: rgb(235, 232, 232);
+  color: black;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 500;
+}
+  
+  /* Styling for poem containers */
+  .poem-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    scroll-behavior: smooth;
+    margin-bottom: 0px;
+    position: relative;
+  }
+
+  /* Hide scrollbar */
+  .poem-container::-webkit-scrollbar {
+   width: 0;
+   height: 0;
+  }
+  
+  /* Styling for poem rows */
+  .poem-row {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    scroll-behavior: smooth;
+  }
+  
+  /* Styling for individual poems */
+  .poem {
+    margin-right: 20px;
+    width: 350px;
+  }
+  
+  /* Styling for poem blocks */
+  .colored-block {
+    background-color: #055c6b;
+    padding: 20px;
+    margin-bottom: 0px;
+    position: relative;
+  }
+ 
+  .light-block {
+    background-color: #fff;
+    padding: 0px;
+    margin-bottom: 0px;
+    height: 75px;
+  }
+
+  .bookmark-icon {
+    position: absolute;
+    top: 20px;
+    bottom:10px;
+    right: 20px;
+    font-size: 20px;
+  }
+  
+  /* Styling for poem titles */
+  .poem h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  /* Styling for poem authors */
+  .poem .username {
+    display: flex;
+    margin-top: 4px;
+    margin-bottom: 0px;
+    color: black;
+    text-align: left;
+    margin-left: 5px;
+  }
+  
+  /* Styling for poem buttons */
+  .buttons {
+    display: flex;
+    margin: 0 10px;
+    align-items: center;
+    color: black;
+  }
+  /* Styling for poem icons */
+  .poem .button-icon {
+    margin-right: 10px;
+    font-size: 1.2em;
+    color: black;
+  }
+  /* Styling for poem likes, comments, shares */
+  .poem .likes, .poem .comments, .poem .shares {
+    display: flex;
+    margin-left: 10px;
+    color: black;
+    width: 100px;
+    justify-content: top;
+    align-items: center;
+  }
+  .profile-info {
+    display: flex;
+    align-items: center;
+
+  }
+  .profile-icon {
+    color: black;
+    font-size: 2rem;
+    margin-right: 5px;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  

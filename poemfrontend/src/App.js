@@ -12,6 +12,7 @@ import api from './js/Api'
 import Cookies from 'universal-cookie';
 import { Writer } from './components/Writer';
 import { UserProfile } from './components/UserProfile';
+import { TheReadingRoom } from './components/TheReadingRoom';
 
 
 function App() {
@@ -48,7 +49,8 @@ function App() {
   }
   return(
     <div className='App'>
-      <Writer />
+      <TheReadingRoom/>
+      { /*<Writer /> */}
       {/* <EditProfile/> */}
       {/* <UserProfile /> */}
       <div id='outer-container'>
