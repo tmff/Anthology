@@ -1,15 +1,6 @@
 import React, { useState } from "react";
-import '../css/editProfile.css'
-import api from "../js/Api"
-import quill from "./profileImgs/IMG_0627.jpg"
-// import insta from "./profileImgs/IMG_0629.PNG"
-// import facebook from "./profileImgs/IMG_0630.PNG"
-// import twitter from "./profileImgs/IMG_0633.PNG"
-// import sun from "./profileImgs/IMG_0849.PNG"
-// import moon from "./profileImgs/IMG_0852.PNG"
-// import speaker from "./profileImgs/IMG_0853.PNG"
-// import cog from "./profileImgs/IMG_0861.JPG"
-// import person from "./profileImgs/IMG_0862.PNG"
+import '../../css/editProfile.css'
+import api from "../../js/Api"
 
 
 
