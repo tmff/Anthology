@@ -12,7 +12,7 @@ import api from './js/Api'
 import Cookies from 'universal-cookie';
 import { Writer } from './components/pages/Writer';
 import { UserProfile } from './components/pages/UserProfile';
-import { TheReadingRoom } from './components/TheReadingRoom';
+import { TheReadingRoom } from './components/pages/TheReadingRoom';
 import { redirect } from 'react-router-dom';
 
 export async function loader() {
