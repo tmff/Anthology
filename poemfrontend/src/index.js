@@ -11,6 +11,7 @@ import { Register } from './components/pages/Register';
 import { Friends } from './components/pages/Friends';
 import { Writer } from './components/pages/Writer';
 import { Search } from './components/pages/Search';
+import { EditProfile } from './components/pages/EditProfile';
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
   {
     path: "search",
     element: <Base component={ <Search /> }></Base>
+  },
+  {
+    path: "edit-profile",
+    element: <Base component={ <EditProfile /> }></Base>
   }
 ])
 

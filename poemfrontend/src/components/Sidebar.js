@@ -13,6 +13,7 @@ export default props => {
             <Link to={`/search`} className='menu-item'>Search</Link>
             <Link to={`/profile`} className='menu-item'>Profile</Link>
             <Link to={`/write`} className='menu-item'>Write</Link>
+            <Link to={`/edit-profile`} className='menu-item'>Edit Profile</Link>
         </Menu>
     );
     
