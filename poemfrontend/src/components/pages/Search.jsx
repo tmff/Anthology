@@ -2,7 +2,7 @@ import React, { useState } from "react";
   
 
 
-const Search = (props) => {
+export const Search = (props) => {
   const [searchItem, setSearchItem] = useState('')
   const [searchErrorText, setSearchErrorText] = useState('')
 

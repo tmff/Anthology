@@ -1,13 +1,58 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './css/index.css';
-import App from './App';
+import App, { loader as appLoader, standardLoader } from './App';
 import reportWebVitals from './reportWebVitals';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Title } from './components/Greeting';
+import { Base } from './components/Base';
+import { Login } from './components/pages/Login';
+import { Register } from './components/pages/Register';
+import { Friends } from './components/pages/Friends';
+import { Writer } from './components/pages/Writer';
+import { Search } from './components/pages/Search';
+import { EditProfile } from './components/pages/EditProfile';
+
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    loader: appLoader,
+  },
+  {
+    path: "login",
+    element: <Title component={ <Login /> }></Title> 
+  },
+  {
+    path: "register",
+    element: <Title component={ <Register /> }></Title>
+  },
+  {
+    path: "friends",
+    element: <Base component={ <Friends /> }></Base>,
+    loader: standardLoader,
+  },
+  {
+    path: "write",
+    element: <Base component={ <Writer /> }></Base>,
+    loader: standardLoader,
+  },
+  {
+    path: "search",
+    element: <Base component={ <Search /> }></Base>,
+    loader: standardLoader,
+  },
+  {
+    path: "edit-profile",
+    element: <Base component={ <EditProfile /> }></Base>,
+    loader: standardLoader,
+  }
+])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={ router } />
   </React.StrictMode>
 );
 

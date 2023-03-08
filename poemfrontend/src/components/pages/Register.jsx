@@ -1,7 +1,8 @@
-import api from "../js/Api"
+import api from "../../js/Api"
 import React, { useState } from "react";
 import Cookies from 'universal-cookie';
-import '../css/LogReg.css'
+import { Link } from "react-router-dom";
+import '../../css/LogReg.css'
 
 
 export const Register = (props) => {
@@ -147,11 +148,7 @@ export const Register = (props) => {
                 <button type="submit" onClick={registerUser}>Register Account</button>
                 <h3>{submitResult}</h3>
             </form>
-            <button 
-                className="link-btn"
-                onClick={() => props.onFormSwitch('login')}>
-                    Already have an account? Login here!
-            </button>
+            <Link to={`/login`} className="link-btn">Already have an account? Login here!</Link>
         </div>
     )
 

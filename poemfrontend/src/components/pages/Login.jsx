@@ -1,12 +1,14 @@
-import api from "../js/Api"
+import api from "../../js/Api"
 import React, { useState } from "react";
 import Cookies from 'universal-cookie';
-import '../css/LogReg.css'
+import { Link, useNavigate } from "react-router-dom";
+import '../../css/LogReg.css'
 
 export const Login = (props) => {
     const [username, setUsername] = useState('');
     const [pwd, setPwd] = useState('');
     const [errText,setErrText] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -32,8 +34,13 @@ export const Login = (props) => {
             username: username,
             password: pwd
         }).then(function (res) {
+
+            // Sets the cookie and redirects to the friends page
             cookies.set('Token',res.data.token);
-            props.stateChanger(false);
+            navigate("/friends");
+
+            // props.stateChanger(false);
+
         })
         .catch(err => handleLoginErrors(err.response))
         //.then(res => cookies.set("token",res.response.data))
@@ -41,6 +48,7 @@ export const Login = (props) => {
     }
 
     function handleLoginErrors(response){
+
         if(response.status === 400){
             setErrText(response.data.non_field_errors);
         }
@@ -76,11 +84,7 @@ export const Login = (props) => {
                 <h4 style = {errorStyle}>{errText}</h4>
                 <button id="submit" type="submit" onClick={setLoginToken}>Log In</button>
             </form>
-            <button
-                className="link-btn"
-                onClick={() => props.onFormSwitch('register')}>
-                    Don't have an account? Register here!
-            </button>         
+            <Link to={`/register`} className="link-btn">Don't have an account? Register here!</Link>  
         </div>
 
     )
