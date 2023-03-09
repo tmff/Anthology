@@ -31,7 +31,7 @@ export const router = createBrowserRouter([
   {
     path: "friends",
     element: <Base component={ <Friends /> }></Base>,
-    loader: standardLoader,
+    //loader: standardLoader,
   },
   {
     path: "write",

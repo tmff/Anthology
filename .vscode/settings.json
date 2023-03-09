@@ -1,5 +1,5 @@
 {
     "python.autoComplete.extraPaths": [],
-    "python.linting.pycodestyleEnabled": true,
+    "python.linting.pep8Enabled": true,
     "python.analysis.extraPaths": []
 }
