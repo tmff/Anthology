@@ -10,7 +10,7 @@ const fetchData = (setPoems, poems) => {
         .get("/get-friends-poems")
         .then((res) => {
             console.log(res);
-            setItems([/*...items, ...res.data*/]);
+            setPoems([/*...items, ...res.data*/]);
             page += 1;
         });
 };
@@ -44,7 +44,7 @@ export const Friends = (props) => {
             //    <h3 className='pulldown-msg'>&#8595; Pull down to refresh!</h3>
             //}
         >
-            {data.map((item,index) => {
+            {poems.map((item,index) => {
                 return <div>This is div #{index+1}</div>
             })}
         </InfiniteScroll>
