@@ -46,7 +46,7 @@ export const router = createBrowserRouter([
   {
     path: "edit-profile",
     element: <Base component={ <EditProfile /> }></Base>,
-    loader: standardLoader,
+    // loader: standardLoader,
   },
   {
     path: "*",
