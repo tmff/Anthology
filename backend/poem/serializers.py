@@ -7,10 +7,6 @@ from django.contrib.auth.password_validation import validate_password
 from .models import Poem, Profile
 from rest_framework.authtoken.models import Token
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id','first_name','last_name','username']
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -107,4 +103,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+
+class FriendsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['friends']
 

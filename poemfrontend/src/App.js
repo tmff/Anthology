@@ -2,39 +2,8 @@
 import React from 'react';
 import './css/App.css';
 import Sidebar from './components/Sidebar';
-import { Login } from './components/pages/Login'
-import { Register } from './components/pages/Register';
-import { PoemViewer } from './components/PoemViewer';
-import { EditProfile } from './components/pages/EditProfile';
-import { useState} from 'react';
-import axios from 'axios';
 import api from './js/Api'
-import Cookies from 'universal-cookie';
 import { Writer } from './components/pages/Writer';
-import { UserProfile } from './components/pages/UserProfile';
-import { TheReadingRoom } from './components/pages/TheReadingRoom';
-import { redirect } from 'react-router-dom';
-
-export async function loader() {
-
-  const cookies = new Cookies();
-
-  // If the user isn't logged in, redirect to the login page
-  if (cookies.get("Token") == null) return redirect("/login");
-
-  // Redirect to home page
-  return redirect("/friends");
-}
-
-export async function standardLoader() {
-
-  const cookies = new Cookies();
-
-  // If the user isn't logged in, redirect to the login page
-  if (cookies.get("Token") == null) return redirect("/login");
-
-  return null;
-}
 
 
 function App() {

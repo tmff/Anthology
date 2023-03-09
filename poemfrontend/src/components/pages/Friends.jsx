@@ -1,52 +1,64 @@
 import React, { useEffect, useState } from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 import '../../css/Friends.css';
-
+import { PoemViewer } from '../PoemViewer';
 import api from '../../js/Api.js';
+import AnthNavbar from '../Navbar';
 
-let page = 1;
-const fetchData = (setPoems, poems) => {
-    api
-        .get("/get-friends-poems")
-        .then((res) => {
-            console.log(res);
-            setPoems([/*...items, ...res.data*/]);
-            page += 1;
-        });
-};
 
 const refresh = (props) => {};
 
 export const Friends = (props) => {
-    const [poems, setPoems] = useState([])
+    const [poems, setPoems] = useState(Array.from({ length: 20 }))
+    const [hasMore, setHasMore] = useState(true)
+    
+    const fetchData = () => {
+        api
+            .get("/get-friends-poems")
+            .then((res) => {
+                console.log(res);
+                setPoems(res.data);
+            });
+    };
 
-    useEffect(() => {
-        fetchData(setPoems, poems);
+    useEffect(() =>{
+        fetchData()
     },[])
 
-    return (
-        <InfiniteScroll
-            className='friends'
-            dataLength={poems.length}
-            next={fetchData}
-            hasMore={true}
-            loader={<h4 className='load-msg'>Loading...</h4>}
-            endMessage= {
-                <p className='end-msg'>
-                    <b>You have reached the end!</b>
-                </p>
-            }
-            // TODO - refresh seems to be breaking things.
-            // refreshFunction={this.refresh}
-            // pullDownToRefresh
-            // pullDownToRefreshThreshold={50}
-            // pullDownToRefreshContent={
-            //    <h3 className='pulldown-msg'>&#8595; Pull down to refresh!</h3>
-            //}
-        >
-            {poems.map((item,index) => {
-                return <div>This is div #{index+1}</div>
-            })}
-        </InfiniteScroll>
-    )
+    useEffect(() => {
+        console.log(poems[0])
+    },[poems])
+
+    var obj;
+    if(!poems.includes(undefined)){
+        return (
+            <div className='friends-container'>
+                <header> <AnthNavbar/> </header>
+                <InfiniteScroll
+                    dataLength={poems.length}
+                    next={fetchData}
+                    hasMore={hasMore}
+                    loader={<h4 className='load-msg'>Loading...</h4>}
+                    endMessage= {
+                        <p className='end-msg'>
+                            <b>You have reached the end!</b>
+                        </p>
+                    }
+                >
+                    {poems.map((item) => (
+                        <PoemViewer key={item.id} content={obj = {
+                            title:item.title,
+                            content:item.content
+                        }}/>
+                    ))}
+                </InfiniteScroll>
+            </div>
+        )
+    }else{
+        return(
+            <div className='freinds-container'>
+                <h1>Loading!</h1>
+            </div>
+        )
+    }
 }
