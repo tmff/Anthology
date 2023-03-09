@@ -3,6 +3,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import '../../css/Friends.css';
 import { PoemViewer } from '../PoemViewer';
 import api from '../../js/Api.js';
+import AnthNavbar from '../Navbar';
 
 
 const refresh = (props) => {};
@@ -32,9 +33,7 @@ export const Friends = (props) => {
     if(!poems.includes(undefined)){
         return (
             <div className='friends-container'>
-                <header className='fake-navbar'>
-                    <h1 className='app-title'>Anthology</h1>
-                </header>
+                <header> <AnthNavbar/> </header>
                 <InfiniteScroll
                     dataLength={poems.length}
                     next={fetchData}

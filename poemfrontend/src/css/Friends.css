@@ -1,6 +1,11 @@
+.friends-container {
+    text-align: center;
+    justify-content: space-around;
+    
+}
+
 .fake-navbar {
     background-color: var(--cornflower-blue);
-    margin-bottom: 10px;
     width: 100%;
     position: absolute;
     top: 0px;
@@ -17,7 +22,7 @@
 
 .poem-view {
     position: relative;
-    display: flex;
+    display: block;
     flex-direction: column-reverse;
     padding: 5px;
     border: 1px solid #fff;
@@ -28,7 +33,9 @@
 }
 
 
-/* I'd like to replace this with some sort of loading wheel in the future, think that would be better*/
+/* I'd like to replace this with some sort of loading wheel in the future, 
+ * think that would be better 
+ */
 .load-msg { 
     border: none;
     margin: none;

@@ -1,0 +1,22 @@
+/* Unfortunately the css styling that comes with the component is super ugly
+ * so we do custom css!
+ */ 
+
+.navbar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: var(--cornflower-blue);
+    width: 100%;
+    text-decoration: none;
+}
+
+.app-title {
+    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');
+    padding: 0px;
+}
+
+/* Removes underline from link */
+a:link, a:visited, a:hover, a:active {
+    text-decoration: none;
+}
