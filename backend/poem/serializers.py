@@ -109,15 +109,3 @@ class FriendsSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ['friends']
 
-    def create(self, validated_data):
-        request = self.context.get("request")
-        if request and hasattr(request, "user"):
-            user = request.user
-        
-        profile = Profile.objects.create(
-            user=user,
-            friends=[]
-        )
-
-        profile.save()
-        return profile
