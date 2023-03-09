@@ -4,7 +4,6 @@ import '../../css/Friends.css';
 import { PoemViewer } from '../PoemViewer';
 import api from '../../js/Api.js';
 
-let page = 1;
 
 const refresh = (props) => {};
 
@@ -17,35 +16,50 @@ export const Friends = (props) => {
             .get("/get-friends-poems")
             .then((res) => {
                 console.log(res);
-                setPoems([...poems, ...res.data]);
-                page += 1;
+                setPoems(res.data);
             });
     };
+
+    useEffect(() =>{
+        fetchData()
+    },[])
+
+    useEffect(() => {
+        console.log(poems[0])
+    },[poems])
+
     var obj;
-    return (
-        <div className='friends-container'>
-            <header className='fake-navbar'>
-                <h1 className='app-title'>Anthology</h1>
-            </header>
-            <InfiniteScroll
-                dataLength={poems.length}
-                next={fetchData}
-                hasMore={hasMore}
-                loader={<h4 className='load-msg'>Loading...</h4>}
-                endMessage= {
-                    <p className='end-msg'>
-                        <b>You have reached the end!</b>
-                    </p>
-                }
-            >
-                {poems.map((i, index) => (
-                    <div className='poem-view'>
-                        <PoemViewer content={obj = {
-                            content:"bleh\nmeh\numm"
+    if(!poems.includes(undefined)){
+        return (
+            <div className='friends-container'>
+                <header className='fake-navbar'>
+                    <h1 className='app-title'>Anthology</h1>
+                </header>
+                <InfiniteScroll
+                    dataLength={poems.length}
+                    next={fetchData}
+                    hasMore={hasMore}
+                    loader={<h4 className='load-msg'>Loading...</h4>}
+                    endMessage= {
+                        <p className='end-msg'>
+                            <b>You have reached the end!</b>
+                        </p>
+                    }
+                >
+                    {poems.map((item) => (
+                        <PoemViewer key={item.id} content={obj = {
+                            title:item.title,
+                            content:item.content
                         }}/>
-                    </div>
-                ))}
-            </InfiniteScroll>
-        </div>
-    )
+                    ))}
+                </InfiniteScroll>
+            </div>
+        )
+    }else{
+        return(
+            <div className='freinds-container'>
+                <h1>Loading!</h1>
+            </div>
+        )
+    }
 }
