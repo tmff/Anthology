@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './css/index.css';
-import App, { loader as appLoader, standardLoader } from './App';
+import App, { loader as appLoader, standardLoader, loginLoader } from './js/Loaders';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Title } from './components/Greeting';
@@ -22,16 +22,18 @@ export const router = createBrowserRouter([
   },
   {
     path: "login",
-    element: <Title component={ <Login /> }></Title> 
+    element: <Title component={ <Login /> }></Title>,
+    loader: loginLoader,
   },
   {
     path: "register",
-    element: <Title component={ <Register /> }></Title>
+    element: <Title component={ <Register /> }></Title>,
+    loader: loginLoader,
   },
   {
     path: "friends",
     element: <Base component={ <Friends /> }></Base>,
-    //loader: standardLoader,
+    loader: standardLoader,
   },
   {
     path: "write",
