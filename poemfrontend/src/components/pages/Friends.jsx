@@ -1,32 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
+import '../../css/Friends.css';
 
 import api from '../../js/Api.js';
-import axios from "axios";
 
 let page = 1;
-const fetchData = (setItems, items) => {
-    axios
-        .get(/* api endpoint link goes here */)
+const fetchData = (setPoems, poems) => {
+    api
+        .get("/get-friends-poems")
         .then((res) => {
-            setItems([/*...items, ...res.data*/]);
+            console.log(res);
+            setPoems([/*...items, ...res.data*/]);
             page += 1;
         });
 };
 
-const refresh = (setItems) => {};
+const refresh = (props) => {};
 
 export const Friends = (props) => {
-
-    const [items, setItems] = useState([]);
+    const [poems, setPoems] = useState([])
 
     useEffect(() => {
-        fetchData(setItems, items);
+        fetchData(setPoems, poems);
     },[])
 
     return (
         <InfiniteScroll
-            dataLength={items.length}
+            className='friends'
+            dataLength={poems.length}
             next={fetchData}
             hasMore={true}
             loader={<h4 className='load-msg'>Loading...</h4>}
@@ -35,16 +36,17 @@ export const Friends = (props) => {
                     <b>You have reached the end!</b>
                 </p>
             }
-            refreshFunction={this.refresh}
-            pullDownToRefresh
-            pullDownToRefreshThreshold={50}
-            pullDownToRefreshContent={
-                <h3 className='pulldown-msg'>&#8595; Pull down to refresh!</h3>
-            }
+            // TODO - refresh seems to be breaking things.
+            // refreshFunction={this.refresh}
+            // pullDownToRefresh
+            // pullDownToRefreshThreshold={50}
+            // pullDownToRefreshContent={
+            //    <h3 className='pulldown-msg'>&#8595; Pull down to refresh!</h3>
+            //}
         >
-        <div className="friends">
-            
-        </div>
+            {poems.map((item,index) => {
+                return <div>This is div #{index+1}</div>
+            })}
         </InfiniteScroll>
     )
 }

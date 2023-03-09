@@ -4,13 +4,19 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
-from .models import Poem
+from .models import Poem, Profile
 from rest_framework.authtoken.models import Token
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id','first_name','last_name','username']
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id','first_name','last_name','username']
+
 
 class PoemSerializer(serializers.ModelSerializer):
     
@@ -32,11 +38,24 @@ class PoemSerializer(serializers.ModelSerializer):
         )
         poem.save()
         return poem
-    
-    
-
+      
 
     
+    def create(self, validated_data):
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+        
+        profile = Profile.objects.create(
+            user=user,
+            friends=[]
+        )
+
+        profile.save()
+        return profile
+
+
+
 
 class RegisterSerializer(serializers.ModelSerializer):
 

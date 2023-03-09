@@ -9,7 +9,7 @@ class NotFoundPage extends React.Component {
             <div className='notfound-page'>
                 <img className='monkey' src={PageNotFound} />
                 <p className='msg-404'>
-                    Sorry! That page either could not be found, or does not exist.
+                    Sorry! That page either could not be found, or does not exist. (Error 404)
                     <br />
                     <Link to={"/"}> Go Back to the Home Page</Link>
                 </p>
