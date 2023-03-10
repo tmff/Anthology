@@ -7,7 +7,7 @@ COPY . /app
 # Use ENV keywords before compiling
 ENV API_ENDPOINT $api_endpoint
 
-RUN npm install
+RUN npm ci
 RUN npm run build
 
 FROM nginx
