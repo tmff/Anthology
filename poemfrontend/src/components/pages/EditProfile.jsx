@@ -11,6 +11,28 @@ export const EditProfile = (props) => {
     const [username, setUsername] = useState("@jameswatson");
     const [blurb, setBlurb] = useState("The next Michael Rosen");
 
+    
+    const setDarkMode = () => {
+        document.querySelector("body").setAttribute('data-theme', 'dark');
+        localStorage.setItem("selectedTheme", "dark")
+    };
+    
+    const setLightMode = () => {
+        document.querySelector("body").setAttribute('data-theme', 'light');
+        localStorage.setItem("selectedTheme", "light")
+    };
+
+    const selectedTheme = localStorage.getItem("selectedTheme");
+
+    if(selectedTheme === "dark") {
+        setDarkMode();
+    }
+
+    const toggleTheme = e => {
+        if (e.target.checked) setDarkMode()
+        else setLightMode()
+    };
+
     // function editProfilePicture() {
     //     console.log("CLICKED");
     //     {/* save button */ }
@@ -113,7 +135,8 @@ export const EditProfile = (props) => {
                     <FontAwesomeIcon icon = {faSun} className= "sun"/>
                     <label name = "theme" id="theme" class="switch">
                         <input type="checkbox" 
-                        // onChange={toDarkMode} 
+                        onChange = {toggleTheme} 
+                        defaultChecked = {selectedTheme === "dark"}
                         />
                         <span class="slider round"></span>
                     </label>
