@@ -4,7 +4,7 @@ from .views import UserDetailAPI,RegisterUserAPIView, PoemView, PoemFriendListVi
 
 router = routers.DefaultRouter()
 router.register(r'poems', PoemView)
-router.register(r'get-friends-poems', PoemFriendListView)
+router.register(r'get-friends-poems', PoemFriendListView, basename='get-friends-poems')
 
 urlpatterns = [
   path("", include(router.urls)),

@@ -1,47 +1,80 @@
 :root {
-    --uranian-blue: #a0ddffff;
-    --vista-blue: #758ecdff;
-    --periwinkle: #c1cefeff;
-    --cornflower-blue: #7189ffff;
-    --royal-purple: #624cabff;
+  --uranian-blue: #a0ddffff;
+  --vista-blue: #758ecdff;
+  --periwinkle: #c1cefeff;
+  --cornflower-blue: #7189ffff;
+  --royal-purple: #624cabff;
 }
 
 .profileContainer {
-    padding: 10px;
-    border: 1px solid white;
-    border-radius: 10px;
-    margin: 10px;
-    /* width: 300px;
+  padding: 10px;
+  border: 1px solid white;
+  border-radius: 10px;
+  margin: 10px;
+  background-color: white;
+  color: black;
+  /* width: 300px;
     height: 600px; */
 }
 
-.profilePicture {
-    border-radius: 50px;
+.dark-mode {
+  background-color: black;
+  color: white;
 }
 
-.btn {
-    background-color: DodgerBlue; /* Blue background */
-    border: none; /* Remove borders */
-    color: white; /* White text */
-    padding: 12px 16px; /* Some padding */
-    font-size: 16px; /* Set a font size */
-    cursor: pointer; /* Mouse pointer on hover */
-  }
-  
-  /* Darker background on mouse-over */
-  .btn:hover {
-    background-color: RoyalBlue;
-  }
+.profilePicture {
+  border-radius: 50px;
+}
+
+.userPic {
+  width: 70px;
+  height: 70px;
+}
+
+.editpfp {
+  background-color: white;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  width: 5px;
+  height: 5px;
+}
+
+.quill {
+  /* padding-right: 12px;
+  padding-bottom: 10x; */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+
+}
 
 .names {
-    padding: 40px;
+  padding: 5px;
 
 }
+
+.blurb {
+  padding: 5px;
+  border: 1px solid white;
+  border-radius: 10px;
+}
+
+.editblurb {
+  border-radius: 50%;
+  align-items: center;
+  width: 5px;
+  height: 5px;
+}
+
 
 .socialMedia {
-    padding: 3px;
-    border-radius: 2px;
+  padding: 10px;
+  border-radius: 2px;
+  display: flex;
 }
+
 /* 
 .socialMedia.img {
     padding: 3px;
@@ -57,108 +90,189 @@
     margin: 4px;
 } */
 .settings {
-    border-color: white;
-    border-radius: 10px;
-    padding: 10px;
+  border-color: white;
+  border-radius: 10px;
+  padding: 10px;
 }
+
+.cog {
+  padding-left: 10px;
+}
+
+.languageSelect {
+  text-align: left;
+  padding: 5px;
+}
+
+.languages {
+  padding-right: 10px;
+}
+
+.lightDarkMode {
+  padding: 5px;
+  text-align: left;
+}
+
+.sun {
+  padding-left: 5px;
+  padding-right: 10px;
+}
+
+.moon {
+  padding-left: 10px;
+}
+
+.autoplayOption {
+  text-align: left;
+  padding-left: 5px;
+  padding-right: 10px;
+}
+
+.speaker {
+  padding-left: 5px;
+  padding-right: 10px;
+}
+
+.publicPrivateMode {
+  text-align: left;
+  padding: 5px;
+}
+
+.public {
+  padding-right: 5px;
+}
+
+.private {
+  padding-left: 5px;
+}
+
 img {
-    max-width: 100%;
-    max-height: 100%;
-    display: block;
-    margin: 0 auto;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Set a specific color for each brand */
+/* Facebook */
+.facebook {
+  /* padding: 10px; */
+  flex: 33.33%;
+  padding: 1px;
+}
+
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+
+/* Twitter */
+.twitter {
+  /* padding: 10px; */
+  flex: 33.33%;
+  padding: 1px;
+}
+
+.fa-twitter {
+  background: #55ACEE;
+  color: white;
+
+}
+
+.instagram {
+  /* padding: 10px; */
+  flex: 33.33%;
+  padding: 1px;
+}
+
+.fa-instagram {
+  background: #125688;
+  color: white;
+}
+
+.btn {
+  background-color: DodgerBlue;
+  /* Blue background */
+  border: none;
+  /* Remove borders */
+  color: white;
+  /* White text */
+  padding: 12px 16px;
+  /* Some padding */
+  font-size: 16px;
+  /* Set a font size */
+  cursor: pointer;
+  /* Mouse pointer on hover */
+}
+
+/* Darker background on mouse-over */
+.btn:hover {
+  background-color: RoyalBlue;
 }
 
 .fa {
-    padding: 10px;
-    font-size: 100px;
-    width: 50px;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 10px;
-  }
-  
-  /* Add a hover effect if you want */
-  .fa:hover {
-    opacity: 0.7;
-  }
-  
-  /* Set a specific color for each brand */
-  
-  /* Facebook */
-  .fa-facebook {
-    background: #3B5998;
-    color: white;
-  }
-  
-  /* Twitter */
-  .fa-twitter {
-    background: #55ACEE;
-    color: white;
-   
-  }
-  .fa-instagram {
-    background: #125688;
-    color: white;
-  }
+  padding: 10px;
+  font-size: 100px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10px;
+}
 
-
-
-
-
-
-
-
-
-
+/* Add a hover effect if you want */
+.fa:hover {
+  opacity: 0.7;
+}
 
 .switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-  }
-  
-  .switch input { 
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #a0ddffff;
-    border-radius: 34px;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    border-radius: 50%;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-  
-  input:checked + .slider {
-    background-color: #7189ffff;
-  }
-  
-  input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-  }
-  
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-  }
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #a0ddffff;
+  border-radius: 34px;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  border-radius: 50%;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked+.slider {
+  background-color: #7189ffff;
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
