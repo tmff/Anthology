@@ -10,6 +10,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics
 from .serializers import PoemSerializer,UserSerializer,RegisterSerializer, FriendsSerializer
 from .models import Poem, Profile
+from django.db.models import Q
 # Create your views here.
 
 
@@ -50,6 +51,30 @@ class PoemFriendListView(viewsets.ModelViewSet):
         
         # Serialize all of the poems
         return queryset
+
+class HighlightChoiceView(viewsets.ModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = PoemSerializer
+    model = Poem
+
+    def get_queryset(self, *args, **kwargs):
+        profile = Profile.objects.get(user=self.request.user.id)
+        friends = profile.friends.all()
+        friends_users = [friend.user for friend in friends]
+        today = date.today()
+        try:
+            queryset = Poem.objects.filter(
+                Q(author__profile__is_private=False) | 
+                Q(author__profile__is_private__isnull=True)
+            )
+            queryset = Poem.object.filter(time_created__date=today).exclude(author__in=friends_users)
+
+            random_poems = queryset.order_by('?')[:2]
+        except:
+            return Poem.objects.none()
+
+        return queryset
+
 
 
 class UserDetailAPI(APIView):
