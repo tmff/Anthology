@@ -29,7 +29,7 @@
 }
 
 /* Standard location for Anthology title*/
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1300px) {
   .app-Title {
     /* Placeholder font from Google Fonts, we can pick one later */
     @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');
@@ -43,7 +43,7 @@
 }
 
 /* Centers title in top-middle of Login/Register form when screen is below certain size*/
-@media screen and (max-width:699px) {
+@media screen and (max-width:1299px) {
   .app-Title {
     /* Placeholder font from Google Fonts, we can pick one later */
     @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');
@@ -52,7 +52,7 @@
     font-weight: 700;
     text-transform: capitalize;
     font-size: 30px;
-    position: absolute; top:20px ; left: 40%; 
+    position: absolute; top:20px ; left: calc(50% - 85px); 
   }
 }
 
