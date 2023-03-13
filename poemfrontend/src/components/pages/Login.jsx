@@ -42,18 +42,25 @@ export const Login = (props) => {
             // props.stateChanger(false);
 
         })
-        .catch(err => handleLoginErrors(err.response))
+        .catch(err => handleLoginErrors(err))
         //.then(res => cookies.set("token",res.response.data))
 
     }
 
-    function handleLoginErrors(response){
+    function handleLoginErrors(err){
 
-        if(response.status === 400){
-            setErrText(response.data.non_field_errors);
+        // Check if the error response exists - if it doesn't, then it's an internal error
+        if (err.response == null) {
+            console.log(err);
+            return;
+        }
+
+        // Check the status codes of the response
+        if(err.response.status === 400){
+            setErrText(err.response.data.non_field_errors);
         }
         else{
-            console.log(response);
+            console.log(err.response);
         }
     }
     
