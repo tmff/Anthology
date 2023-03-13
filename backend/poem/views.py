@@ -1,6 +1,4 @@
 from django.shortcuts import render
-
-
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -11,6 +9,7 @@ from rest_framework import generics
 from .serializers import PoemSerializer,UserSerializer,RegisterSerializer, FriendsSerializer
 from .models import Poem, Profile
 from django.db.models import Q
+import datetime
 # Create your views here.
 
 
@@ -61,15 +60,14 @@ class HighlightChoiceView(viewsets.ModelViewSet):
         profile = Profile.objects.get(user=self.request.user.id)
         friends = profile.friends.all()
         friends_users = [friend.user for friend in friends]
-        today = date.today()
+        today = datetime.date.today()
         try:
             queryset = Poem.objects.filter(
                 Q(author__profile__is_private=False) | 
                 Q(author__profile__is_private__isnull=True)
             )
-            queryset = Poem.object.filter(time_created__date=today).exclude(author__in=friends_users)
-
-            random_poems = queryset.order_by('?')[:2]
+            queryset = queryset.filter(time_created__date=today).exclude(author__in=friends_users)
+            queryset = queryset.order_by('?')[:2]
         except:
             return Poem.objects.none()
 
