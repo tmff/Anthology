@@ -13,6 +13,7 @@ import { Writer } from './components/pages/Writer';
 import { Search } from './components/pages/Search';
 import { EditProfile } from './components/pages/EditProfile';
 import NotFoundPage  from './components/pages/NotFound';
+import { Highlight } from './components/pages/Highlight';
 
 export const router = createBrowserRouter([
   {
@@ -51,9 +52,15 @@ export const router = createBrowserRouter([
     // loader: standardLoader,
   },
   {
+    path: "highlight",
+    element:<Base component={ <Highlight />}></Base>,
+    loader: standardLoader,
+  },
+  {
     path: "*",
     element: <Base component= { <NotFoundPage />}></Base>,
   }
+
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
