@@ -92,6 +92,7 @@ export const Login = (props) => {
                 <button id="submit" type="submit" onClick={setLoginToken}>Log In</button>
             </form>
             <Link to={`/register`} className="link-btn">Don't have an account? Register here!</Link>  
+            <Link to={`/GDPR`} className="link-btn">GDPR Policy</Link>
         </div>
 
     )

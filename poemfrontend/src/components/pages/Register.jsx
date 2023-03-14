@@ -153,6 +153,7 @@ export const Register = (props) => {
                 <h3>{submitResult}</h3>
             </form>
             <Link to={`/login`} className="link-btn">Already have an account? Login here!</Link>
+            <Link to={`/GDPR`} className="link-btn">GDPR Policy</Link>
         </div>
     )
 
