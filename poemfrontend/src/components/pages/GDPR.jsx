@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GDPR = () => {
+export const GDPR = (props) => {
     return(
         <div>
             <h1 className='GDPR-Title'>Anthology GDPR Policy</h1>
@@ -65,5 +65,3 @@ const GDPR = () => {
         </div>
     )
 }
-
-export default GDPR
