@@ -1,7 +1,7 @@
 import api from "../../js/Api"
 import React, { useState } from "react";
 import Cookies from 'universal-cookie';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import '../../css/LogReg.css'
 
 
@@ -18,6 +18,7 @@ export const Register = (props) => {
     const [pwdMissing,setPwdMissing] = useState('');
     const [pwd2Missing,setPwd2Missing] = useState('');
     const [emailMissing,setEmailMissing] = useState('');
+    const navigate = useNavigate();
 
     const cookies = new Cookies();
 
@@ -61,7 +62,10 @@ export const Register = (props) => {
         api.post('/api-token-auth',{
             username: username,
             password: pwd
-        }).then(res => cookies.set('Token',res.data.token),props.stateChanger(false))
+        }).then(res => {
+		cookies.set('Token',res.data.token);
+		navigate("/friends");
+	})
         .catch(err => console.log(err))
         //.then(res => cookies.set("token",res.response.data))
 

@@ -12,8 +12,14 @@ import { Friends } from './components/pages/Friends';
 import { Writer } from './components/pages/Writer';
 import { Search } from './components/pages/Search';
 import { EditProfile } from './components/pages/EditProfile';
+import { GDPR } from './components/pages/GDPR';
+import { TheReadingRoom } from './components/pages/TheReadingRoom';
 import NotFoundPage  from './components/pages/NotFound';
+<<<<<<< HEAD
 import { UserProfile } from './components/pages/UserProfile';
+=======
+import { Highlight } from './components/pages/Highlight';
+>>>>>>> eddf3b6b5b00dc1404048f3c1afd77b29c0c4f91
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +43,11 @@ export const router = createBrowserRouter([
     loader: standardLoader,
   },
   {
+    path: "reading-room",
+    element: <Base component={ <TheReadingRoom /> }></Base>,
+    loader: standardLoader,
+  },
+  {
     path: "write",
     element: <Base component={ <Writer /> }></Base>,
     loader: standardLoader,
@@ -57,9 +68,19 @@ export const router = createBrowserRouter([
     // loader: standardLoader,
   },
   {
+    path: "highlight",
+    element:<Base component={ <Highlight />}></Base>,
+    loader: standardLoader,
+  },
+  {
+    path: "privacy",
+    element: <Base component={ <GDPR />}></Base>,
+  },
+  {
     path: "*",
     element: <Base component= { <NotFoundPage />}></Base>,
   }
+
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
