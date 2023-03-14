@@ -15,11 +15,8 @@ import { EditProfile } from './components/pages/EditProfile';
 import { GDPR } from './components/pages/GDPR';
 import { TheReadingRoom } from './components/pages/TheReadingRoom';
 import NotFoundPage  from './components/pages/NotFound';
-<<<<<<< HEAD
 import { UserProfile } from './components/pages/UserProfile';
-=======
 import { Highlight } from './components/pages/Highlight';
->>>>>>> eddf3b6b5b00dc1404048f3c1afd77b29c0c4f91
 
 export const router = createBrowserRouter([
   {
