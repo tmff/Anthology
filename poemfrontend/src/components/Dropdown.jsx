@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import '../css/Dropdown.css';
 
-const Dropdown = () => {
+const DropDown = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleOpen = () => {
