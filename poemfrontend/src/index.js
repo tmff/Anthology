@@ -12,6 +12,7 @@ import { Friends } from './components/pages/Friends';
 import { Writer } from './components/pages/Writer';
 import { Search } from './components/pages/Search';
 import { EditProfile } from './components/pages/EditProfile';
+import { GDPR } from './components/pages/GDPR';
 import { TheReadingRoom } from './components/pages/TheReadingRoom';
 import NotFoundPage  from './components/pages/NotFound';
 import { Highlight } from './components/pages/Highlight';
@@ -62,6 +63,9 @@ export const router = createBrowserRouter([
     element:<Base component={ <Highlight />}></Base>,
     loader: standardLoader,
   },
+  {
+    path: "privacy",
+    element: <Base component={ <GDPR />}></Base>
   {
     path: "*",
     element: <Base component= { <NotFoundPage />}></Base>,
