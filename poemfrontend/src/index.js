@@ -13,6 +13,7 @@ import { Writer } from './components/pages/Writer';
 import { Search } from './components/pages/Search';
 import { EditProfile } from './components/pages/EditProfile';
 import NotFoundPage  from './components/pages/NotFound';
+import { UserProfile } from './components/pages/UserProfile';
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +44,11 @@ export const router = createBrowserRouter([
   {
     path: "search",
     element: <Base component={ <Search /> }></Base>,
+    loader: standardLoader,
+  },
+  {
+    path: "profile",
+    element: <Base component={ <UserProfile/>}></Base>,
     loader: standardLoader,
   },
   {
