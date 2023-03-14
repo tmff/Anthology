@@ -32,7 +32,7 @@ export const PoemViewer = (props) => {
 
     return(
         <div className='viewer'>
-            <span class="dot"> </span>
+            <span className="dot"> </span>
             <h1>{title}</h1>
             <h2>{line1}</h2>
             <h2>{line2}</h2>

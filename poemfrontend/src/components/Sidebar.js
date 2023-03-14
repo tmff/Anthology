@@ -14,7 +14,7 @@ export default props => {
             <Link to={`/profile`} className='menu-item'>Profile</Link>
             <Link to={`/write`} className='menu-item'>Write</Link>
             <Link to={`/edit-profile`} className='menu-item'>Edit Profile</Link>
-	    <Link to={`/privacy`} className='menu-item'>Privacy Policy</Link>
+	        <Link to={`/privacy`} className='menu-item'>Privacy Policy</Link>
         </Menu>
     );
     
