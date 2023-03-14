@@ -66,6 +66,7 @@ export const router = createBrowserRouter([
   {
     path: "privacy",
     element: <Base component={ <GDPR />}></Base>,
+  },
   {
     path: "*",
     element: <Base component= { <NotFoundPage />}></Base>,
