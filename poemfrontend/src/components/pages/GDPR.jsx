@@ -11,7 +11,7 @@ export const GDPR = (props) => {
             <h2>What data do we collect?</h2>
             <p>Anthology collects the following data:</p>
             <ul>
-                <li>Personal identification information (Full name, email address, password, etc.) </li>
+                <li>Personal identification information (Full name, email address, password, date of birth etc.) </li>
                 <li>Photo for profile picture if uploaded  </li>
                 <li>Users that you are linked with via a ”Friends” feature </li>
                 <li>Location when using the app or always as agreed to by the user </li>
@@ -31,6 +31,8 @@ export const GDPR = (props) => {
             <p>Anthology collects your data so that we can: </p>
             <ul>
                 <li>Log your poems so you can always have access to your previous work </li>
+                <li>Check your age and if you are under 18, your account will be automatically private for 
+                    safeguarding</li>
                 <li>Process your poems using Natural Language Toolkit to understand the sentiment so that 
                     The Reading Room (discovery page) can have more personalised suggestions of poems that you are more likely to enjoy. </li>
                 <li>Log your friends on the app so we can show the correct poems on the home page for each user  </li>
@@ -40,8 +42,8 @@ export const GDPR = (props) => {
             <h2>How do we store your data?</h2>
             <ul>
                 <li>Anthology securely stores your data at University of Birmingham and only the IT team has secure limited access to data </li>
-                <li>Anthology will keep your personal data and cookie history for 9 months (till the end of 2023).
-                     Once this time period has expired, we will delete your data by clearing the database. </li>
+                <li>Anthology will keep your personal data and cookie history for 9 months, till the end of 2023. 
+                    After this limited timeline, we will delete your data by clearing the database.  </li>
             </ul>
             <h2>How do we use cookies?</h2>
             <p>Anthology uses cookies in a range of ways to improve your experience on our website, including:  </p>
@@ -50,17 +52,18 @@ export const GDPR = (props) => {
                     This allows the application to display your poems and friends and remember your previously selected preferences such as language, 
                     light/dark mode and preference to autoplay poems for accessibility etc.  </li>
             </ul>
-            <p>You can manage cookies by not accepting additional cookies on your browser, however this can limit the experience.  </p>
+            <p>You can manage cookies by not accepting additional cookies on your browser, however this can limit the 
+                user experience.  </p>
             <h2>How to contact us</h2>
-            <p>If you have any questions about Anthology's privacy policy, the data we hold on you, or you would like to exercise one of your data protection rights, #
-                please do not hesitate to contact us. </p>
-            <p>Email us at: LXM153@student.bham.ac.uk </p>
-            <p>Call us: 07982 640245 </p>
+            <p>If you have any questions about Anthology's privacy policy, the data we hold on you, or you would like 
+                to exercise one of your data protection rights, please do not hesitate to contact us </p>
+            <p>Email us at: HJP183@student.bham.ac.uk</p>
+            <p>Call us: 07907750797</p>
             <p>Or write to us at:</p>
-            <p>11 Rookery Road<br/>
-               Selly Oak <br/>
-               B29 7DG <br/>
-               United Kingdom
+            <p>192 Harborne Lane<br/>
+                Selly Oak<br/>
+                B29 6TQ<br/>
+                United Kingdom
             </p>
         </div>
     )

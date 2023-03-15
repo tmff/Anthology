@@ -8,6 +8,10 @@
   background: linear-gradient(var(--uranian-blue), var(--royal-purple));
 }
 
+ul {
+  list-style-type: none;
+}
+
 :root{
   --uranian-blue: #a0ddffff;
   --vista-blue: #758ecdff;
