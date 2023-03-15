@@ -1,53 +1,70 @@
-import React, { useState } from "react";
-  
+import { useState } from "react";
 
 
-export const Search = (props) => {
-  const [searchItem, setSearchItem] = useState('')
-  const [searchErrorText, setSearchErrorText] = useState('')
+function Search() {
+  const [query, setQuery] = useState("");
+  const [userResults, setUserResults] = useState([]);
+  const [postResults, setPostResults] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [displayItems, setDisplayItems] = useState(false);
 
-  function handleUserClick(){
-    if(searchItem.length === 0){
-      setSearchErrorText('Nothing found')
+
+
+  // Handling of displaying users and posts
+  function handleOptionSelect(option) {
+    setSelectedOption(option);
+    setDisplayItems(true);
+    if(option === 'Users'){
+      setUserResults([]);
+      <h2>Users here</h2>
+      userResults.map((user) => (
+        <div key={user.id}>
+          <h3>{user.name}</h3>
+          <p>{user.bio}</p>
+        </div>
+      ))
     }
     else{
-      setSearchItem('Users here')
+      setPostResults([]);
+      <h2>Posts here</h2>
+      postResults.map((post) => (
+        <div key={post.id}>
+          <h3>{post.title}</h3>
+          <p>{post.content}</p>
+        </div>
+      ))
     }
   }
 
-  
-  function handlePostsClick(){
-    if(searchItem.length === 0){
-      setSearchErrorText('Nothing found')
-    }
-    else{
-      setSearchItem('Posts here')
-    }
-  }
-  
+
+
   return (
     <div className="container">
       <h2>Search</h2>
-      <div className='search'>
-        <input
-          placeholder='Search for users or posts'
-          onChange={() => {}}
-          value={searchItem}
-          type="text"
-        />
-        <button 
-          className="user-button"
-          onClick={handleUserClick}
-        >   Users
-        </button>
-        <button 
-          className="posts-button"
-          onClick={handlePostsClick}
-        >   Posts
-        </button>
+      {/* Search bar */}
+      <input
+        type="text"
+        placeholder="Search for Users and Posts"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+      {/* Dropdown menu for users and posts */}
+      <select value={selectedOption}
+        onChange={(e) => handleOptionSelect(e.target.value)}>
+        <option>Users</option>
+        <option>Posts</option>
+      </select>
+
+      {/* Items displayed here */}
+      <div>
+        {displayItems && (
+          <div>
+            <h2>{selectedOption} here</h2>
+          </div>
+        )}
       </div>
-      <h3>{searchItem}</h3>
-      <h3>{searchErrorText}</h3>
+
+      {/* Daily Themes Section */}
       <h2>Daily Themes</h2>
       <p> Themes will go here.</p>
     </div>
