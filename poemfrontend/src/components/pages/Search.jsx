@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 
-function Search() {
+export const Search = () => {
   const [query, setQuery] = useState("");
   const [userResults, setUserResults] = useState([]);
   const [postResults, setPostResults] = useState([]);
@@ -71,4 +71,3 @@ function Search() {
   );
 }
   
-export default Search;
