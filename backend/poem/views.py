@@ -6,7 +6,7 @@ from rest_framework import viewsets
 from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics
-from .serializers import PoemSerializer,UserSerializer,RegisterSerializer, FriendsSerializer
+from .serializers import PoemSerializer,UserSerializer,RegisterSerializer, FriendsSerializer,HighlightSumbitSerializer
 from .models import Poem, Profile
 from django.db.models import Q
 import datetime
@@ -72,6 +72,37 @@ class HighlightChoiceView(viewsets.ModelViewSet):
             return Poem.objects.none()
 
         return queryset
+
+class SubmitHighlightPoem(APIView):
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = HighlightSumbitSerializer
+
+    def post(self,request):
+        profile = Profile.objects.get(user=self.request.user.id)
+        serializer = self.serializer_class(data=request.data)
+        ##Check if user has voted today and return bad request if they have
+        if profile.last_vote_time != None:
+            if profile.last_vote_time.date() == datetime.date.today():
+                return Response({'message':'already voted today'}, status=400)
+        if serializer.is_valid():
+            poem_id = serializer.validated_data['poem_id']
+            poem = Poem.objects.get(id=poem_id)
+            poem.matches_won += 1
+            poem.matches_played += 1
+            poem.save()
+
+            losing_poem_id = serializer.validated_data['losing_id']
+            losing_poem = Poem.objects.get(id=losing_poem_id)
+            losing_poem.matches_played += 1
+            losing_poem.save()
+
+            profile.last_vote_time = datetime.datetime.now()
+            profile.save()
+            return Response({'message':'Vote cast!'},status=200)
+        else:
+            return Response(serializer.errors, status=400)
+
+
 
 
 

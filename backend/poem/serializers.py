@@ -34,6 +34,11 @@ class PoemSerializer(serializers.ModelSerializer):
         )
         poem.save()
         return poem
+
+class HighlightSumbitSerializer(serializers.Serializer):
+    poem_id = serializers.IntegerField()
+    losing_id = serializers.IntegerField()
+    
       
 
     

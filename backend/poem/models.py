@@ -13,6 +13,9 @@ class Profile(models.Model):
     friends = models.ManyToManyField('self')
     is_private = models.BooleanField(default = False)
 
+    ##Highlighting
+    last_vote_time = models.DateTimeField(default=None,null=True,blank=True)
+
     def __str__(self):
         return self.user.username
     
@@ -41,6 +44,11 @@ class Poem(models.Model):
     time_created = models.DateTimeField(default=datetime.datetime.now)
     is_published = models.BooleanField(default=False)
     tags = models.ForeignKey(Tag, on_delete=models.SET_NULL,null = True)
+
+    ##Highlighting
+    matches_played = models.IntegerField(default=0)
+    matches_won = models.IntegerField(default=0)
+
 
 
     def __str__(self):
