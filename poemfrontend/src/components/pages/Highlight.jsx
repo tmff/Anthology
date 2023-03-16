@@ -8,16 +8,27 @@ import '../../css/Highlight.css'
 
 export const Highlight = (props) => {
 
-    const [display,setDisplay] = useState(<h1>No poems to be seen here, check back later!</h1>)
+    const [display,setDisplay] = useState(<h1>No poems to be seen here, check back later!</h1>);
     const [poems,setPoems] = useState([]);
-
+    const [canVote,setCanVote] = useState(true);
 
 
     useEffect(() => {
+        
+        api.get('/submit-highlight-vote')
+        .then((res) => {
+            if(res.data.can_vote === 'false'){
+                console.log(res.data.can_vote);
+                setCanVote(false);
+                setDisplay(<h2>Already voted today!</h2>)
+                return;
+            }
+        })
+
         api.get("/get-highlight-choice")
         .then((res) => {
             if(res.data.length < 2){
-                setDisplay(<h1>No poems to be seen here, check back later!</h1>);
+                setDisplay(<h2>No poems to be seen here, check back later!</h2>);
             }
             else{
                 setPoems([res.data[0],res.data[1]])
@@ -29,7 +40,11 @@ export const Highlight = (props) => {
         })
     },[])
 
-    useEffect(() =>{setPoemsToHighlight()},[poems])
+    useEffect(() =>{
+        if(canVote){
+            setPoemsToHighlight()
+        }
+    },[poems])
 
     function setPoemsToHighlight(){
         if(poems.length == 0)return;
@@ -67,7 +82,10 @@ export const Highlight = (props) => {
         {
             poem_id:id,
             losing_id:losId
-        }).then((res) => console.log(res))
+        }).then((res) => {
+            console.log(res)
+            setDisplay(<h2>Thanks for voting! Check out the highlighted poem for your friends today!</h2>)
+        })
         .catch((err) => console.log(err));
     }
 
@@ -80,7 +98,7 @@ export const Highlight = (props) => {
             <div style={top}>
                 <h1>Highlight</h1>
             </div>
-            <h2>Choose your favourite!</h2>
+            <h1>Choose your favourite!</h1>
             {display}
         </div>
     )

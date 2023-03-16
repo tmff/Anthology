@@ -102,6 +102,13 @@ class SubmitHighlightPoem(APIView):
         else:
             return Response(serializer.errors, status=400)
 
+    def get(self,request):
+        profile = Profile.objects.get(user=self.request.user.id)
+        if profile.last_vote_time != None:
+            if profile.last_vote_time.date() == datetime.date.today():
+                return Response({'can_vote':'false'},status=200)
+        return Response({'can_vote':'true'},status=200)
+
 
 
 
