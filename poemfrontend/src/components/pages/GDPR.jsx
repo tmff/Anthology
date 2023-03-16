@@ -58,13 +58,6 @@ export const GDPR = (props) => {
             <p>If you have any questions about Anthology's privacy policy, the data we hold on you, or you would like 
                 to exercise one of your data protection rights, please do not hesitate to contact us </p>
             <p>Email us at: HJP183@student.bham.ac.uk</p>
-            <p>Call us: 07907750797</p>
-            <p>Or write to us at:</p>
-            <p>192 Harborne Lane<br/>
-                Selly Oak<br/>
-                B29 6TQ<br/>
-                United Kingdom
-            </p>
         </div>
     )
 }
