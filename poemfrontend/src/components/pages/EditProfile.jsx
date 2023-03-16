@@ -77,16 +77,16 @@ export const EditProfile = (props) => {
 
     return (
         <div className="profileContainer">
-
             <div className="profilePicture">
                 {/* <img src={person} alt="Profile picture"></img> */}
+                <h1>Edit your profile</h1>
                 <FontAwesomeIcon icon = {faUserCircle} className= "userPic"/>
 
-                <button className="editpfp">
+                {/* <button className="editpfp">
                      <FontAwesomeIcon icon = {faFeatherPointed} className= "quill"/>
                     {/* <img src={quill} alt="Edit Profile Picture"> </img> */}
-                    {/* onClick = {editProfilePicture} */}
-                </button>
+                    {/* onClick = {editProfilePicture} *
+                </button> */}
             </div> 
             <div className="names">
                 <h4> {name} </h4>
@@ -95,11 +95,11 @@ export const EditProfile = (props) => {
 
             <div className="Blurb">
                 <h2> Blurb</h2>
-                <button className= "editblurb">
+                {/* <button className= "editblurb">
                      <FontAwesomeIcon icon = {faFeatherPointed} className= "quill"/>
                      {/* <img src={quill} alt="quill"> </img> 
-                    onClick = {setBlurb} */}
-                </button>
+                    onClick = {setBlurb} 
+                </button> */}
                 <p>{blurb}</p>
             </div>
 
