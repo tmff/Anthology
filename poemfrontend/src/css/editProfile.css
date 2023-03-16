@@ -43,11 +43,11 @@
 .quill {
   /* padding-right: 12px;
   padding-bottom: 10x; */
-  display: block;
+  /* display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
-
+  width: 50%; */
+  align-self: center; 
 }
 
 .names {
