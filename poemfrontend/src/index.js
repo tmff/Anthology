@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Title } from './components/Greeting';
 import { Base } from './components/Base';
+import { ErrorPage } from './components/pages/ErrorPage';
 import { Login } from './components/pages/Login';
 import { Register } from './components/pages/Register';
 import { Friends } from './components/pages/Friends';
@@ -27,36 +28,43 @@ export const router = createBrowserRouter([
   {
     path: "login",
     element: <Title component={ <Login /> }></Title>,
+    errorElement: <Title component={ <ErrorPage /> }></Title>,
     loader: loginLoader,
   },
   {
     path: "register",
     element: <Title component={ <Register /> }></Title>,
+    errorElement: <Title component={ <ErrorPage /> }></Title>,
     loader: loginLoader,
   },
   {
     path: "friends",
     element: <Base component={ <Friends /> }></Base>,
+    errorElement: <Base component={ <ErrorPage /> }></Base>,
     loader: standardLoader,
   },
   {
     path: "reading-room",
     element: <Base component={ <TheReadingRoom /> }></Base>,
+    errorElement: <Base component={ <ErrorPage /> }></Base>,
     loader: standardLoader,
   },
   {
     path: "write",
     element: <Base component={ <Writer /> }></Base>,
+    errorElement: <Base component={ <ErrorPage /> }></Base>,
     loader: standardLoader,
   },
   {
     path: "search",
     element: <Base component={ <Search /> }></Base>,
+    errorElement: <Base component={ <ErrorPage /> }></Base>,
     loader: standardLoader,
   },
   {
     path: "profile",
     element: <Base component={ <UserProfile/>}></Base>,
+    errorElement: <Base component={ <ErrorPage /> }></Base>,
     loader: standardLoader,
   },
   {
