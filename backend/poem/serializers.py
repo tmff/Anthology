@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
-from .models import Poem, Profile
+from .models import Poem, Profile, Like, Bookmark
 from rest_framework.authtoken.models import Token
 
 
@@ -17,10 +17,55 @@ class UserSerializer(serializers.ModelSerializer):
 class PoemSerializer(serializers.ModelSerializer):
     
     author = UserSerializer(read_only=True)
+    is_liked = serializers.SerializerMethodField()
+    like_count = serializers.SerializerMethodField()
+    is_bookmarked = serializers.SerializerMethodField()
+    comment_count = serializers.SerializerMethodField()
     
     class Meta:
         model = Poem
-        fields = ('id','title','content','author')
+        fields = ('id','title','content','author', 'is_liked', 'like_count', 'is_bookmarked', 'comment_count')
+
+
+    def get_is_liked(self, poem):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+
+        if not user:
+            return False
+        
+        try:
+            result = Like.objects.get(poem=poem, user=user)
+            return True
+        except Like.DoesNotExist:
+            return False
+    
+
+    def get_like_count(self, poem):
+        return poem.get_like_count()
+    
+
+    def get_is_bookmarked(self, poem):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+
+        if not user:
+            return False
+        
+        try:
+            result = Bookmark.objects.get(poem=poem, user=user)
+            return True
+        except Bookmark.DoesNotExist:
+            return False
+    
+
+    def get_comment_count(self, poem):
+        return poem.get_comment_count()
+    
 
     def create(self,validated_data):
         user = None
@@ -39,11 +84,6 @@ class HighlightSumbitSerializer(serializers.Serializer):
     poem_id = serializers.IntegerField()
     losing_id = serializers.IntegerField()
     
-      
-
-    
-
-
 
 class RegisterSerializer(serializers.ModelSerializer):
 

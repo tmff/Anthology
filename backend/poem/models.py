@@ -66,6 +66,9 @@ class Poem(models.Model):
     def get_title(self) -> str:
         return self.title
     
+    def get_like_count(self) -> int:
+        return Like.objects.aggregate(count = Count('pk', filter=Q(poem=self)))["count"]
+    
 
     def get_bookmark_count(self) -> int:
         return Bookmark.objects.aggregate(count = Count('pk', filter=Q(poem=self)))["count"]
@@ -101,6 +104,9 @@ class Reply(Comment):
     parent_comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='parent_comment_to_reply')
 
 
+class Like(models.Model):
+    poem = models.ForeignKey(Poem, on_delete=models.CASCADE)  # If the poem is deleted, remove this statistic
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # If the user is deleted, remove this statistic
 
 
 @receiver(post_save, sender=User)
