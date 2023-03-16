@@ -14,7 +14,7 @@ export const Friends = (props) => {
     
     const fetchData = () => {
         api
-            .get("/get-friends-poems")
+            .get("/get-friends-poems/")
             .then((res) => {
                 console.log(res);
                 setPoems(res.data);
@@ -30,7 +30,7 @@ export const Friends = (props) => {
     },[poems])
 
     var obj;
-    if(!poems.includes(undefined)){
+    if (!poems.includes(undefined)) {
         return (
             <div className='friends-container'>
                 <header> {/*<AnthNavbar/> */} </header>
@@ -54,8 +54,8 @@ export const Friends = (props) => {
                 </InfiniteScroll>
             </div>
         )
-    }else{
-        return(
+    } else {
+        return (
             <div className='friends-container'>
                 <h1>Loading!</h1>
             </div>
