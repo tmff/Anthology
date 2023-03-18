@@ -15,7 +15,7 @@ export const Highlight = (props) => {
 
     useEffect(() => {
         
-        api.get('/submit-highlight-vote')
+        api.get('/submit-highlight-vote/')
         .then((res) => {
             if(res.data.can_vote === 'false'){
                 console.log(res.data.can_vote);
@@ -25,7 +25,7 @@ export const Highlight = (props) => {
             }
         })
 
-        api.get("/get-highlight-choice")
+        api.get("/get-highlight-choice/")
         .then((res) => {
             if(res.data.length < 2){
                 setDisplay(<h2>No poems to be seen here, check back later!</h2>);
