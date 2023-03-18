@@ -29,6 +29,7 @@ DEBUG = os.getenv("DJANGO_DEBUG")
 ALLOWED_HOSTS = [
     'team16-22.bham.team',
     'anthology.bham.team',
+    'teamproject-app',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
