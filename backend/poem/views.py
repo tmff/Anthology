@@ -8,7 +8,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics
 from .serializers import PoemSerializer,UserSerializer,RegisterSerializer, FriendsSerializer,HighlightSumbitSerializer
 from .models import Poem, Profile
-from django.db.models import Q
+from django.db.models import Q,F, FloatField, ExpressionWrapper, Max
 import datetime
 # Create your views here.
 
@@ -108,6 +108,29 @@ class SubmitHighlightPoem(APIView):
             if profile.last_vote_time.date() == datetime.date.today():
                 return Response({'can_vote':'false'},status=200)
         return Response({'can_vote':'true'},status=200)
+
+class HighlightedPoem(APIView):
+    authentication_class = (TokenAuthentication, )
+    serializer_class = PoemSerializer
+
+    def get(self, *args, **kwargs):
+        profile = Profile.objects.get(user=self.request.user.id)
+        friends = profile.friends.all()
+        friends_users = [friend.user for friend in friends]
+        today = datetime.date.today()
+        try:
+            queryset = Poem.objects.filter(time_created__date=today).exclude(author__in=friends_users)
+            highest_win_rate_poem = queryset.annotate(
+            win_percentage=ExpressionWrapper(F('matches_won') * 100.0 / F('matches_played'), output_field=FloatField())
+            ).aggregate(
+            max_win_percentage=Max('win_percentage')
+            ).filter(
+            win_percentage=max_win_percentage
+            ).first()
+            return Response(PoemSerializer(highest_win_rate_poem),status=200)
+
+        except:
+            return Response({'poem':'null'},status=200)
 
 
 

@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework import routers
-from .views import UserDetailAPI,RegisterUserAPIView, PoemView, PoemFriendListView, HighlightChoiceView, SubmitHighlightPoem
+from .views import UserDetailAPI,RegisterUserAPIView, PoemView, PoemFriendListView, HighlightChoiceView, SubmitHighlightPoem,HighlightedPoem
 
 router = routers.DefaultRouter()
 router.register(r'poems', PoemView)
@@ -9,9 +9,11 @@ router.register(r'get-highlight-choice', HighlightChoiceView, basename='get-high
 
 
 
+
 urlpatterns = [
   path("", include(router.urls)),
   path("get-details", UserDetailAPI.as_view()),
   path("register", RegisterUserAPIView.as_view()),
   path("submit-highlight-vote",SubmitHighlightPoem.as_view()),
+  path("get-highlight",HighlightedPoem.as_view()),
 ]

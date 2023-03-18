@@ -65,7 +65,7 @@ class PoemSerializer(serializers.ModelSerializer):
 
     def get_comment_count(self, poem):
         return poem.get_comment_count()
-    
+
 
     def create(self,validated_data):
         user = None
