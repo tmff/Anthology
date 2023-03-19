@@ -7,11 +7,13 @@ import '../css/Poem.css'
 export const PoemViewer = (props) => {
     const [[line1,line2,line3],setContent] = useState(['uhh','huh','mhm']);
     const [title,setTitle] = useState("");
+    const [author,setAuthor] = useState([{username:""}]);
 
 
     useEffect(() => {
         if(!props.id){
             setPoemContent(props.content);
+            setAuthor([props.content.author]);
         }
         else{
             var path = "/poems/" + props.id;
@@ -31,22 +33,34 @@ export const PoemViewer = (props) => {
 
     if(props.highlighted){
         return(
-            <div className='viewer highlighted'>
-                <span className="dot"> </span>
-                <h1>{title}</h1>
-                <h2>{line1}</h2>
-                <h2>{line2}</h2>
-                <h2>{line3}</h2>
+            <div>
+                <div>
+                    <h1>{author[0].username}</h1>
+                </div>
+                <div className='viewer highlighted'>
+                    <span className="dot"> </span>
+                    <h1>{title}</h1>
+                    <h2>{line1}</h2>
+                    <h2>{line2}</h2>
+                    <h2>{line3}</h2>
+                </div>
             </div>
         )
     }
     else{
         return(
-            <div className='viewer'>
-                <h1>{title}</h1>
-                <h2>{line1}</h2>
-                <h2>{line2}</h2>
-                <h2>{line3}</h2>
+            <div>
+                <div>
+                    <img></img>
+                    <h1>{author[0].username}</h1>
+                </div>
+                <div className='viewer'>
+                    <span className="dot"> </span>
+                    <h1>{title}</h1>
+                    <h2>{line1}</h2>
+                    <h2>{line2}</h2>
+                    <h2>{line3}</h2>
+                </div>
             </div>
         )
     }

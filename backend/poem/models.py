@@ -13,6 +13,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     friends = models.ManyToManyField('self')
     is_private = models.BooleanField(default = False)
+    profile_picture = models.ImageField(upload_to='profile_pictures', default='profile_pictures/default.jpg')
 
     ##Highlighting
     last_vote_time = models.DateTimeField(default=None,null=True,blank=True)

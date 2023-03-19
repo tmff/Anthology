@@ -27,6 +27,7 @@ export const Friends = (props) => {
                 setHighlightedPoem(res.data.poem);
             }
         })
+        .catch((err) => {console.log(err)});
     };
 
     useEffect(() =>{
@@ -53,14 +54,17 @@ export const Friends = (props) => {
                         </p>
                     }
                 >
-                    {poems.map((item) => (              
-                        <PoemViewer key={item.id} content={obj = {
-                            title:item.title,
-                            content:item.content
-                        }}
-                        highlighted={highlightedPoem === item.id ? true : false}
-                        />
-                    ))}
+                    <div>
+                        {poems.map((item) => (              
+                            <PoemViewer key={item.id} content={obj = {
+                                title:item.title,
+                                content:item.content,
+                                author:item.author,
+                            }}
+                            highlighted={highlightedPoem === item.id ? true : false}
+                            />
+                        ))}
+                    </div>
                 </InfiniteScroll>
             </div>
         )
