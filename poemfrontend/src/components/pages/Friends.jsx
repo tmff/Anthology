@@ -10,15 +10,23 @@ const refresh = (props) => {};
 
 export const Friends = (props) => {
     const [poems, setPoems] = useState(Array.from({ length: 20 }))
-    const [hasMore, setHasMore] = useState(true)
+    const [hasMore, setHasMore] = useState(false)
+    const [highlightedPoem, setHighlightedPoem] = useState(-1)
     
     const fetchData = () => {
-        api
-            .get("/get-friends-poems/")
-            .then((res) => {
+        api.get("/get-friends-poems/")
+        .then((res) => {
                 console.log(res);
                 setPoems(res.data);
-            });
+        })
+        .catch((err) => {console.log(err)});
+        
+        api.get("/get-highlight")
+        .then((res) => {
+            if(res.status === 200){
+                setHighlightedPoem(res.data.poem);
+            }
+        })
     };
 
     useEffect(() =>{
@@ -45,11 +53,13 @@ export const Friends = (props) => {
                         </p>
                     }
                 >
-                    {poems.map((item) => (
+                    {poems.map((item) => (              
                         <PoemViewer key={item.id} content={obj = {
                             title:item.title,
                             content:item.content
-                        }}/>
+                        }}
+                        highlighted={highlightedPoem === item.id ? true : false}
+                        />
                     ))}
                 </InfiniteScroll>
             </div>

@@ -109,28 +109,33 @@ class SubmitHighlightPoem(APIView):
                 return Response({'can_vote':'false'},status=200)
         return Response({'can_vote':'true'},status=200)
 
+
+
+
 class HighlightedPoem(APIView):
-    authentication_class = (TokenAuthentication, )
+    authentication_classes = (TokenAuthentication,)
     serializer_class = PoemSerializer
 
-    def get(self, *args, **kwargs):
-        profile = Profile.objects.get(user=self.request.user.id)
+    def get(self,request):
+        if not request.user.is_authenticated:
+            return Response("User is not authenticated.", status=401)
+        user = request.user
+        profile = Profile.objects.get(user=user)
         friends = profile.friends.all()
         friends_users = [friend.user for friend in friends]
         today = datetime.date.today()
         try:
-            queryset = Poem.objects.filter(time_created__date=today).exclude(author__in=friends_users)
+            queryset = Poem.objects.filter(time_created__date=today).filter(author__in=friends_users)
+            print(len(queryset))
             highest_win_rate_poem = queryset.annotate(
-            win_percentage=ExpressionWrapper(F('matches_won') * 100.0 / F('matches_played'), output_field=FloatField())
-            ).aggregate(
-            max_win_percentage=Max('win_percentage')
-            ).filter(
-            win_percentage=max_win_percentage
-            ).first()
-            return Response(PoemSerializer(highest_win_rate_poem),status=200)
-
+            win_rate=ExpressionWrapper(
+                F('matches_won') * 100 / F('matches_played'),
+                output_field=FloatField()
+            )
+            ).order_by('-win_rate').first()
+            return Response({'poem':highest_win_rate_poem.id},status=200)
         except:
-            return Response({'poem':'null'},status=200)
+           return Response({'poem':'null'},status=404)
 
 
 

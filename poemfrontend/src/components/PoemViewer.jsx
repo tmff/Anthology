@@ -29,14 +29,25 @@ export const PoemViewer = (props) => {
         setContent([splitString[0],splitString[1],splitString[2]]);
     }
 
-
-    return(
-        <div className='viewer'>
-            <span className="dot"> </span>
-            <h1>{title}</h1>
-            <h2>{line1}</h2>
-            <h2>{line2}</h2>
-            <h2>{line3}</h2>
-        </div>
-    )
+    if(props.highlighted){
+        return(
+            <div className='viewer highlighted'>
+                <span className="dot"> </span>
+                <h1>{title}</h1>
+                <h2>{line1}</h2>
+                <h2>{line2}</h2>
+                <h2>{line3}</h2>
+            </div>
+        )
+    }
+    else{
+        return(
+            <div className='viewer'>
+                <h1>{title}</h1>
+                <h2>{line1}</h2>
+                <h2>{line2}</h2>
+                <h2>{line3}</h2>
+            </div>
+        )
+    }
 }
