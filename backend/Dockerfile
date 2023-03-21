@@ -9,7 +9,6 @@ WORKDIR /backend
 COPY . /backend
 RUN pip install pipenv
 RUN pipenv requirements > requirements.txt
-COPY requirements.txt /backend
 
 RUN pip install -r requirements.txt
 
