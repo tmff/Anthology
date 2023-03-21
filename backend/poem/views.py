@@ -6,6 +6,7 @@ from rest_framework import viewsets
 from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 from .serializers import PoemSerializer,UserSerializer,RegisterSerializer, FriendsSerializer,HighlightSumbitSerializer
 from .models import Poem, Profile
 from django.db.models import Q,F, FloatField, ExpressionWrapper, Max
@@ -18,6 +19,8 @@ class PoemView(viewsets.ModelViewSet):
     serializer_class = PoemSerializer
     queryset = Poem.objects.all()
     authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, *args, **kwargs):
         poem = Poem.objects.get(id=request.poem.id)
         serializer = PoemSerializer(poem,context={'request': request})
@@ -28,12 +31,14 @@ class FriendView(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     queryset = Profile.objects.all()
     serializer_class = FriendsSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class PoemFriendListView(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     serializer_class = PoemSerializer
     model = Poem
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self, *args, **kwargs):
         
@@ -55,6 +60,7 @@ class HighlightChoiceView(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     serializer_class = PoemSerializer
     model = Poem
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self, *args, **kwargs):
         profile = Profile.objects.get(user=self.request.user.id)
@@ -76,6 +82,7 @@ class HighlightChoiceView(viewsets.ModelViewSet):
 class SubmitHighlightPoem(APIView):
     authentication_classes = (TokenAuthentication,)
     serializer_class = HighlightSumbitSerializer
+    permission_classes = [IsAuthenticated]
 
     def post(self,request):
         profile = Profile.objects.get(user=self.request.user.id)
@@ -115,6 +122,7 @@ class SubmitHighlightPoem(APIView):
 class HighlightedPoem(APIView):
     authentication_classes = (TokenAuthentication,)
     serializer_class = PoemSerializer
+    permission_classes = [IsAuthenticated]
 
     def get(self,request):
         if not request.user.is_authenticated:
