@@ -8,7 +8,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .serializers import PoemSerializer,UserSerializer,RegisterSerializer, FriendsSerializer,HighlightSumbitSerializer,FriendRequestSerializer
-from .models import Poem, Profile
+from .models import Poem, Profile, FriendRequest
 from django.db.models import Q,F, FloatField, ExpressionWrapper, Max
 import datetime
 # Create your views here.
@@ -143,7 +143,7 @@ class HighlightedPoem(APIView):
             ).order_by('-win_rate').first()
             return Response({'poem':highest_win_rate_poem.id},status=200)
         except:
-           return Response({'poem':'null'},status=404)
+           return Response({'poem':'null'},status=400)
 
 
 
@@ -181,3 +181,17 @@ class SendFriendRequestView(generics.CreateAPIView):
         friend_request = FriendRequest(from_user=from_user, to_user=to_user, status='pending')
         friend_request.save()
         return Response({'status': 'Friend request sent.'}, status=201)
+
+
+class PendingRequestView(viewsets.ModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = FriendRequestSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        profile = Profile.objects.get(user=self.request.user.id)
+        try:
+            queryset = FriendRequest.objects.filter(to_user=profile)
+            return queryset
+        except:
+            return FriendRequest.objects.none()

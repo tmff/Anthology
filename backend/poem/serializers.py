@@ -136,6 +136,13 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
+class UserRelatedField(serializers.RelatedField):
+    def to_representation(self, value):
+        return {'id': value.id, 'username': value.username}
+
+    def to_internal_value(self, data):
+        return User.objects.get(id=data)
+
 class FriendsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
@@ -143,9 +150,13 @@ class FriendsSerializer(serializers.ModelSerializer):
 
 
 class FriendRequestSerializer(serializers.ModelSerializer):
+    from_user = UserRelatedField(source='from_user.user',read_only=True)
+    to_user = UserRelatedField(source='to_user.user',read_only=True)
+
+
     class Meta:
         model = FriendRequest
-        fields = ['id','to_user','created_at']
+        fields = ['id','to_user','from_user','created_at']
 
 
 

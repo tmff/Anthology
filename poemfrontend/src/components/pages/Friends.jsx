@@ -4,6 +4,7 @@ import '../../css/Friends.css';
 import '../../css/App.css';
 import { PoemViewer } from '../PoemViewer';
 import api from '../../js/Api.js';
+import FriendsMenu from '../FriendsMenu';
 // import AnthNavbar from '../Navbar';
 
 
@@ -13,6 +14,7 @@ export const Friends = (props) => {
     const [poems, setPoems] = useState(Array.from({ length: 20 }))
     const [hasMore, setHasMore] = useState(false)
     const [highlightedPoem, setHighlightedPoem] = useState(-1)
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     
     const fetchData = () => {
         api.get("/get-friends-poems/")
@@ -29,6 +31,7 @@ export const Friends = (props) => {
             }
         })
         .catch((err) => {console.log(err)});
+
     };
 
     useEffect(() =>{
@@ -39,11 +42,22 @@ export const Friends = (props) => {
         console.log(poems[0])
     },[poems])
 
+    const top = {
+        position:"relative",
+        top:-220,
+    }
+
+    const handleMenuToggle = () => {
+        setIsMenuOpen(!isMenuOpen);
+      };
+
     var obj;
     if (!poems.includes(undefined)) {
         return (
             <div className='friends-container'>
                 <header> {/*<AnthNavbar/> */} </header>
+                <button onClick={handleMenuToggle}>Add Friends</button>
+                {isMenuOpen && <FriendsMenu />}
                 <InfiniteScroll
                     dataLength={poems.length}
                     next={fetchData}

@@ -1,0 +1,23 @@
+:root{
+--uranian-blue: #a0ddffff;
+--vista-blue: #758ecdff;
+--periwinkle: #c1cefeff;
+--cornflower-blue: #7189ffff;
+--royal-purple: #624cabff;
+}
+
+
+
+
+.FriendsMenu{
+    z-index: 999;
+    background-color: var(--royal-purple);
+    border: 10px solid var(--vista-blue);
+    border-radius: 20px;
+}
+
+.items{
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
