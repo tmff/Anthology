@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 import '../../css/Friends.css';
+import '../../css/App.css';
 import { PoemViewer } from '../PoemViewer';
 import api from '../../js/Api.js';
 // import AnthNavbar from '../Navbar';

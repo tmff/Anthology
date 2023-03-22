@@ -13,12 +13,17 @@
 }
 
 .app-title {
-    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');
-    font-family: 'Libre-Baskerville', serif;
+    /*@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');*/
+    /*font-family: 'Libre-Baskerville', serif;*/
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;&display=swap');
+    font-family: 'Roboto Slab', serif;
     font-size: 30px;
     color: #fff;
     padding: 0px;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap');
+
 
 .poem-view {
     position: relative;
@@ -29,7 +34,7 @@
     border-radius: 15px;
     background-color: #fff;
     color: #000;
-    font-size: 25px;
+    font-size: 25px;   
 }
 
 

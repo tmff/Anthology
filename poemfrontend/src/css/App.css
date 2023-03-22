@@ -20,6 +20,12 @@ ul {
   --royal-purple: #624cabff;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap');
+
+*{
+  font-family: 'Roboto Slab', serif;
+}
+
 
 @keyframes fadeEffect {
   0% {
@@ -36,9 +42,10 @@ ul {
 @media screen and (min-width: 1300px) {
   .app-Title {
     /* Placeholder font from Google Fonts, we can pick one later */
-    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');
+    /*@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');*/
     animation: fadeEffect 2s;
-    font-family: 'Libre-Baskerville', serif;
+    /*font-family: 'Libre-Baskerville', serif;*/
+    font-family: 'Roboto Slab', serif;
     font-weight: 700;
     text-transform: capitalize;
     font-size: 60px;
@@ -50,9 +57,10 @@ ul {
 @media screen and (max-width: 1299px) {
   .app-Title {
     /* Placeholder font from Google Fonts, we can pick one later */
-    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');
+    /*@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');*/
     animation: fadeEffect 2s;
-    font-family: 'Libre-Baskerville', serif;
+    /*font-family: 'Libre-Baskerville', serif;*/
+    font-family: 'Roboto Slab', serif;
     font-weight: 700;
     text-transform: capitalize;
     font-size: 30px;
