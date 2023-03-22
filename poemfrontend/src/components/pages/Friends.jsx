@@ -55,9 +55,10 @@ export const Friends = (props) => {
     if (!poems.includes(undefined)) {
         return (
             <div className='friends-container'>
-                <header> {/*<AnthNavbar/> */} </header>
-                <button onClick={handleMenuToggle}>Add Friends</button>
-                {isMenuOpen && <FriendsMenu />}
+                <div>
+                    <button onClick={handleMenuToggle}>Add Friends</button>
+                    {isMenuOpen && <FriendsMenu/>}
+                </div>
                 <InfiniteScroll
                     dataLength={poems.length}
                     next={fetchData}

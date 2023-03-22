@@ -20,11 +20,18 @@ const FriendsMenu = (props) => {
         }
     },[requests,])
 
+
     return (
         <div className="FriendsMenu">
-            <ul className='items'>
+            <ul className='accrej'>
                 {requests.map((item) => {
-                    return <li key={item.id}>{item.from_user.username}</li>
+                    return (
+                        <div>
+                            <li key={item.id} className='username'>{item.from_user.username}</li>
+                            <button>accept</button>
+                            <button>reject</button>
+                        </div>
+                    )
                 })}
             </ul>
         </div>
@@ -32,3 +39,4 @@ const FriendsMenu = (props) => {
 };
 
 export default FriendsMenu;
+
