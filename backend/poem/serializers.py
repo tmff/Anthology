@@ -1,10 +1,10 @@
-from rest_framework import serializers
+from rest_framework import serializers, generics
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
-from .models import Poem, Profile, Like, Bookmark
+from .models import Poem, Profile, Like, Bookmark, FriendRequest
 from rest_framework.authtoken.models import Token
 
 
@@ -106,7 +106,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True, required=True,style={'input_type': 'password', 'placeholder': 'Confirm Password'},)
 
 
-    # The metadata for the serialiser
+    # The metadata for the serializer
     class Meta:
         model = User
         fields = ('username', 'password', 'password2',
@@ -140,4 +140,12 @@ class FriendsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['friends']
+
+
+class FriendRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FriendRequest
+        fields = ['id','to_user','created_at']
+
+
 

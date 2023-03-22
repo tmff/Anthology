@@ -1,11 +1,13 @@
 from django.urls import path, include
 from rest_framework import routers
-from .views import UserDetailAPI,RegisterUserAPIView, PoemView, PoemFriendListView, HighlightChoiceView, SubmitHighlightPoem,HighlightedPoem
+from .views import UserDetailAPI,RegisterUserAPIView, PoemView, PoemFriendListView, HighlightChoiceView, SubmitHighlightPoem,HighlightedPoem,SendFriendRequestView
 
 router = routers.DefaultRouter()
 router.register(r'poems', PoemView)
 router.register(r'get-friends-poems', PoemFriendListView, basename='get-friends-poems')
 router.register(r'get-highlight-choice', HighlightChoiceView, basename='get-highlight-choice')
+
+
 
 
 
@@ -16,4 +18,6 @@ urlpatterns = [
   path("register", RegisterUserAPIView.as_view()),
   path("submit-highlight-vote",SubmitHighlightPoem.as_view()),
   path("get-highlight",HighlightedPoem.as_view()),
+  path("send-friend-request",SendFriendRequestView.as_view()),
+
 ]

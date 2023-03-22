@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
-from .serializers import PoemSerializer,UserSerializer,RegisterSerializer, FriendsSerializer,HighlightSumbitSerializer
+from .serializers import PoemSerializer,UserSerializer,RegisterSerializer, FriendsSerializer,HighlightSumbitSerializer,FriendRequestSerializer
 from .models import Poem, Profile
 from django.db.models import Q,F, FloatField, ExpressionWrapper, Max
 import datetime
@@ -29,7 +29,7 @@ class PoemView(viewsets.ModelViewSet):
 
 class FriendView(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
-    queryset = Profile.objects.all()
+    queryset = Profile.objects.all()#Doesnt this just return everyone lmao
     serializer_class = FriendsSerializer
     permission_classes = [IsAuthenticated]
 
@@ -151,7 +151,7 @@ class HighlightedPoem(APIView):
 
 class UserDetailAPI(APIView):
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (AllowAny,)
+    permission_classes = [IsAuthenticated]
     def get(self,request,*args,**kwargs):
         user = User.objects.get(id=request.user.id)
         serializer = UserSerializer(user)
@@ -163,4 +163,21 @@ class RegisterUserAPIView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
 
+class SendFriendRequestView(generics.CreateAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = FriendRequestSerializer
 
+    def create(self,request,*args,**kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        validated_data = serializer.validated_data
+        from_user = request.user.profile
+        to_user = validated_data['to_user']
+        if from_user == to_user:
+            return Response({'error': 'You cannot send a friend request to yourself.'}, status=400)
+        if from_user.friends.filter(id=to_user.id).exists():
+            return Response({'error': 'You are already friends with this user.'}, status=400)
+        friend_request = FriendRequest(from_user=from_user, to_user=to_user, status='pending')
+        friend_request.save()
+        return Response({'status': 'Friend request sent.'}, status=201)

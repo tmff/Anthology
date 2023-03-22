@@ -20,7 +20,15 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
-    
+
+
+class FriendRequest(models.Model):
+    from_user = models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='friend_requests_sent')
+    to_user = models.ForeignKey(Profile,on_delete=models.CASCADE,related_name="friend_requests_received")
+    status = models.CharField(max_length=20, choices=(('pending', 'Pending'), ('accepted', 'Accepted'), ('rejected', 'Rejected')))
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
 
 class Tag(models.Model):
     title = models.CharField(max_length=120)
