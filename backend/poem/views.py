@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
-from .serializers import PoemSerializer,UserSerializer,RegisterSerializer, FriendsSerializer,HighlightSumbitSerializer,FriendRequestSerializer
+from .serializers import *
 from .models import Poem, Profile, FriendRequest
 from django.db.models import Q,F, FloatField, ExpressionWrapper, Max
 import datetime
@@ -165,15 +165,20 @@ class RegisterUserAPIView(generics.CreateAPIView):
 
 class SendFriendRequestView(generics.CreateAPIView):
     authentication_classes = (TokenAuthentication,)
-    permission_classes = [IsAuthenticated]
-    serializer_class = FriendRequestSerializer
+    #permission_classes = [IsAuthenticated]
+    serializer_class = CreateFriendRequestSerializer
 
     def create(self,request,*args,**kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         validated_data = serializer.validated_data
         from_user = request.user.profile
-        to_user = validated_data['to_user']
+        to_user_str = validated_data['to_user']
+        try:
+            user = User.objects.get(username=to_user_str)
+            to_user = Profile.objects.get(user=user)
+        except:
+            return Response({'error': 'User cannot be found.'}, status=400)
         if from_user == to_user:
             return Response({'error': 'You cannot send a friend request to yourself.'}, status=400)
         if from_user.friends.filter(id=to_user.id).exists():

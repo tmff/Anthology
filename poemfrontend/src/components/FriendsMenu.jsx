@@ -4,6 +4,7 @@ import api from '../js/Api.js';
 
 const FriendsMenu = (props) => {
     const [requests,setRequests] = useState([]);
+    const [sendInput,setSendInput] = useState('');
     //On menu open
     useEffect(() => {
         api.get("/pending-request/")
@@ -20,9 +21,25 @@ const FriendsMenu = (props) => {
         }
     },[requests,])
 
+    function sendFriendRequest(){
+        api.post('/send-friend-request',{
+            to_user: sendInput,
+        })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err))
+    }
+
 
     return (
         <div className="FriendsMenu">
+            <div>
+                <label for="sndReq">Send Request</label>
+                <input id="sndReq" name="sendReq" type="text" onChange={e => setSendInput(e.target.value)}></input>
+                <div>
+                    <button type="button" onClick={sendFriendRequest}></button>
+                </div>
+
+            </div>
             <ul className='accrej'>
                 {requests.map((item) => {
                     return (

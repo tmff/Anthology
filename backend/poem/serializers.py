@@ -153,10 +153,16 @@ class FriendRequestSerializer(serializers.ModelSerializer):
     from_user = UserRelatedField(source='from_user.user',read_only=True)
     to_user = UserRelatedField(source='to_user.user',read_only=True)
 
-
     class Meta:
         model = FriendRequest
         fields = ['id','to_user','from_user','created_at']
+
+class CreateFriendRequestSerializer(serializers.ModelSerializer):
+    to_user = serializers.CharField()
+
+    class Meta:
+        model = FriendRequest
+        fields = ['to_user',]
 
 
 
