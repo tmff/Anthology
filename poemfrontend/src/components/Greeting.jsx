@@ -1,4 +1,5 @@
 
+import { Footer } from './Footer';
 import '../css/App.css';
 
 export const Title = (props) => {
@@ -10,6 +11,7 @@ export const Title = (props) => {
                 <div className='app-Title'>Anthology.</div>
             </div>
             { props.component }
+            <Footer />
         </div>
     )
 }

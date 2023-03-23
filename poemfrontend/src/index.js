@@ -70,11 +70,13 @@ export const router = createBrowserRouter([
   {
     path: "edit-profile",
     element: <Base component={ <EditProfile /> }></Base>,
+    errorElement: <Base component={ <ErrorPage /> }></Base>,
     // loader: standardLoader,
   },
   {
     path: "highlight",
     element:<Base component={ <Highlight />}></Base>,
+    errorElement: <Base component={ <ErrorPage /> }></Base>,
     loader: standardLoader,
   },
   {

@@ -6,6 +6,15 @@
   justify-content: center;
   color:  white;
   background: linear-gradient(var(--uranian-blue), var(--royal-purple));
+  padding-bottom: 10px;
+  flex-direction: column;
+}
+
+footer {
+  top: 50px;
+  left: 100px;
+  padding: 20px;
+  margin: 10px 10px 10px 10px; 
 }
 
 ul {
