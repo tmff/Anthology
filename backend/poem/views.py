@@ -174,9 +174,16 @@ class SendFriendRequestView(generics.CreateAPIView):
         validated_data = serializer.validated_data
         from_user = request.user.profile
         to_user_str = validated_data['to_user']
+
         try:
             user = User.objects.get(username=to_user_str)
             to_user = Profile.objects.get(user=user)
+            
+            queryset = FriendRequest.objects.filter(from_user=from_user)
+            queryset = queryset.filter(to_user=user.profile)
+            if queryset.exists():
+                return Response({'error': 'You have already sent a friend request to this user.'}, status=400)
+            
         except:
             return Response({'error': 'User cannot be found.'}, status=400)
         if from_user == to_user:

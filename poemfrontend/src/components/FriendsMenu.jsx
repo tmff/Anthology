@@ -5,6 +5,7 @@ import api from '../js/Api.js';
 const FriendsMenu = (props) => {
     const [requests,setRequests] = useState([]);
     const [sendInput,setSendInput] = useState('');
+    const [friendRes,setFriendRes] = useState(' ');
     //On menu open
     useEffect(() => {
         api.get("/pending-request/")
@@ -25,8 +26,14 @@ const FriendsMenu = (props) => {
         api.post('/send-friend-request',{
             to_user: sendInput,
         })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err))
+        .then((res) => {
+            console.log(res.data.status)
+            setFriendRes(res.data.status)
+        })
+        .catch((err) => {
+            console.log(err)
+            setFriendRes(err.response.data.error)
+        })
     }
 
 
@@ -38,6 +45,7 @@ const FriendsMenu = (props) => {
                 <div>
                     <button type="button" onClick={sendFriendRequest}></button>
                 </div>
+                <b1>{friendRes}</b1>
 
             </div>
             <ul className='accrej'>
