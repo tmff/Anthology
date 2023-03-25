@@ -2,6 +2,7 @@ import api from "../js/Api"
 import { useState, useEffect} from 'react';
 import Cookies from 'universal-cookie';
 import '../css/Poem.css'
+import axios from "axios";
 
 //Pass in id of poem that you want to get
 export const PoemViewer = (props) => {
@@ -11,16 +12,29 @@ export const PoemViewer = (props) => {
 
 
     useEffect(() => {
+        const cancelToken = axios.CancelToken.source();
         if(!props.id){
             setPoemContent(props.content);
             setAuthor([props.content.author]);
         }
         else{
             var path = "/poems/" + props.id;
-            api.get(path)
-            .then((res) => setPoemContent(res.data))
-            .catch((err) => console.log(err));
+            api.get(path, {cancelToken: cancelToken.token})
+            .then((res) => {
+                setPoemContent(res.data)
+            })
+            .catch((err) => {
+                if(axios.isCancel(err)){
+                    console.log("cancelled")
+                }else{
+                    console.log(err)
+                }
+            })
             console.log("loaded")
+        }
+
+        return () => {
+            cancelToken.cancel();
         }
     },[])
 

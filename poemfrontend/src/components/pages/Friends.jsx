@@ -5,24 +5,31 @@ import '../../css/App.css';
 import { PoemViewer } from '../PoemViewer';
 import api from '../../js/Api.js';
 import FriendsMenu from '../FriendsMenu';
+import axios from 'axios';
 // import AnthNavbar from '../Navbar';
 
 
 const refresh = (props) => {};
 
 export const Friends = (props) => {
-    const [poems, setPoems] = useState(Array.from({ length: 20 }))
-    const [hasMore, setHasMore] = useState(false)
-    const [highlightedPoem, setHighlightedPoem] = useState(-1)
+    const [poems, setPoems] = useState(Array.from({ length: 20 }));
+    const [highlightedPoem, setHighlightedPoem] = useState(-1);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    
-    const fetchData = () => {
-        api.get("/get-friends-poems/")
+
+    useEffect(() =>{
+        const cancelToken = axios.CancelToken.source();
+        api.get("/get-friends-poems/", {cancelToken: cancelToken.token})
         .then((res) => {
                 console.log(res);
                 setPoems(res.data);
         })
-        .catch((err) => {console.log(err)});
+        .catch((err) => {
+            if(axios.isCancel(err)){
+                console.log("cancelled")
+            }else{
+                console.log(err)
+            }
+        });
         
         api.get("/get-highlight")
         .then((res) => {
@@ -30,12 +37,17 @@ export const Friends = (props) => {
                 setHighlightedPoem(res.data.poem);
             }
         })
-        .catch((err) => {console.log(err)});
+        .catch((err) => {
+            if(axios.isCancel(err)){
+                console.log("cancelled")
+            }else{
+                console.log(err)
+            }
+        });
 
-    };
-
-    useEffect(() =>{
-        fetchData()
+        return () => {
+            cancelToken.cancel();
+        }
     },[])
 
     useEffect(() => {
@@ -61,8 +73,7 @@ export const Friends = (props) => {
                 </div>
                 <InfiniteScroll
                     dataLength={poems.length}
-                    next={fetchData}
-                    hasMore={hasMore}
+                    hasMore={false}
                     loader={<h4 className='load-msg'>Loading...</h4>}
                     endMessage= {
                         <p className='end-msg'>

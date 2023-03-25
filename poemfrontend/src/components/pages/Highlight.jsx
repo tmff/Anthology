@@ -14,8 +14,8 @@ export const Highlight = (props) => {
 
 
     useEffect(() => {
-        
-        api.get('/submit-highlight-vote')
+        const cancelToken = axios.CancelToken.source();
+        api.get('/submit-highlight-vote',{cancelToken: cancelToken.token})
         .then((res) => {
             if(res.data.can_vote === 'false'){
                 console.log(res.data.can_vote);
@@ -24,8 +24,16 @@ export const Highlight = (props) => {
                 return;
             }
         })
+        .catch((err) => {
+            if(axios.isCancel(err)){
+                console.log("cancelled")
+            }else{
+                console.log(err)
+            }
+        })
 
-        api.get("/get-highlight-choice")
+
+        api.get("/get-highlight-choice",{cancelToken: cancelToken.token})
         .then((res) => {
             if(res.data.length < 2){
                 setDisplay(<h2>No poems to be seen here, check back later!</h2>);
@@ -36,8 +44,16 @@ export const Highlight = (props) => {
             }
         })
         .catch((err) => {
-            console.log(err);
+            if(axios.isCancel(err)){
+                console.log("cancelled")
+            }else{
+                console.log(err)
+            }
         })
+
+        return () => {
+            cancelToken.cancel();
+        }
     },[])
 
     useEffect(() =>{
