@@ -21,20 +21,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY",'django-insecure-3t9r2**#@lokjjh$s1zc^ist-b70wk_bcbw7vwmpg%5$^!v&50')
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DJANGO_DEBUG",True)
+DEBUG = os.getenv("DJANGO_DEBUG")
 
 ALLOWED_HOSTS = [
-    'teamproject-app',
-    'localhost',
-    '0.0.0.0',
     'team16-22.bham.team',
+    'anthology.bham.team',
+    'teamproject-app',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-        'https://team16-22.bham.team'
+        'https://team16-22.bham.team',
+        'https://anthology.bham.team',
 ]
 
 # Application definition
@@ -90,11 +90,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv("POSTGRES_DB","usersdb"),  
-        'USER': os.getenv("POSTGRES_USER","anth"), 
-        'PASSWORD': os.getenv("POSTGRES_PASSWORD","eevee"), 
-        'HOST': os.getenv("POSTGRES_HOST","localhost"), 
-        'PORT': os.getenv("POSTGRES_PORT","5432"), 
+        'NAME': os.getenv("POSTGRES_DB"),  
+        'USER': os.getenv("POSTGRES_USER"), 
+        'PASSWORD': os.getenv("POSTGRES_PASSWORD"), 
+        'HOST': os.getenv("POSTGRES_HOST"), 
+        'PORT': os.getenv("POSTGRES_PORT"), 
     }
 }
 
@@ -141,5 +141,6 @@ STATIC_URL = 'django-admin/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
-   'http://localhost:3000'
+   'https://team16-22.bham.team',
+   'https://anthology.bham.team'
 ]
