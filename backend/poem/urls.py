@@ -20,4 +20,5 @@ urlpatterns = [
   path("submit-highlight-vote",SubmitHighlightPoem.as_view()),
   path("get-highlight",HighlightedPoem.as_view()),
   path("send-friend-request",SendFriendRequestView.as_view()),
+  path("accept-friend-request",PendingRequestResponseView.as_view()),
 ]

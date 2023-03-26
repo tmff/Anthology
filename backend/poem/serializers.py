@@ -165,4 +165,8 @@ class CreateFriendRequestSerializer(serializers.ModelSerializer):
         fields = ['to_user',]
 
 
-
+class RespondFriendRequestSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+    class Meta:
+        model = FriendRequest
+        fields = ['id','status',]

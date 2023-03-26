@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import '../css/FriendsMenu.css';
 import api from '../js/Api.js';
@@ -8,13 +9,17 @@ const FriendsMenu = (props) => {
     const [friendRes,setFriendRes] = useState(' ');
     //On menu open
     useEffect(() => {
+        getRequests();
+    },[])
+
+    function getRequests(){
         api.get("/pending-request/")
         .then((res) => {
             console.log(res.data)
             setRequests(res.data)
         })
         .catch((err) => console.log(err))
-    },[])
+    }
 
     useEffect(() => {
         if(requests){
@@ -27,13 +32,31 @@ const FriendsMenu = (props) => {
             to_user: sendInput,
         })
         .then((res) => {
-            console.log(res.data.status)
-            setFriendRes(res.data.status)
+            console.log(res.data.status);
+            setFriendRes(res.data.status);
         })
         .catch((err) => {
-            console.log(err)
-            setFriendRes(err.response.data.error)
+            console.log(err);
+            setFriendRes(err.response.data.error);
         })
+    }
+    
+    function respondRequest(id,response){
+        api.post('/accept-friend-request',{
+            id: id,
+            status: response,
+        })
+        .then((res) => {
+            console.log(res.data)
+            getRequests();
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }
+
+    function rejectRequest(id){
+        console.log(id)
     }
 
 
@@ -41,7 +64,7 @@ const FriendsMenu = (props) => {
         <div className="FriendsMenu">
             <div>
                 <label for="sndReq">Send Request</label>
-                <input id="sndReq" name="sendReq" type="text" onChange={e => setSendInput(e.target.value)}></input>
+                <input id="sndReq" placeholder='username' name="sendReq" type="text" onChange={e => setSendInput(e.target.value)}></input>
                 <div>
                     <button type="button" onClick={sendFriendRequest}></button>
                 </div>
@@ -52,9 +75,10 @@ const FriendsMenu = (props) => {
                 {requests.map((item) => {
                     return (
                         <div>
-                            <li key={item.id} className='username'>{item.from_user.username}</li>
-                            <button>accept</button>
-                            <button>reject</button>
+                            <li key={item.id} className='username'>{item.from_user.username}
+                                <button onClick={e => respondRequest(item.id,"accepted")}>accept</button>
+                                <button onClick={e => respondRequest(item.id,"declined")}>reject</button>
+                            </li>
                         </div>
                     )
                 })}
@@ -64,4 +88,7 @@ const FriendsMenu = (props) => {
 };
 
 export default FriendsMenu;
+
+
+
 
