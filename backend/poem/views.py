@@ -174,9 +174,16 @@ class SendFriendRequestView(generics.CreateAPIView):
         validated_data = serializer.validated_data
         from_user = request.user.profile
         to_user_str = validated_data['to_user']
+
         try:
             user = User.objects.get(username=to_user_str)
             to_user = Profile.objects.get(user=user)
+
+            queryset = FriendRequest.objects.filter(from_user=from_user)
+            queryset = queryset.filter(to_user=user.profile)
+            if queryset.exists():
+                return Response({'error': 'You have already sent a friend request to this user.'}, status=400)
+            
         except:
             return Response({'error': 'User cannot be found.'}, status=400)
         if from_user == to_user:
@@ -196,7 +203,41 @@ class PendingRequestView(viewsets.ModelViewSet):
     def get_queryset(self, *args, **kwargs):
         profile = Profile.objects.get(user=self.request.user.id)
         try:
-            queryset = FriendRequest.objects.filter(to_user=profile)
+            queryset = FriendRequest.objects.filter(to_user=profile).filter(status='pending')
             return queryset
         except:
             return FriendRequest.objects.none()
+        
+
+class PendingRequestResponseView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = RespondFriendRequestSerializer
+
+    def post(self,request,*args,**kwargs):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            profile = Profile.objects.get(user=self.request.user.id)
+            friend_request_id = serializer.validated_data['id']
+            friend_request = FriendRequest.objects.get(id=friend_request_id)
+            if friend_request.to_user != profile:
+                return Response({'error': 'You do not have permission to respond to this request.'}, status=400)
+            if friend_request.status != 'pending':
+                return Response({'error': 'This request has already been responded to.'}, status=400)
+            response = serializer.validated_data['status']
+            if response == 'accepted':
+                friend_request.status = 'accepted'
+                friend_request.save()
+                profile.friends.add(friend_request.from_user)
+                profile.save()
+                friend_request.from_user.friends.add(profile)
+                friend_request.from_user.save()
+                return Response({'status': 'Friend request accepted.'}, status=200)
+            elif response == 'declined':
+                friend_request.status = 'declined'
+                friend_request.save()
+                return Response({'status': 'Friend request declined.'}, status=200)
+            else:
+                return Response({'error': 'Invalid response.'}, status=400)
+        else:
+            return Response(serializer.errors, status=400)
