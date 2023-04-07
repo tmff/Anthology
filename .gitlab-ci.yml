@@ -30,7 +30,7 @@ before_script:
   - export BASE_DIR="`pwd`"
 
 check-django:
-  image: python:3.10
+  image: python:3.10.10
   stage: check
   tags: 
   - python
