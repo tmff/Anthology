@@ -2,6 +2,9 @@ import api from "../js/Api"
 import { useState, useEffect} from 'react';
 import Cookies from 'universal-cookie';
 import '../css/Poem.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCommentDots, faHeart, faPaperPlane, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 
 //Pass in id of poem that you want to get
 export const PoemViewer = (props) => {
@@ -34,9 +37,11 @@ export const PoemViewer = (props) => {
     if(props.highlighted){
         return(
             <div>
-                <div>
-                    <h1>{author[0].username}</h1>
-                </div>
+              <div className="colored-block">
+                <h4>{title}</h4>
+                <p>{line1}<br/>{line2}<br/>{line3}</p>
+                <FontAwesomeIcon icon={faBookmark} className="bookmark-icon" />
+              </div>
                 <div className='viewer highlighted'>
                     <span className="dot"> </span>
                     <h1>{title}</h1>
@@ -50,17 +55,24 @@ export const PoemViewer = (props) => {
     else{
         return(
             <div>
-                <div>
-                    <img></img>
-                    <h1>{author[0].username}</h1>
+              <div className="poem">
+              <div className="colored-block">
+                <h4>{title}</h4>
+                <p>{line1}<br/>{line2}<br/>{line3}</p>
+                <FontAwesomeIcon icon={faBookmark} className="bookmark-icon" />
+              </div>
+              <div className="light-block">
+                <div className="profile-info">
+                  <FontAwesomeIcon icon={faUserCircle} className="profile-icon" />
+                  <p className="username">{author[0].username}</p>
                 </div>
-                <div className='viewer'>
-                    <span className="dot"> </span>
-                    <h1>{title}</h1>
-                    <h2>{line1}</h2>
-                    <h2>{line2}</h2>
-                    <h2>{line3}</h2>
+                <div className="buttons">
+                  <FontAwesomeIcon icon={faHeart} className="button-icon" />
+                  <FontAwesomeIcon icon={faCommentDots} className="button-icon" />
+                  <FontAwesomeIcon icon={faPaperPlane} className="button-icon" />
                 </div>
+              </div>
+              </div>
             </div>
         )
     }
