@@ -58,7 +58,7 @@ check-django:
   - echo "React compilation complete."
 
 .migrations-django:
-  image: python:3.10
+  image: python:3.10.10
   stage: build
   tags:
   - python
