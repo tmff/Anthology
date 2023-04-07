@@ -67,12 +67,11 @@ h3 {
   }
   
   /* Styling for individual poems */
-  .poem {
+  /* .poem {
     margin-right: 20px;
     width: 350px;
   }
   
-  /* Styling for poem blocks */
   .colored-block {
     background-color: #055c6b;
     padding: 20px;
@@ -95,13 +94,11 @@ h3 {
     font-size: 20px;
   }
   
-  /* Styling for poem titles */
   .poem h4 {
     margin-top: 0;
     margin-bottom: 10px;
   }
   
-  /* Styling for poem authors */
   .poem .username {
     display: flex;
     margin-top: 4px;
@@ -111,20 +108,17 @@ h3 {
     margin-left: 5px;
   }
   
-  /* Styling for poem buttons */
   .buttons {
     display: flex;
     margin: 0 10px;
     align-items: center;
     color: black;
   }
-  /* Styling for poem icons */
   .poem .button-icon {
     margin-right: 10px;
     font-size: 1.2em;
     color: black;
   }
-  /* Styling for poem likes, comments, shares */
   .poem .likes, .poem .comments, .poem .shares {
     display: flex;
     margin-left: 10px;
@@ -144,6 +138,6 @@ h3 {
     margin-right: 5px;
     justify-content: center;
     padding: 10px;
-  }
+  } */
 
   
