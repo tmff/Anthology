@@ -2,9 +2,11 @@ import api from "../js/Api"
 import { useState, useEffect} from 'react';
 import Cookies from 'universal-cookie';
 import '../css/Poem.css'
+import { Tooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCommentDots, faHeart, faPaperPlane, faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { faBookmark } from '@fortawesome/free-regular-svg-icons';
+import { faCommentDots, faHeart as faSolidHeart, faPaperPlane, faUserCircle, faBookmark as faSolidBookmark } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faRegularHeart, faBookmark as faRegularBookmark } from '@fortawesome/free-regular-svg-icons';
 import axios from "axios";
 
 //Pass in id of poem that you want to get
@@ -12,7 +14,8 @@ export const PoemViewer = (props) => {
     const [[line1,line2,line3],setContent] = useState(['uhh','huh','mhm']);
     const [title,setTitle] = useState("");
     const [author,setAuthor] = useState([{username:""}]);
-
+    const [liked, setLiked] = useState(false);
+    const [bookmarked, setBookmarked] = useState(false);
 
     useEffect(() => {
         const cancelToken = axios.CancelToken.source();
@@ -24,7 +27,9 @@ export const PoemViewer = (props) => {
             var path = "/poems/" + props.id;
             api.get(path, {cancelToken: cancelToken.token})
             .then((res) => {
-                setPoemContent(res.data)
+                setPoemContent(res.data);
+                setLiked(res.data.is_liked);
+                setBookmarked(res.data.is_bookmarked);
             })
             .catch((err) => {
                 if(axios.isCancel(err)){
@@ -48,13 +53,29 @@ export const PoemViewer = (props) => {
         setContent([splitString[0],splitString[1],splitString[2]]);
     }
 
+    function promptLike() {
+
+        // Set the new state
+        setLiked(!liked);
+        
+        // Send an API request
+    }
+
+    function promptBookmark() {
+
+        // Set the new state
+        setBookmarked(!bookmarked);
+
+        // Send an API request
+    }
+
     if(props.highlighted){
         return(
             <div>
               <div className="colored-block">
                 <h4>{title}</h4>
                 <p>{line1}<br/>{line2}<br/>{line3}</p>
-                <FontAwesomeIcon icon={faBookmark} className="bookmark-icon" />
+                <FontAwesomeIcon icon={bookmarked ? faSolidBookmark : faRegularBookmark} className="bookmark-icon" />
               </div>
                 <div className='viewer highlighted'>
                     <span className="dot"> </span>
@@ -73,7 +94,7 @@ export const PoemViewer = (props) => {
               <div className="colored-block">
                 <h4>{title}</h4>
                 <p>{line1}<br/>{line2}<br/>{line3}</p>
-                <FontAwesomeIcon icon={faBookmark} className="bookmark-icon" />
+                <FontAwesomeIcon icon={bookmarked ? faSolidBookmark : faRegularBookmark} className="bookmark-icon" onClick={ promptBookmark } data-tooltip-id="bookmark-tooltip" />
               </div>
               <div className="light-block">
                 <div className="profile-info">
@@ -81,9 +102,15 @@ export const PoemViewer = (props) => {
                   <p className="username">{author[0].username}</p>
                 </div>
                 <div className="buttons">
-                  <FontAwesomeIcon icon={faHeart} className="button-icon" />
-                  <FontAwesomeIcon icon={faCommentDots} className="button-icon" />
-                  <FontAwesomeIcon icon={faPaperPlane} className="button-icon" />
+
+                  <FontAwesomeIcon icon={liked ?  faSolidHeart : faRegularHeart} className="button-icon" onClick={ promptLike } data-tooltip-id="like-tooltip" />
+                  <FontAwesomeIcon icon={faCommentDots} className="button-icon" data-tooltip-id="comment-tooltip" />
+                  <FontAwesomeIcon icon={faPaperPlane} className="button-icon" data-tooltip-id="share-tooltip" />
+
+                  <Tooltip id="like-tooltip" content="Like" />
+                  <Tooltip id="comment-tooltip" content="Comments" />
+                  <Tooltip id="share-tooltip" content="Share" />
+                  <Tooltip id="bookmark-tooltip" content="Bookmark" />
                 </div>
               </div>
               </div>
