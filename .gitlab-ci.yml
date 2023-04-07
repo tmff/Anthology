@@ -93,7 +93,7 @@ build-docker:
   - docker push ${CI_FULL_IMG}:backend
 
 test-django:
-  image: python:3.10
+  image: python:3.10.10
   stage: test
   tags: 
   - python
