@@ -99,6 +99,7 @@ test-django:
   script:
   - echo "Running Django tests..."
   - cd $BASE_DIR/backend
+  - echo "Python version: `python --version`"
   - pip install pipenv
   - pipenv install
   - pipenv run python manage.py test
