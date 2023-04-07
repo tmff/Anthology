@@ -9,10 +9,9 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .serializers import *
 from .models import Poem, Profile, FriendRequest
-from django.db.models import Q,F, FloatField, ExpressionWrapper, Max
+from django.db.models import Q, F, FloatField, ExpressionWrapper, Max
 import datetime
 # Create your views here.
-
 
 
 class PoemView(viewsets.ModelViewSet):
@@ -23,7 +22,7 @@ class PoemView(viewsets.ModelViewSet):
 
     def get(self, request, *args, **kwargs):
         poem = Poem.objects.get(id=request.poem.id)
-        serializer = PoemSerializer(poem,context={'request': request})
+        serializer = PoemSerializer(poem, context={'request': request})
         return Response(serializer.data)
 
 
@@ -56,6 +55,7 @@ class PoemFriendListView(viewsets.ModelViewSet):
         # Serialize all of the poems
         return queryset
 
+
 class HighlightChoiceView(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     serializer_class = PoemSerializer
@@ -79,18 +79,19 @@ class HighlightChoiceView(viewsets.ModelViewSet):
 
         return queryset
 
+
 class SubmitHighlightPoem(APIView):
-    authentication_classes = (TokenAuthentication,)
+    authentication_classes = (TokenAuthentication)
     serializer_class = HighlightSumbitSerializer
     permission_classes = [IsAuthenticated]
 
-    def post(self,request):
+    def post(self, request):
         profile = Profile.objects.get(user=self.request.user.id)
         serializer = self.serializer_class(data=request.data)
-        ##Check if user has voted today and return bad request if they have
-        if profile.last_vote_time != None:
+        # Check if user has voted today and return bad request if they have
+        if profile.last_vote_time is not None:
             if profile.last_vote_time.date() == datetime.date.today():
-                return Response({'message':'already voted today'}, status=400)
+                return Response({'message': 'already voted today'}, status=400)
         if serializer.is_valid():
             poem_id = serializer.validated_data['poem_id']
             poem = Poem.objects.get(id=poem_id)
@@ -105,18 +106,16 @@ class SubmitHighlightPoem(APIView):
 
             profile.last_vote_time = datetime.datetime.now()
             profile.save()
-            return Response({'message':'Vote cast!'},status=200)
+            return Response({'message': 'Vote cast!'}, status=200)
         else:
             return Response(serializer.errors, status=400)
 
-    def get(self,request):
+    def get(self, request):
         profile = Profile.objects.get(user=self.request.user.id)
-        if profile.last_vote_time != None:
+        if profile.last_vote_time is not None:
             if profile.last_vote_time.date() == datetime.date.today():
-                return Response({'can_vote':'false'},status=200)
-        return Response({'can_vote':'true'},status=200)
-
-
+                return Response({'can_vote': 'false'}, status=200)
+        return Response({'can_vote': 'true'}, status=200)
 
 
 class HighlightedPoem(APIView):
@@ -124,7 +123,7 @@ class HighlightedPoem(APIView):
     serializer_class = PoemSerializer
     permission_classes = [IsAuthenticated]
 
-    def get(self,request):
+    def get(self, request):
         if not request.user.is_authenticated:
             return Response("User is not authenticated.", status=401)
         user = request.user
@@ -136,23 +135,21 @@ class HighlightedPoem(APIView):
             queryset = Poem.objects.filter(time_created__date=today).filter(author__in=friends_users)
             print(len(queryset))
             highest_win_rate_poem = queryset.annotate(
-            win_rate=ExpressionWrapper(
-                F('matches_won') * 100 / F('matches_played'),
-                output_field=FloatField()
-            )
+                win_rate=ExpressionWrapper(
+                    F('matches_won') * 100 / F('matches_played'),
+                    output_field=FloatField()
+                )
             ).order_by('-win_rate').first()
-            return Response({'poem':highest_win_rate_poem.id},status=200)
+            return Response({'poem': highest_win_rate_poem.id}, status=200)
         except:
-           return Response({'poem':'null'},status=400)
-
-
-
+            return Response({'poem': 'null'}, status=400)
 
 
 class UserDetailAPI(APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = [IsAuthenticated]
-    def get(self,request,*args,**kwargs):
+
+    def get(self, request, *args, **kwargs):
         user = User.objects.get(id=request.user.id)
         serializer = UserSerializer(user)
         return Response(serializer.data)
@@ -165,10 +162,10 @@ class RegisterUserAPIView(generics.CreateAPIView):
 
 class SendFriendRequestView(generics.CreateAPIView):
     authentication_classes = (TokenAuthentication,)
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = CreateFriendRequestSerializer
 
-    def create(self,request,*args,**kwargs):
+    def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         validated_data = serializer.validated_data
@@ -207,14 +204,14 @@ class PendingRequestView(viewsets.ModelViewSet):
             return queryset
         except:
             return FriendRequest.objects.none()
-        
+
 
 class PendingRequestResponseView(APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = [IsAuthenticated]
     serializer_class = RespondFriendRequestSerializer
 
-    def post(self,request,*args,**kwargs):
+    def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             profile = Profile.objects.get(user=self.request.user.id)
@@ -241,3 +238,46 @@ class PendingRequestResponseView(APIView):
                 return Response({'error': 'Invalid response.'}, status=400)
         else:
             return Response(serializer.errors, status=400)
+
+
+class LikePoemView(generics.CreateAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = LikeSerializer
+
+    def create(self, request, *args, **kwargs):
+
+        # Find the poem
+        print(request.data)
+        if request.data['poem_id'] is None:
+            return Response({'error': 'A poem ID must be specified.'}, status=400)
+
+        poem = Poem.objects.get(id=request.data['poem_id'])
+        if not poem:
+            return Response({'error': 'Poem not found.'}, status=400)
+
+        like = Like(poem=poem, user=request.user)
+        like.save()
+        return Response({'status': 'Like made.', 'likes': poem.get_like_count()}, status=200)
+
+
+class UnlikePoemView(generics.DestroyAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, *args, **kwargs):
+
+        # Find the poem
+        if request.data['poem_id'] is None:
+            return Response({'error': 'A poem ID must be specified.'}, status=400)
+
+        poem = Poem.objects.get(id=request.data['poem_id'])
+        if not poem:
+            return Response({'error': 'Poem not found.'}, status=400)
+
+        like = Like.objects.filter(user=request.user, poem=poem)
+        if not like:
+            return Response({'error': 'The poem is not liked.'}, status=400)
+
+        like.delete()
+        return Response({'status': 'Like removed.', 'likes': poem.get_like_count()}, status=200)

@@ -8,26 +8,25 @@ from django.dispatch import receiver
 import datetime
 
 
-##access with freds_department = u.Author.department for example
+# access with freds_department = u.Author.department for example
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     friends = models.ManyToManyField('self')
-    is_private = models.BooleanField(default = False)
+    is_private = models.BooleanField(default=False)
     profile_picture = models.ImageField(upload_to='profile_pictures', default='profile_pictures/default.jpg')
 
-    ##Highlighting
-    last_vote_time = models.DateTimeField(default=None,null=True,blank=True)
+    # Highlighting
+    last_vote_time = models.DateTimeField(default=None, null=True, blank=True)
 
     def __str__(self):
         return self.user.username
 
 
 class FriendRequest(models.Model):
-    from_user = models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='friend_requests_sent')
-    to_user = models.ForeignKey(Profile,on_delete=models.CASCADE,related_name="friend_requests_received")
+    from_user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='friend_requests_sent')
+    to_user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="friend_requests_received")
     status = models.CharField(max_length=20, choices=(('pending', 'Pending'), ('accepted', 'Accepted'), ('rejected', 'Rejected')))
     created_at = models.DateTimeField(auto_now_add=True)
-
 
 
 class Tag(models.Model):
@@ -46,6 +45,8 @@ Consists of the following:
 - Author: the author of the poem as a User object.
 - Time created: when the poem was submitted to the database.
 """
+
+
 class Poem(models.Model):
 
     title = models.CharField(max_length=120)
@@ -53,39 +54,32 @@ class Poem(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)  # TODO - should not be null but it's half 10 in the evening and i need sleep
     time_created = models.DateTimeField(default=datetime.datetime.now)
     is_published = models.BooleanField(default=False)
-    tags = models.ForeignKey(Tag, on_delete=models.SET_NULL,null = True)
+    tags = models.ForeignKey(Tag, on_delete=models.SET_NULL, null=True)
 
-    ##Highlighting
+    # Highlighting
     matches_played = models.IntegerField(default=0)
     matches_won = models.IntegerField(default=0)
 
-
-
     def __str__(self):
         return self.title
-    
 
     def get_author(self) -> User:
         return self.author
-    
 
     def get_content(self) -> str:
         return self.content
-    
 
     def get_title(self) -> str:
         return self.title
     
     def get_like_count(self) -> int:
-        return Like.objects.aggregate(count = Count('pk', filter=Q(poem=self)))["count"]
-    
+        return Like.objects.aggregate(count=Count('pk', filter=Q(poem=self)))["count"]
 
     def get_bookmark_count(self) -> int:
-        return Bookmark.objects.aggregate(count = Count('pk', filter=Q(poem=self)))["count"]
-    
+        return Bookmark.objects.aggregate(count=Count('pk', filter=Q(poem=self)))["count"]
 
     def get_comment_count(self) -> int:
-        return Comment.objects.aggregate(count = Count('pk', filter=Q(poem=self)))["count"]
+        return Comment.objects.aggregate(count=Count('pk', filter=Q(poem=self)))["count"]
 
 
 class Bookmark(models.Model):
@@ -94,14 +88,12 @@ class Bookmark(models.Model):
                                                               # No
     poem = models.ForeignKey(Poem, on_delete=models.CASCADE)
 
-
     def get_user(self) -> User:
         return self.user
-    
 
     def get_poem(self) -> Poem:
         return self.poem
-    
+
 
 class Comment(models.Model):
 

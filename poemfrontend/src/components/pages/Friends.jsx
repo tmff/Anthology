@@ -82,15 +82,20 @@ export const Friends = (props) => {
                     }
                 >
                     <div>
-                        {poems.map((item) => (              
+                        {poems.map((item) => {console.log(item); return (             
                             <PoemViewer key={item.id} content={obj = {
                                 title:item.title,
                                 content:item.content,
                                 author:item.author,
+                                poem_id:item.id,
+                                is_liked:item.is_liked,
+                                like_count:item.like_count,
+                                comment_count:item.comment_count,
+                                is_bookmarked:item.is_bookmarked,
                             }}
                             highlighted={highlightedPoem === item.id ? true : false}
                             />
-                        ))}
+                        )})}
                     </div>
                 </InfiniteScroll>
             </div>

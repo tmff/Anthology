@@ -132,7 +132,7 @@
 }
 /* Styling for poem icons */
 .poem .button-icon {
-  margin-right: 10px;
+  margin: 0 10px 0 10px;
   font-size: 1.2em;
   color: black;
 }

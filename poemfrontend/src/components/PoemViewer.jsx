@@ -16,12 +16,17 @@ export const PoemViewer = (props) => {
     const [author,setAuthor] = useState([{username:""}]);
     const [liked, setLiked] = useState(false);
     const [bookmarked, setBookmarked] = useState(false);
+    const [likes, setLikes] = useState(0)
+    const [comments, setComments] = useState(0)
 
     useEffect(() => {
         const cancelToken = axios.CancelToken.source();
         if(!props.id){
             setPoemContent(props.content);
             setAuthor([props.content.author]);
+            setLiked(props.content.is_liked);
+            setLikes(props.content.like_count);
+            setComments(props.content.comment_count);
         }
         else{
             var path = "/poems/" + props.id;
@@ -57,16 +62,22 @@ export const PoemViewer = (props) => {
 
         // Set the new state
         setLiked(!liked);
-        
+
         // Send an API request
+        const poemId = props.content.poem_id;
+        const request = liked ? api.delete('/remove-poem-like', { data: { poem_id: poemId } }) : api.post('/like-poem', { poem_id: poemId });
+        request.then((res) => {
+            console.log(res.data);
+            setLikes(res.data.likes);
+        }).catch((err) => {
+            console.log(err);
+        });
     }
 
     function promptBookmark() {
 
         // Set the new state
         setBookmarked(!bookmarked);
-
-        // Send an API request
     }
 
     if(props.highlighted){
@@ -104,7 +115,9 @@ export const PoemViewer = (props) => {
                 <div className="buttons">
 
                   <FontAwesomeIcon icon={liked ?  faSolidHeart : faRegularHeart} className="button-icon" onClick={ promptLike } data-tooltip-id="like-tooltip" />
+                  {likes}
                   <FontAwesomeIcon icon={faCommentDots} className="button-icon" data-tooltip-id="comment-tooltip" />
+                  {comments}
                   <FontAwesomeIcon icon={faPaperPlane} className="button-icon" data-tooltip-id="share-tooltip" />
 
                   <Tooltip id="like-tooltip" content="Like" />

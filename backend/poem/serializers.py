@@ -11,21 +11,20 @@ from rest_framework.authtoken.models import Token
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id','first_name','last_name','username']
+        fields = ['id', 'first_name', 'last_name', 'username']
 
 
 class PoemSerializer(serializers.ModelSerializer):
-    
+
     author = UserSerializer(read_only=True)
     is_liked = serializers.SerializerMethodField()
     like_count = serializers.SerializerMethodField()
     is_bookmarked = serializers.SerializerMethodField()
     comment_count = serializers.SerializerMethodField()
-    
+
     class Meta:
         model = Poem
-        fields = ('id','title','content','author', 'is_liked', 'like_count', 'is_bookmarked', 'comment_count')
-
+        fields = ('id', 'title', 'content', 'author', 'is_liked', 'like_count', 'is_bookmarked', 'comment_count')
 
     def get_is_liked(self, poem):
         user = None
@@ -35,17 +34,15 @@ class PoemSerializer(serializers.ModelSerializer):
 
         if not user:
             return False
-        
+
         try:
             result = Like.objects.get(poem=poem, user=user)
             return True
         except Like.DoesNotExist:
             return False
-    
 
     def get_like_count(self, poem):
         return poem.get_like_count()
-    
 
     def get_is_bookmarked(self, poem):
         user = None
@@ -61,29 +58,28 @@ class PoemSerializer(serializers.ModelSerializer):
             return True
         except Bookmark.DoesNotExist:
             return False
-    
-
+   
     def get_comment_count(self, poem):
         return poem.get_comment_count()
 
-
-    def create(self,validated_data):
+    def create(self, validated_data):
         user = None
         request = self.context.get("request")
         if request and hasattr(request, "user"):
             user = request.user
         poem = Poem(
-            title = validated_data['title'],
-            content = validated_data['content'],
-            author = user,
+            title=validated_data['title'],
+            content=validated_data['content'],
+            author=user,
         )
         poem.save()
         return poem
 
+
 class HighlightSumbitSerializer(serializers.Serializer):
     poem_id = serializers.IntegerField()
     losing_id = serializers.IntegerField()
-    
+
 
 class RegisterSerializer(serializers.ModelSerializer):
 
@@ -93,26 +89,21 @@ class RegisterSerializer(serializers.ModelSerializer):
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
 
-
     # The chosen password
-    password =  serializers.CharField(
+    password = serializers.CharField(
         write_only=True,
-        required=True,validators=[validate_password],
+        required=True, validators=[validate_password],
         style={'input_type': 'password', 'placeholder': 'Password'},
     )
 
-
     # Repeating the password
-    password2 = serializers.CharField(write_only=True, required=True,style={'input_type': 'password', 'placeholder': 'Confirm Password'},)
-
+    password2 = serializers.CharField(write_only=True, required=True, style={'input_type': 'password', 'placeholder': 'Confirm Password'},)
 
     # The metadata for the serializer
     class Meta:
         model = User
-        fields = ('username', 'password', 'password2',
-         'email', 'first_name', 'last_name')
-        extra_kwargs = {'first_name': {'required': True},'last_name': {'required': True}}
-    
+        fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name')
+        extra_kwargs = {'first_name': {'required': True}, 'last_name': {'required': True}}
 
     # Validate the password
     def clean(self):
@@ -124,9 +115,9 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Your passwords do not match.")
 
     # Create the user
-    def create(self,validated_data):
+    def create(self, validated_data):
         user = User.objects.create(
-            username = validated_data['username'],
+            username=validated_data['username'],
             email=validated_data['email'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name']
@@ -143,6 +134,7 @@ class UserRelatedField(serializers.RelatedField):
     def to_internal_value(self, data):
         return User.objects.get(id=data)
 
+
 class FriendsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
@@ -150,12 +142,13 @@ class FriendsSerializer(serializers.ModelSerializer):
 
 
 class FriendRequestSerializer(serializers.ModelSerializer):
-    from_user = UserRelatedField(source='from_user.user',read_only=True)
-    to_user = UserRelatedField(source='to_user.user',read_only=True)
+    from_user = UserRelatedField(source='from_user.user', read_only=True)
+    to_user = UserRelatedField(source='to_user.user', read_only=True)
 
     class Meta:
         model = FriendRequest
-        fields = ['id','to_user','from_user','created_at']
+        fields = ['id', 'to_user', 'from_user', 'created_at']
+
 
 class CreateFriendRequestSerializer(serializers.ModelSerializer):
     to_user = serializers.CharField()
@@ -167,6 +160,12 @@ class CreateFriendRequestSerializer(serializers.ModelSerializer):
 
 class RespondFriendRequestSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
+
     class Meta:
         model = FriendRequest
-        fields = ['id','status',]
+        fields = ['id', 'status',]
+
+
+class LikeSerializer(serializers.ModelSerializer):
+    poem_id = serializers.IntegerField()
+    user = UserRelatedField(source='user.user', read_only=True)
