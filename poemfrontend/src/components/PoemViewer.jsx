@@ -13,7 +13,7 @@ import axios from "axios";
 export const PoemViewer = (props) => {
     const [[line1,line2,line3],setContent] = useState(['uhh','huh','mhm']);
     const [title,setTitle] = useState("");
-    const [author,setAuthor] = useState([{username:""}]);
+    const [author,setAuthor] = useState({username:""});
     const [liked, setLiked] = useState(false);
     const [bookmarked, setBookmarked] = useState(false);
     const [likes, setLikes] = useState(0)
@@ -23,7 +23,7 @@ export const PoemViewer = (props) => {
         const cancelToken = axios.CancelToken.source();
         if(!props.id){
             setPoemContent(props.content);
-            setAuthor([props.content.author]);
+            setAuthor(props.content.author);
             setLiked(props.content.is_liked);
             setLikes(props.content.like_count);
             setComments(props.content.comment_count);
@@ -110,7 +110,7 @@ export const PoemViewer = (props) => {
               <div className="light-block">
                 <div className="profile-info">
                   <FontAwesomeIcon icon={faUserCircle} className="profile-icon" />
-                  <p className="username">{author[0].username}</p>
+                  <p className="username">{author.username}</p>
                 </div>
                 <div className="buttons">
 

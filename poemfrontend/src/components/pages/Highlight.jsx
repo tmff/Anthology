@@ -65,18 +65,31 @@ export const Highlight = (props) => {
     function setPoemsToHighlight(){
         if(poems.length == 0)return;
         var obj1,obj2;
+        console.log(poems[0].author)
         setDisplay(
             <div className="container">
                 <div onClick={chooseOne}>
                     <PoemViewer content={obj1 = {
                         title:poems[0].title,
-                        content:poems[0].content
+                        content:poems[0].content,
+                        author:poems[0].author,
+                        poem_id:poems[0].id,
+                        is_liked:poems[0].is_liked,
+                        like_count:poems[0].like_count,
+                        comment_count:poems[0].comment_count,
+                        is_bookmarked:poems[0].is_bookmarked,
                     }} />
                 </div>
                 <div onClick={chooseTwo}>
                     <PoemViewer content={obj2 = {
                         title:poems[1].title,
-                        content:poems[1].content
+                        content:poems[1].content,
+                        author:poems[1].author,
+                        poem_id:poems[1].id,
+                        is_liked:poems[1].is_liked,
+                        like_count:poems[1].like_count,
+                        comment_count:poems[1].comment_count,
+                        is_bookmarked:poems[1].is_bookmarked,
                     }}/>
                 </div>
             </div>

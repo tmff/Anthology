@@ -57,7 +57,7 @@ class PoemFriendListView(viewsets.ModelViewSet):
 
 
 class HighlightChoiceView(viewsets.ModelViewSet):
-    authentication_classes = (TokenAuthentication,)
+    authentication_classes = [TokenAuthentication,]
     serializer_class = PoemSerializer
     model = Poem
     permission_classes = [IsAuthenticated]
@@ -81,7 +81,7 @@ class HighlightChoiceView(viewsets.ModelViewSet):
 
 
 class SubmitHighlightPoem(APIView):
-    authentication_classes = (TokenAuthentication)
+    authentication_classes = (TokenAuthentication,)
     serializer_class = HighlightSumbitSerializer
     permission_classes = [IsAuthenticated]
 
