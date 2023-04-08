@@ -79,55 +79,35 @@ export const PoemViewer = (props) => {
         // Set the new state
         setBookmarked(!bookmarked);
     }
-
-    if(props.highlighted){
-        return(
-            <div>
-              <div className="colored-block">
-                <h4>{title}</h4>
-                <p>{line1}<br/>{line2}<br/>{line3}</p>
-                <FontAwesomeIcon icon={bookmarked ? faSolidBookmark : faRegularBookmark} className="bookmark-icon" />
-              </div>
-                <div className='viewer highlighted'>
-                    <span className="dot"> </span>
-                    <h1>{title}</h1>
-                    <h2>{line1}</h2>
-                    <h2>{line2}</h2>
-                    <h2>{line3}</h2>
-                </div>
-            </div>
-        )
-    }
-    else{
-        return(
-            <div>
-              <div className="poem">
-              <div className="colored-block">
+    
+    return(
+        <div>
+            <div className="poem">
+            <div className={props.highlighted ? "colored-block highlighted" : "colored-block"}>
                 <h4>{title}</h4>
                 <p>{line1}<br/>{line2}<br/>{line3}</p>
                 <FontAwesomeIcon icon={bookmarked ? faSolidBookmark : faRegularBookmark} className="bookmark-icon" onClick={ promptBookmark } data-tooltip-id="bookmark-tooltip" />
-              </div>
-              <div className="light-block">
+            </div>
+            <div className="light-block">
                 <div className="profile-info">
-                  <FontAwesomeIcon icon={faUserCircle} className="profile-icon" />
-                  <p className="username">{author.username}</p>
+                <FontAwesomeIcon icon={faUserCircle} className="profile-icon" />
+                <p className="username">{author.username}</p>
                 </div>
                 <div className="buttons">
 
-                  <FontAwesomeIcon icon={liked ?  faSolidHeart : faRegularHeart} className="button-icon" onClick={ promptLike } data-tooltip-id="like-tooltip" />
-                  {likes}
-                  <FontAwesomeIcon icon={faCommentDots} className="button-icon" data-tooltip-id="comment-tooltip" />
-                  {comments}
-                  <FontAwesomeIcon icon={faPaperPlane} className="button-icon" data-tooltip-id="share-tooltip" />
+                <FontAwesomeIcon icon={liked ?  faSolidHeart : faRegularHeart} className="button-icon" onClick={ promptLike } data-tooltip-id="like-tooltip" />
+                {likes}
+                <FontAwesomeIcon icon={faCommentDots} className="button-icon" data-tooltip-id="comment-tooltip" />
+                {comments}
+                <FontAwesomeIcon icon={faPaperPlane} className="button-icon" data-tooltip-id="share-tooltip" />
 
-                  <Tooltip id="like-tooltip" content="Like" />
-                  <Tooltip id="comment-tooltip" content="Comments" />
-                  <Tooltip id="share-tooltip" content="Share" />
-                  <Tooltip id="bookmark-tooltip" content="Bookmark" />
+                <Tooltip id="like-tooltip" content="Like" />
+                <Tooltip id="comment-tooltip" content="Comments" />
+                <Tooltip id="share-tooltip" content="Share" />
+                <Tooltip id="bookmark-tooltip" content="Bookmark" />
                 </div>
-              </div>
-              </div>
             </div>
-        )
-    }
+            </div>
+        </div>
+    )
 }
