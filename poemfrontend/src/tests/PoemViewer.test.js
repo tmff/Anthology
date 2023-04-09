@@ -10,8 +10,8 @@ const poemObj = {
     content: "This is a test poem.",
     author: {
         id: 1,
-        first_name: "Test Author",
-        last_name: "Test Author",
+        first_name: "",
+        last_name: "",
         username: "testauthor",
     },
     is_liked: false,
