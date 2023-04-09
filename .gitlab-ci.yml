@@ -118,10 +118,9 @@ test-react:
   - npm run test:ci
   - cd $BASE_DIR
   - echo "Finished React tests."
-  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   artifacts:
     paths:
-      - coverage/
+      - poemfrontend/junit.xml
     when: always
     reports:
       junit:
