@@ -106,7 +106,7 @@ test-django:
   - cd $BASE_DIR
   - echo "Finished Django tests."
 
-.test-react:
+test-react:
   image: node:16
   stage: test
   tags:
@@ -114,7 +114,7 @@ test-django:
   script:
   - echo "Running React tests..."
   - cd $BASE_DIR/poemfrontend
-  - npm test
+  - npm run test
   - cd $BASE_DIR
   - echo "Finished React tests."
 
