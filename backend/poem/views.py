@@ -142,7 +142,7 @@ class HighlightedPoem(APIView):
             ).order_by('-win_rate').first()
             return Response({'poem': highest_win_rate_poem.id}, status=200)
         except:
-            return Response({'poem': 'null'}, status=400)
+            return Response({'poem': 'null'}, status=200)
 
 
 class UserDetailAPI(APIView):

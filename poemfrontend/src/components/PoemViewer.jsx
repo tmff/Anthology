@@ -3,7 +3,7 @@ import { useState, useEffect} from 'react';
 import Cookies from 'universal-cookie';
 import '../css/Poem.css'
 import { Tooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css';
+//import 'react-tooltip/dist/react-tooltip.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentDots, faHeart as faSolidHeart, faPaperPlane, faUserCircle, faBookmark as faSolidBookmark } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faRegularHeart, faBookmark as faRegularBookmark } from '@fortawesome/free-regular-svg-icons';
@@ -81,9 +81,9 @@ export const PoemViewer = (props) => {
     }
     
     return(
-        <div>
+        <div data-testid="poem-viewer">
             <div className="poem">
-            <div className={props.highlighted ? "colored-block highlighted" : "colored-block"}>
+            <div data-testid="coloured-top" className={props.highlighted ? "colored-block highlighted" : "colored-block"}>
                 <h4>{title}</h4>
                 <p>{line1}<br/>{line2}<br/>{line3}</p>
                 <FontAwesomeIcon icon={bookmarked ? faSolidBookmark : faRegularBookmark} className="bookmark-icon" onClick={ promptBookmark } data-tooltip-id="bookmark-tooltip" />
