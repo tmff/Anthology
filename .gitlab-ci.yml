@@ -115,9 +115,17 @@ test-react:
   - echo "Running React tests..."
   - cd $BASE_DIR/poemfrontend
   - npm install react-scripts --save-dev
-  - npm run test
+  - npm run test:ci
   - cd $BASE_DIR
   - echo "Finished React tests."
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  artifacts:
+    paths:
+      - coverage/
+    when: always
+    reports:
+      junit:
+        - junit.xml
 
 deploy-git:
   image: alpine:latest
