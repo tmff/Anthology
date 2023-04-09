@@ -20,4 +20,6 @@ const poemObj = {
     comment_count: 0,
 }
 
-expect(true).toBe(true);
+test('nothing', () => {
+    expect(true).toBe(true);
+});
