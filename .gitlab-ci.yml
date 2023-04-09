@@ -124,7 +124,7 @@ test-react:
     when: always
     reports:
       junit:
-        - junit.xml
+        - poemfrontend/junit.xml
 
 deploy-git:
   image: alpine:latest
