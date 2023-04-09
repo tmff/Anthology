@@ -22,8 +22,8 @@ variables:
   REPLACE_CMD: "sed -i 's|image: teamproject|image: ${CI_FULL_IMG}|g' ~/team-project-deployment/docker/app.yml"
 stages:          # List of stages for jobs, and their order of execution
   - check
-  - build
   - test
+  - build
   - publish
   - deploy
 before_script:
