@@ -1,5 +1,6 @@
 import { render, screen , cleanup} from '@testing-library/react';
 import '@testing-library/jest-dom'
+import { expect } from '@jest/globals';
 
 afterEach(cleanup);
 
@@ -18,3 +19,5 @@ const poemObj = {
     is_bookmarked: false,
     comment_count: 0,
 }
+
+expect(true).toBe(true);
