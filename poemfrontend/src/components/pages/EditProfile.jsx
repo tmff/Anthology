@@ -1,37 +1,81 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import '../../css/editProfile.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faSun} from '@fortawesome/free-regular-svg-icons'; 
 import {faMoon, faGear, faVolumeHigh, faFeatherPointed, faUserCircle} from '@fortawesome/free-solid-svg-icons'; 
 import api from "../../js/Api"
+import axios from "axios";
 
 export const EditProfile = (props) => {
 
-    const [name, setName] = useState("James Watson");
-    const [username, setUsername] = useState("@jameswatson");
-    const [blurb, setBlurb] = useState("The next Michael Rosen");
+    const [picture, setPicture] = useState('/media/profile_pictures/default.jpg')
+    const [inputs, setInputs] = useState({});
 
-    
-    const setDarkMode = () => {
-        document.querySelector("body").setAttribute('data-theme', 'dark');
-        localStorage.setItem("selectedTheme", "dark")
+    const handleChange = (event) => {
+      const targetName = event.target.name;
+      const targetValue = event.target.value;
+      setInputs(values => ({...values, [targetName]: targetValue}))
+    }
+  
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      console.log(inputs.bioIn)
+      alert(inputs.bioIn);
+      const config =  {headers: {'content-type': 'multipart/form-data'}}
+      let form_data = new FormData();
+      if (inputs.name != null) form_data.append('name', inputs.name);
+      if (inputs.bio!= null) form_data.append('bio', inputs.bio);
+      if (inputs.facebook != null) form_data.append('facebook', inputs.facebook);
+      if (inputs.twitter != null) form_data.append('twitter', inputs.twitter);
+      if (inputs.instagram != null) form_data.append('instagram', inputs.instagram);
+      api.post('/edit-profile', form_data, config)
+        .then((res) => {
+          console.log(res.data);
+      })
+      .catch(err => console.log(err))
     };
     
-    const setLightMode = () => {
-        document.querySelector("body").setAttribute('data-theme', 'light');
-        localStorage.setItem("selectedTheme", "light")
-    };
-
-    const selectedTheme = localStorage.getItem("selectedTheme");
-
-    if(selectedTheme === "dark") {
-        setDarkMode();
+    const onImageChange = (e) => {
+        console.log(e.target.files[0]);
+        console.log(e.target.value);
+        setPicture (e.target.files[0]);
+        console.log(picture);
     }
 
-    const toggleTheme = e => {
-        if (e.target.checked) setDarkMode()
-        else setLightMode()
-    };
+    const handleImageSubmit = (e) => {
+        e.preventDefault();
+        console.log(e);
+        const config =  {headers: {'content-type': 'multipart/form-data'}}
+        let image_data = new FormData();
+        image_data.append('profile_picture', picture, picture.name);
+        api.post('/edit-picture', image_data, config)
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => console.log(err))  
+      };
+
+
+    // const setDarkMode = () => {
+    //     document.querySelector("body").setAttribute('data-theme', 'dark');
+    //     localStorage.setItem("selectedTheme", "dark")
+    // };
+    
+    // const setLightMode = () => {
+    //     document.querySelector("body").setAttribute('data-theme', 'light');
+    //     localStorage.setItem("selectedTheme", "light")
+    // };
+
+    // const selectedTheme = localStorage.getItem("selectedTheme");
+
+    // if(selectedTheme === "dark") {
+    //     setDarkMode();
+    // }
+
+    // const toggleTheme = e => {
+    //     if (e.target.checked) setDarkMode()
+    //     else setLightMode()
+    // };
 
     // function editProfilePicture() {
     //     console.log("CLICKED");
@@ -46,42 +90,25 @@ export const EditProfile = (props) => {
     //       }
     // }
 
-    // const currentSettings= (e) => {
-    //     e.preventDefault();
-    //     console.log("getting current settings");
-
-    // Fetch the current user settings using get API
-    //    api.get("/users/u777/settings",config)
-    //     .then((res) => {
-        // retrieve data from res variable
-        // console.log(res);})
-    //     .catch((err) => console.log(err))
- 
-    // Save user settings - on Save button
-    //     api.post("/users/u777/settings",{
-    //         language: english, // fetch from fields
-    //         mode: light,
-    //         autoplay: off,
-    //         public: yes
-    //     },config)
-    //     .then((res) => console.log(res))
-    //     .catch((err) => console.log(err))
-    // }
-
-    //  const newSettings = (e) => {
-    //     e.preventDefault();
-    //     console.log("saving settings");
-
-
-    // }
 
     return (
         <div className="profileContainer">
             <div className="profilePicture">
                 {/* <img src={person} alt="Profile picture"></img> */}
                 <h1>Edit your profile</h1>
+                <h4>Change Profile Picture:</h4>
                 <FontAwesomeIcon icon = {faUserCircle} className= "userPic"/>
-
+                {/* <br/> */}
+                <form onSubmit={handleImageSubmit}>
+                    <input type="file" 
+                           accept="image/png, image/jpeg" 
+                           onChange={onImageChange} 
+                           id="image" 
+                           name="image"
+                    />
+                    <br/>
+                    <input type="submit"></input> 
+                </form>
                 {/* <button className="editpfp">
                      <FontAwesomeIcon icon = {faFeatherPointed} className= "quill"/>
                     {/* <img src={quill} alt="Edit Profile Picture"> </img> */}
@@ -89,18 +116,62 @@ export const EditProfile = (props) => {
                 </button> */}
             </div> 
             <div className="names">
-                <h4> {name} </h4>
-                <h4>{username}</h4>
+                {/* <h4> {name} </h4>
+                <h4>{username}</h4> */}
+                <form onSubmit={handleSubmit}>
+                    <label>Enter new name:
+                     <input 
+                        type="text" 
+                        name="name" 
+                        value={inputs.name || " "} 
+                        onChange={handleChange}
+                    />
+                     </label>
+                     <label>Enter new blurb:
+                    {/* <br></br> */}
+                    <input 
+                        type="text" 
+                        name="bio" 
+                        value={inputs.bio || " "} 
+                        onChange={handleChange}
+                    />
+                    </label>
+                     <label>Connect Facebook:
+                     <input 
+                        type="url" 
+                        name="facebook" 
+                        value={inputs.facebook || " "} 
+                        onChange={handleChange}
+                    />
+                     </label>
+                     <label>Connect Twitter:
+                     <input 
+                        type="url" 
+                        name="twitter" 
+                        value={inputs.twitter || " "} 
+                        onChange={handleChange}
+                    />
+                     </label>
+                     <label>Connect Instagram:
+                     <input 
+                        type="url" 
+                        name="instagram" 
+                        value={inputs.instagram || " "} 
+                        onChange={handleChange}
+                    />
+                     </label>
+                 <input type="submit" />
+                </form>
             </div>
 
             <div className="Blurb">
-                <h2> Blurb</h2>
+                {/* <h2> Blurb</h2> */}
                 {/* <button className= "editblurb">
                      <FontAwesomeIcon icon = {faFeatherPointed} className= "quill"/>
                      {/* <img src={quill} alt="quill"> </img> 
                     onClick = {setBlurb} 
                 </button> */}
-                <p>{blurb}</p>
+                {/* <p>{blurb}</p> */}
             </div>
 
             <div className="socialMedia">
@@ -135,8 +206,8 @@ export const EditProfile = (props) => {
                     <FontAwesomeIcon icon = {faSun} className= "sun"/>
                     <label name = "theme" id="theme" class="switch">
                         <input type="checkbox" 
-                        onChange = {toggleTheme} 
-                        defaultChecked = {selectedTheme === "dark"}
+                        // onChange = {toggleTheme} 
+                        // defaultChecked = {selectedTheme === "dark"}
                         />
                         <span class="slider round"></span>
                     </label>

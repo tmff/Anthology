@@ -7,10 +7,12 @@ from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import MultiPartParser, FormParser
 from .serializers import *
 from .models import Poem, Profile, FriendRequest
 from django.db.models import Q, F, FloatField, ExpressionWrapper, Max
 import datetime
+import io
 # Create your views here.
 
 
@@ -281,3 +283,50 @@ class UnlikePoemView(generics.DestroyAPIView):
 
         like.delete()
         return Response({'status': 'Like removed.', 'likes': poem.get_like_count()}, status=200)
+        
+class EditProfileView(APIView):
+    serializer_class = ProfileSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
+
+    def get(self, request, *args, **kwargs):
+        profile = Profile.objects.get(user=self.request.user.id)
+        serializer = ProfileSerializer(profile, context={'request': request})
+        return Response(serializer.data)
+
+    def post (self, request, *args, **kwargs):
+        profile = Profile.objects.get(user=self.request.user.id)
+        print("inside post")
+        print(request.data)
+        serializer = ProfileSerializer(profile, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=200)
+        else:
+            print('error', serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class EditPictureView(APIView):
+    serializer_class = ImageSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
+
+    def get(self, request, *args, **kwargs):
+        profile = Profile.objects.get(user=self.request.user.id)
+        serializer = ImageSerializer(profile, context={'request': request})
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        profile = Profile.objects.get(user=self.request.user.id)
+
+        serializer = ImageSerializer(profile, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=200)
+        else:
+            print('error', serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+

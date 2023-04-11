@@ -25,6 +25,7 @@ class RequestAdmin(admin.ModelAdmin):
 
 admin.site.unregister(User)
 admin.site.register(Poem,PoemAdmin)
+admin.site.register(Profile)
 admin.site.register(Tag,TagAdmin)
 admin.site.register(User,UserAdmin)
 admin.site.register(FriendRequest,RequestAdmin)
