@@ -22,8 +22,8 @@ variables:
   REPLACE_CMD: "sed -i 's|image: teamproject|image: ${CI_FULL_IMG}|g' ~/team-project-deployment/docker/app.yml"
 stages:          # List of stages for jobs, and their order of execution
   - check
-  - build
   - test
+  - build
   - publish
   - deploy
 before_script:
@@ -106,7 +106,7 @@ test-django:
   - cd $BASE_DIR
   - echo "Finished Django tests."
 
-.test-react:
+test-react:
   image: node:16
   stage: test
   tags:
@@ -114,9 +114,17 @@ test-django:
   script:
   - echo "Running React tests..."
   - cd $BASE_DIR/poemfrontend
-  - npm test
+  - npm install react-scripts --save-dev
+  - npm run test:ci
   - cd $BASE_DIR
   - echo "Finished React tests."
+  artifacts:
+    paths:
+      - poemfrontend/junit.xml
+    when: always
+    reports:
+      junit:
+        - poemfrontend/junit.xml
 
 deploy-git:
   image: alpine:latest

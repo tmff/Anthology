@@ -23,6 +23,7 @@
     "react-query": "^3.39.3",
     "react-router-dom": "^6.8.2",
     "react-scripts": "5.0.1",
+    "react-test-renderer": "^18.2.0",
     "react-tooltip": "^5.10.5",
     "universal-cookie": "^4.0.4",
     "web-vitals": "^2.1.4"
@@ -31,7 +32,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test:ci": "npm run test -- --testResultsProcessor=\"jest-junit\" --watchAll=false --ci --coverage"
   },
   "eslintConfig": {
     "extends": [
@@ -50,5 +52,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    }
   }
 }

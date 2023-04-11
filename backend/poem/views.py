@@ -59,7 +59,7 @@ class PoemFriendListView(viewsets.ModelViewSet):
 
 
 class HighlightChoiceView(viewsets.ModelViewSet):
-    authentication_classes = (TokenAuthentication,)
+    authentication_classes = [TokenAuthentication,]
     serializer_class = PoemSerializer
     model = Poem
     permission_classes = [IsAuthenticated]
@@ -83,7 +83,7 @@ class HighlightChoiceView(viewsets.ModelViewSet):
 
 
 class SubmitHighlightPoem(APIView):
-    authentication_classes = (TokenAuthentication)
+    authentication_classes = (TokenAuthentication,)
     serializer_class = HighlightSumbitSerializer
     permission_classes = [IsAuthenticated]
 
@@ -144,7 +144,7 @@ class HighlightedPoem(APIView):
             ).order_by('-win_rate').first()
             return Response({'poem': highest_win_rate_poem.id}, status=200)
         except:
-            return Response({'poem': 'null'}, status=400)
+            return Response({'poem': 'null'}, status=200)
 
 
 class UserDetailAPI(APIView):
