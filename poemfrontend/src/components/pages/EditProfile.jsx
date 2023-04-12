@@ -5,11 +5,15 @@ import {faSun} from '@fortawesome/free-regular-svg-icons';
 import {faMoon, faGear, faVolumeHigh, faFeatherPointed, faUserCircle} from '@fortawesome/free-solid-svg-icons'; 
 import api from "../../js/Api"
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 export const EditProfile = (props) => {
 
     const [picture, setPicture] = useState('/media/profile_pictures/default.jpg')
     const [inputs, setInputs] = useState({});
+    const [isPrivate, setPrivate] = useState (false);
+    const navigate = useNavigate();
+    
 
     const handleChange = (event) => {
       const targetName = event.target.name;
@@ -20,7 +24,6 @@ export const EditProfile = (props) => {
     const handleSubmit = (event) => {
       event.preventDefault();
       console.log(inputs.bioIn)
-      alert(inputs.bioIn);
       const config =  {headers: {'content-type': 'multipart/form-data'}}
       let form_data = new FormData();
       if (inputs.name != null) form_data.append('name', inputs.name);
@@ -55,46 +58,36 @@ export const EditProfile = (props) => {
             .catch(err => console.log(err))  
       };
 
-
-    // const setDarkMode = () => {
-    //     document.querySelector("body").setAttribute('data-theme', 'dark');
-    //     localStorage.setItem("selectedTheme", "dark")
-    // };
     
-    // const setLightMode = () => {
-    //     document.querySelector("body").setAttribute('data-theme', 'light');
-    //     localStorage.setItem("selectedTheme", "light")
-    // };
+      const handlePrivateMode= (event)=> {
+        setPrivate(true);
+      }
 
-    // const selectedTheme = localStorage.getItem("selectedTheme");
+      const handlePublicMode = (e) => {
+        setPrivate(false);
+      }
 
-    // if(selectedTheme === "dark") {
-    //     setDarkMode();
-    // }
-
-    // const toggleTheme = e => {
-    //     if (e.target.checked) setDarkMode()
-    //     else setLightMode()
-    // };
-
-    // function editProfilePicture() {
-    //     console.log("CLICKED");
-    //     {/* save button */ }
-    // }
-
-    // function toDarkMode = (e) => {
-    //     if ( console.log( e.target.checked ) ) {
-            
-    //       } else {
-
-    //       }
-    // }
-
-
+      function submitPreferences(){
+        const config =  {headers: {'content-type': 'multipart/form-data'}}
+        let mode_data = new FormData();
+        mode_data.append('is_private', isPrivate);
+        api.post('/edit-mode', mode_data, config)
+            .then(res => {
+                console.log(res.data);
+                console.log("Your changes have been saved");
+                alert("Your changes have been saved ");
+            })
+            .catch(err => {
+                console.log(err);
+                alert("Your changes have NOT been saved " +err);
+            }) 
+        
+        //  navigate("/profile");
+      };
     return (
         <div className="profileContainer">
+            {/* <div className={`App ${theme}`}></div> */}
             <div className="profilePicture">
-                {/* <img src={person} alt="Profile picture"></img> */}
                 <h1>Edit your profile</h1>
                 <h4>Change Profile Picture:</h4>
                 <FontAwesomeIcon icon = {faUserCircle} className= "userPic"/>
@@ -107,7 +100,7 @@ export const EditProfile = (props) => {
                            name="image"
                     />
                     <br/>
-                    <input type="submit"></input> 
+                    <input type="submit" value="Upload image"></input> 
                 </form>
                 {/* <button className="editpfp">
                      <FontAwesomeIcon icon = {faFeatherPointed} className= "quill"/>
@@ -116,10 +109,9 @@ export const EditProfile = (props) => {
                 </button> */}
             </div> 
             <div className="names">
-                {/* <h4> {name} </h4>
-                <h4>{username}</h4> */}
                 <form onSubmit={handleSubmit}>
-                    <label>Enter new name:
+                    <label>Name
+                    <br></br>
                      <input 
                         type="text" 
                         name="name" 
@@ -127,8 +119,8 @@ export const EditProfile = (props) => {
                         onChange={handleChange}
                     />
                      </label>
-                     <label>Enter new blurb:
-                    {/* <br></br> */}
+                     <label>Blurb
+                    <br></br>
                     <input 
                         type="text" 
                         name="bio" 
@@ -136,7 +128,8 @@ export const EditProfile = (props) => {
                         onChange={handleChange}
                     />
                     </label>
-                     <label>Connect Facebook:
+                     <label>Connect Facebook
+                     <br></br>
                      <input 
                         type="url" 
                         name="facebook" 
@@ -144,7 +137,8 @@ export const EditProfile = (props) => {
                         onChange={handleChange}
                     />
                      </label>
-                     <label>Connect Twitter:
+                     <label>Connect Twitter
+                     <br></br>
                      <input 
                         type="url" 
                         name="twitter" 
@@ -152,7 +146,8 @@ export const EditProfile = (props) => {
                         onChange={handleChange}
                     />
                      </label>
-                     <label>Connect Instagram:
+                     <label>Connect Instagram
+                     <br></br>
                      <input 
                         type="url" 
                         name="instagram" 
@@ -160,54 +155,34 @@ export const EditProfile = (props) => {
                         onChange={handleChange}
                     />
                      </label>
-                 <input type="submit" />
+                 <input type="submit" value="Update details" />
                 </form>
             </div>
 
             <div className="Blurb">
-                {/* <h2> Blurb</h2> */}
-                {/* <button className= "editblurb">
-                     <FontAwesomeIcon icon = {faFeatherPointed} className= "quill"/>
-                     {/* <img src={quill} alt="quill"> </img> 
-                    onClick = {setBlurb} 
-                </button> */}
-                {/* <p>{blurb}</p> */}
-            </div>
+                       </div>
 
-            <div className="socialMedia">
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-                <div className="facebook">
-                    <a href="#" class="fa fa-facebook"></a>
-                </div>
-                <div className="twitter">
-                    <a href="#" class="fa fa-twitter"></a>
-                </div>
-                <div className="instagram">
-                    <a href="#" class="fa fa-instagram"></a>
-                </div>
-            </div>
 
             <div className="settings">
                 <h2> Settings
                     <FontAwesomeIcon icon = {faGear} className= "cog"/>
                 </h2>
 
-                <div className= "languageSelect">
+                {/* <div className= "languageSelect">
                     <label for="languages"> Select Language </label>
                     <select className="languages" id="languages" >
                         <option value="english">English</option>
                         <option value="french">French</option>
                         <option value="spanish">Spanish</option>
                     </select>
-                </div>
+                </div> */}
 
                 <div className= "lightDarkMode">
                     <label for="theme"> Light/Dark Mode </label>
                     <FontAwesomeIcon icon = {faSun} className= "sun"/>
                     <label name = "theme" id="theme" class="switch">
                         <input type="checkbox" 
-                        // onChange = {toggleTheme} 
-                        // defaultChecked = {selectedTheme === "dark"}
+                    
                         />
                         <span class="slider round"></span>
                     </label>
@@ -215,24 +190,37 @@ export const EditProfile = (props) => {
                 </div>
 
 
-                <div className= "autoplayOption">
+                {/* <div className= "autoplayOption">
                     <label for="autoplay"> Auto-play Poems</label>
                     <FontAwesomeIcon icon = {faVolumeHigh} className= "speaker"/>
                     <label name="autoplay" id="autoplay" class="switch">
                         <input type="checkbox" />
                         <span class="slider round"></span>
                     </label>
-                </div>
+                </div> */}
 
-
+                <form onSubmit={submitPreferences}> 
                 <div className = "publicPrivateMode">
-                    <label className = "public"> Public</label>
-                    <label class="switch">
-                        <input type="checkbox" />
+                    <button onClick={handlePrivateMode}>
+                        Private
+                    </button>
+                    <button onClick={handlePublicMode}>
+                        Public
+                    </button>
+                    {/* <label className = "public"> Public</label> */}
+                    {/* <label class="switch">
+                        <input type="checkbox" 
+                         name="isPrivate"
+                         onChange = {handlePrivateMode} 
+                         checked = {isPrivate}
+                         />
                         <span class="slider round" />
-                    </label>
-                    <label className= "private"> Private</label>
+                    </label> */}
+                    {/* <label className= "private"> Private</label> */}
                 </div>
+                {/* <h4>Save Preferences:</h4> */}
+                {/* <input type="submit" value="Save Settings" /> */}
+                </form>
             </div>
 
         </div>

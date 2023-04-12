@@ -10,6 +10,14 @@
   flex-direction: column;
 }
 
+#light {
+  background: linear-gradient(var(--uranian-blue), var(--royal-purple));;
+}
+
+#dark {
+  background: linear-gradient(var(--royal-purple), var(--vista-blue));;
+}
+
 footer {
   top: 50px;
   left: 100px;

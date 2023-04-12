@@ -330,3 +330,25 @@ class EditPictureView(APIView):
             print('error', serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class EditModeView(APIView):
+    serializer_class = ModeSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
+
+    def get(self, request, *args, **kwargs):
+        profile = Profile.objects.get(user=self.request.user.id)
+        serializer = ModeSerializer(profile, context={'request': request})
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        profile = Profile.objects.get(user=self.request.user.id)
+
+        serializer = ModeSerializer(profile, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=200)
+        else:
+            print('error', serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+

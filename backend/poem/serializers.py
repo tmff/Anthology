@@ -179,3 +179,8 @@ class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['profile_picture']
+
+class ModeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['is_private']
