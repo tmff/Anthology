@@ -7,19 +7,37 @@ from django.dispatch import receiver
 
 import datetime
 
+def upload_path(instance, filename):
+    return '/'.join('profile_pictures', [instance.__str__], filename)
 
 # access with freds_department = u.Author.department for example
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(default="", max_length=120)
+    bio = models.TextField(default="")
+    facebook = models.URLField(default="",max_length=200, blank=True)
+    twitter = models.URLField(default="",max_length=200, blank=True) 
+    instagram = models.URLField(default="",max_length=200, blank=True)
     friends = models.ManyToManyField('self')
     is_private = models.BooleanField(default=False)
-    profile_picture = models.ImageField(upload_to='profile_pictures', default='profile_pictures/default.jpg')
-
+    profile_picture = models.ImageField(default='profile_pictures/default.jpg', upload_to='profile_pictures')
     # Highlighting
     last_vote_time = models.DateTimeField(default=None, null=True, blank=True)
 
     def __str__(self):
         return self.user.username
+    
+    # def __str__(self):
+    #     return f"{self.first_name} {self.last_name}"
+    
+    def get_firstName(self):
+        return self.user.first_name
+    
+    def get_lastName(self):
+        return self.user.last_name
+    
+    def get_bio(self):
+        return self.bio
 
 
 class FriendRequest(models.Model):

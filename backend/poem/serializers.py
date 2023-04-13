@@ -169,3 +169,18 @@ class RespondFriendRequestSerializer(serializers.ModelSerializer):
 class LikeSerializer(serializers.ModelSerializer):
     poem_id = serializers.IntegerField()
     user = UserRelatedField(source='user.user', read_only=True)
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['name', 'bio', 'facebook', 'twitter', 'instagram']
+
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['profile_picture']
+
+class ModeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['is_private']

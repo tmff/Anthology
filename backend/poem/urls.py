@@ -1,6 +1,8 @@
 from django.urls import path, include
 from rest_framework import routers
 from .views import *
+from django.conf.urls.static import static
+from django.conf import settings 
 
 router = routers.DefaultRouter()
 router.register(r'poems', PoemView)
@@ -18,5 +20,11 @@ urlpatterns = [
   path("send-friend-request", SendFriendRequestView.as_view()),
   path("accept-friend-request", PendingRequestResponseView.as_view()),
   path("like-poem", LikePoemView.as_view()),
-  path("remove-poem-like", UnlikePoemView.as_view())
+  path("remove-poem-like", UnlikePoemView.as_view()),
+  path("edit-profile", EditProfileView.as_view()),
+  path("edit-picture", EditPictureView.as_view()),
+  path("edit-mode", EditModeView.as_view())
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
