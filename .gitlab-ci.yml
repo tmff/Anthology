@@ -73,7 +73,7 @@ check-django:
   - cd $BASE_DIR
   - echo "Django migrations complete."
 
-build-docker:
+build-docker-frontend:
   image: docker:latest
   stage: build
   services:
@@ -89,8 +89,33 @@ build-docker:
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   - docker build --pull -t ${CI_FULL_IMG}:frontend --build-arg api_endpoint=$API_ENDPOINT --platform linux/arm64 ./poemfrontend/
   - docker push ${CI_FULL_IMG}:frontend
+  only:
+    refs:
+      - react
+    changes:
+      - poemfrontend/**/*
+
+build-docker-backend:
+  image: docker:latest
+  stage: build
+  services:
+  - docker:dind
+  variables:
+    DOCKER_HOST: 'tcp://docker:2375'
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  script:
+  - echo "Pruning unneeded images..."
+  - docker image prune --filter label=stage=intermediate
+  - echo "Building the docker image..."
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   - docker build --pull -t ${CI_FULL_IMG}:backend --platform linux/arm64 ./backend/
   - docker push ${CI_FULL_IMG}:backend
+  only:
+    refs:
+      - react
+    changes:
+      - backend/**/*
 
 test-django:
   image: python:3.10.10
@@ -130,8 +155,6 @@ deploy-git:
   image: alpine:latest
   stage: deploy
   when: on_success
-  only:
-    - react
   before_script: 
     - chmod og= $RSA
     - apk update && apk add openssh-client
@@ -155,3 +178,9 @@ deploy-git:
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "echo POSTGRES_USER=${POSTGRES_USER} >> ~/team-project-deployment/docker/.env"
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "echo POSTGRES_PASSWORD=${POSTGRES_PASSWORD} >> ~/team-project-deployment/docker/.env"
     - ssh -o StrictHostKeyChecking=no -i $RSA $VM_USER@$VM "docker compose -f ~/team-project-deployment/docker/app.yml up -d"
+  only:
+    refs:
+      - react
+    changes:
+      - backend/**/*
+      - poemfrontend/**/*
