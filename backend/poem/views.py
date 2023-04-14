@@ -34,6 +34,12 @@ class FriendView(viewsets.ModelViewSet):
     serializer_class = FriendsSerializer
     permission_classes = [IsAuthenticated]
 
+    # def get(self, request, *args, **kwargs):
+    #     profile = Profile.objects.get(user=self.request.user.id)
+    #     # serializer = FriendsSerializer(profile, context={'request': request})
+    #     friends = profile.friends.count()
+    #     return friends
+
 
 class PoemFriendListView(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)

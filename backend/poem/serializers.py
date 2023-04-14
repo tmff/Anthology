@@ -183,4 +183,4 @@ class ImageSerializer(serializers.ModelSerializer):
 class ModeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['is_private']
+        fields = ['is_private', 'dark_mode']

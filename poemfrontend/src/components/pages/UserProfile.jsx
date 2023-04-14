@@ -46,6 +46,20 @@ export const UserProfile = (props) => {
             })
             console.log("loaded")
 
+            // api.get("/get-friends", {cancelToken: cancelToken.token})
+            // .then((res) => {
+            //     setFriends(res.data)
+            //     console.log(res.data)
+            // })
+            // .catch((err) => {
+            //     if(axios.isCancel(err)){
+            //         console.log("cancelled")
+            //     }else{
+            //         console.log(err)
+            //     }
+            // })
+            // console.log("loaded")
+
         return () => {
             cancelToken.cancel();
         }

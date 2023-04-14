@@ -20,6 +20,7 @@ class Profile(models.Model):
     instagram = models.URLField(default="",max_length=200, blank=True)
     friends = models.ManyToManyField('self')
     is_private = models.BooleanField(default=False)
+    dark_mode = models.BooleanField(default= False)
     profile_picture = models.ImageField(default='profile_pictures/default.jpg', upload_to='profile_pictures')
     # Highlighting
     last_vote_time = models.DateTimeField(default=None, null=True, blank=True)

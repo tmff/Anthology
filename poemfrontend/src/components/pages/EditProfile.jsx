@@ -12,6 +12,10 @@ export const EditProfile = (props) => {
     const [picture, setPicture] = useState('/media/profile_pictures/default.jpg')
     const [inputs, setInputs] = useState({});
     const [isPrivate, setPrivate] = useState (false);
+    const [dark, setDark] = useState(false);
+    const [currentPic, setCurrentPic] = useState ()
+    const [currentTheme, setCurrentTheme] = useState ()
+    const [currentPrivacy, setCurrentPrivacy] = useState()
     const navigate = useNavigate();
     
 
@@ -34,8 +38,10 @@ export const EditProfile = (props) => {
       api.post('/edit-profile', form_data, config)
         .then((res) => {
           console.log(res.data);
+          alert("Your changes have been saved ");
       })
       .catch(err => console.log(err))
+    navigate("/profile");
     };
     
     const onImageChange = (e) => {
@@ -54,12 +60,76 @@ export const EditProfile = (props) => {
         api.post('/edit-picture', image_data, config)
             .then(res => {
                 console.log(res.data);
+                alert("Your changes have been saved ");
             })
             .catch(err => console.log(err))  
+        navigate("/profile");
       };
 
-    
-      const handlePrivateMode= (event)=> {
+useEffect(() => {
+      const cancelToken = axios.CancelToken.source();
+      api.get("/edit-picture", {cancelToken: cancelToken.token})
+      .then((res) => {
+          setCurrentPic(res.data.profile_picture)
+      })
+      .catch((err) => {
+          if(axios.isCancel(err)){
+              console.log("cancelled")
+          }else{
+              console.log(err)
+          }
+      })
+      console.log("loaded")
+
+      api.get("/edit-mode", {cancelToken: cancelToken.token})
+            .then((res) => {
+                const theme = (res.data.dark_mode)
+                const privacy = (res.data.is_private)
+                if (!theme) {
+                    setCurrentTheme("light");
+                    console.log(currentTheme);
+                }else{
+                    setCurrentTheme("dark");
+                    console.log(currentTheme);
+                }
+                
+                if(!privacy) {
+                    setCurrentPrivacy("public")
+                }else {
+                    setCurrentPrivacy("private")
+                }
+            })
+            .catch((err) => {
+                if(axios.isCancel(err)){
+                    console.log("cancelled")
+                }else{
+                    console.log(err)
+                }
+            })
+            console.log("loaded")
+
+        return () => {
+            cancelToken.cancel();
+        }
+
+  return () => {
+      cancelToken.cancel();
+  }
+},[])
+    // const handlePrivateMode= (e)=> {
+    //     if (e.target.checked) {
+    //     setPrivate(true);
+    //     console.log(e.target.checked)
+    //     console.log(isPrivate)
+    //     }
+    //     else {
+    //         setPrivate(false);
+    //         console.log('"else"')
+    //         console.log(isPrivate)
+    //     }
+    // }
+
+      const handlePrivateMode= (e)=> {
         setPrivate(true);
       }
 
@@ -67,10 +137,19 @@ export const EditProfile = (props) => {
         setPrivate(false);
       }
 
+      const handleLightMode = (e) => {
+        setDark(false);
+      }
+
+      const handleDarkMode = (e) => {
+        setDark(true);
+      }
+
       function submitPreferences(){
         const config =  {headers: {'content-type': 'multipart/form-data'}}
         let mode_data = new FormData();
         mode_data.append('is_private', isPrivate);
+        mode_data.append('dark_mode', dark);
         api.post('/edit-mode', mode_data, config)
             .then(res => {
                 console.log(res.data);
@@ -81,16 +160,18 @@ export const EditProfile = (props) => {
                 console.log(err);
                 alert("Your changes have NOT been saved " +err);
             }) 
-        
-        //  navigate("/profile");
+         navigate("/profile");
       };
+
+
     return (
         <div className="profileContainer">
             {/* <div className={`App ${theme}`}></div> */}
             <div className="profilePicture">
                 <h1>Edit your profile</h1>
                 <h4>Change Profile Picture:</h4>
-                <FontAwesomeIcon icon = {faUserCircle} className= "userPic"/>
+                {/* <FontAwesomeIcon icon = {faUserCircle} className= "userPic"/> */}
+                <img src = {currentPic} alt="profile picture"/>
                 {/* <br/> */}
                 <form onSubmit={handleImageSubmit}>
                     <input type="file" 
@@ -177,17 +258,16 @@ export const EditProfile = (props) => {
                     </select>
                 </div> */}
 
-                <div className= "lightDarkMode">
+                {/* <div className= "lightDarkMode">
                     <label for="theme"> Light/Dark Mode </label>
                     <FontAwesomeIcon icon = {faSun} className= "sun"/>
                     <label name = "theme" id="theme" class="switch">
                         <input type="checkbox" 
-                    
                         />
                         <span class="slider round"></span>
                     </label>
                     <FontAwesomeIcon icon = {faMoon} className= "moon"/>
-                </div>
+                </div> */}
 
 
                 {/* <div className= "autoplayOption">
@@ -201,22 +281,33 @@ export const EditProfile = (props) => {
 
                 <form onSubmit={submitPreferences}> 
                 <div className = "publicPrivateMode">
+                <h4>Your account is currently {currentPrivacy} </h4>
                     <button onClick={handlePrivateMode}>
                         Private
                     </button>
                     <button onClick={handlePublicMode}>
                         Public
                     </button>
-                    {/* <label className = "public"> Public</label> */}
-                    {/* <label class="switch">
+                    {/* <label className = "public"> Public</label>
+                    <label class="switch">
                         <input type="checkbox" 
                          name="isPrivate"
                          onChange = {handlePrivateMode} 
-                         checked = {isPrivate}
+                        //  checked = {isPrivate}
                          />
                         <span class="slider round" />
-                    </label> */}
-                    {/* <label className= "private"> Private</label> */}
+                    </label>
+                    <label className= "private"> Private</label> */}
+                </div>
+                <div className="themeSetting">
+                    <p> </p>
+                    <h4>The current theme is {currentTheme} </h4>
+                    <button onClick= {handleLightMode}>
+                        Light Mode
+                    </button>
+                    <button onClick= {handleDarkMode}>
+                        Dark Mode
+                    </button>
                 </div>
                 {/* <h4>Save Preferences:</h4> */}
                 {/* <input type="submit" value="Save Settings" /> */}
