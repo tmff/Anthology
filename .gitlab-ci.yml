@@ -43,35 +43,11 @@ check-django:
   - pipenv run python manage.py check
   - cd $BASE_DIR
   - echo "Django checks complete."
-
-.build-react:
-  image: node:16
-  stage: build
-  tags:
-    - node
-  script:
-  - echo "Compiling React..."
-  - cd $BASE_DIR/poemfrontend
-  - npm install
-  - npm run build
-  - cd $BASE_DIR
-  - echo "React compilation complete."
-
-.migrations-django:
-  image: python:3.10.10
-  stage: build
-  tags:
-  - python
-  script:
-  - echo "Running Django migrations..."
-  - cd $BASE_DIR/backend
-  - pip install pipenv
-  - pipenv install
-  - pipenv run python manage.py makemigrations
-  - pipenv run python manage.py migrate
-  - pipenv run python manage.py check
-  - cd $BASE_DIR
-  - echo "Django migrations complete."
+  only:
+    refs:
+      - react
+    changes:
+      - backend/**/*
 
 build-docker-frontend:
   image: docker:latest
@@ -130,6 +106,11 @@ test-django:
   - pipenv run python manage.py test
   - cd $BASE_DIR
   - echo "Finished Django tests."
+  only:
+    refs:
+      - react
+    changes:
+      - backend/**/*
 
 test-react:
   image: node:16
@@ -150,6 +131,11 @@ test-react:
     reports:
       junit:
         - poemfrontend/junit.xml
+  only:
+    refs:
+      - react
+    changes:
+      - poemfrontend/**/*
 
 deploy-git:
   image: alpine:latest
