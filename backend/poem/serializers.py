@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
-from .models import Poem, Profile, Like, Bookmark, FriendRequest
+from .models import Poem, Profile, Like, Bookmark, FriendRequest, Tag
 from rest_framework.authtoken.models import Token
 
 
@@ -184,3 +184,30 @@ class ModeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['is_private', 'dark_mode']
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ['title']
+
+class SearchPoemSerializer(serializers.ModelSerializer):
+    author = UserSerializer(read_only=True)
+    tags = TagSerializer(read_only=True)
+
+    class Meta:
+        model = Poem
+        fields = ['id', 'title', 'content', 'author', 'tags']
+
+    def create(self, validated_data):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+        poem = Poem(
+            title=validated_data['title'],
+            content=validated_data['content'],
+            author=user,
+        )
+        poem.save()
+        return poem
