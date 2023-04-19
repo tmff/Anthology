@@ -21,7 +21,9 @@ from poem import views
 
 router = routers.DefaultRouter()
 router.register(r'poems', views.PoemView,'todo')
-
+router.register(r'get-users', views.UserViewSet, 'users')
+router.register(r'get-tagged-poems', views.TaggedPoemViewSet, 'tags')
+router.register(r'get-posts', views.PostsViewSet, 'posts')
 
 urlpatterns = [
     path('django-admin/admin/', admin.site.urls),

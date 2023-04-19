@@ -13,6 +13,7 @@ export const EditProfile = (props) => {
     const [inputs, setInputs] = useState({});
     const [isPrivate, setPrivate] = useState (false);
     const [dark, setDark] = useState(false);
+    // const [currentName, setCurrentName] = useState ()
     const [currentPic, setCurrentPic] = useState ()
     const [currentTheme, setCurrentTheme] = useState ()
     const [currentPrivacy, setCurrentPrivacy] = useState()
@@ -60,10 +61,11 @@ export const EditProfile = (props) => {
         api.post('/edit-picture', image_data, config)
             .then(res => {
                 console.log(res.data);
-                alert("Your changes have been saved ");
+                // alert("Your changes have been saved ");
             })
             .catch(err => console.log(err))  
-        navigate("/profile");
+        // window.location.reload(true)
+        navigate("/profile");            
       };
 
 useEffect(() => {
@@ -80,6 +82,19 @@ useEffect(() => {
           }
       })
       console.log("loaded")
+
+    //   api.get("/edit-profile", {cancelToken: cancelToken.token})
+    //   .then((res) => {
+    //     setCurrentName(res.data.name);
+    //   })
+    //   .catch((err) => {
+    //       if(axios.isCancel(err)){
+    //           console.log("cancelled")
+    //       }else{
+    //           console.log(err)
+    //       }
+    //   })
+    //   console.log("loaded")
 
       api.get("/edit-mode", {cancelToken: cancelToken.token})
             .then((res) => {
@@ -116,33 +131,25 @@ useEffect(() => {
       cancelToken.cancel();
   }
 },[])
-    // const handlePrivateMode= (e)=> {
-    //     if (e.target.checked) {
-    //     setPrivate(true);
-    //     console.log(e.target.checked)
-    //     console.log(isPrivate)
-    //     }
-    //     else {
-    //         setPrivate(false);
-    //         console.log('"else"')
-    //         console.log(isPrivate)
-    //     }
-    // }
 
       const handlePrivateMode= (e)=> {
         setPrivate(true);
+        window.location.reload(true)
       }
 
       const handlePublicMode = (e) => {
         setPrivate(false);
+        window.location.reload(true)
       }
 
       const handleLightMode = (e) => {
         setDark(false);
+        window.location.reload(true)
       }
 
       const handleDarkMode = (e) => {
         setDark(true);
+        window.location.reload(true)
       }
 
       function submitPreferences(){
@@ -160,19 +167,16 @@ useEffect(() => {
                 console.log(err);
                 alert("Your changes have NOT been saved " +err);
             }) 
-         navigate("/profile");
       };
 
 
     return (
         <div className="profileContainer">
-            {/* <div className={`App ${theme}`}></div> */}
             <div className="profilePicture">
                 <h1>Edit your profile</h1>
                 <h4>Change Profile Picture:</h4>
                 {/* <FontAwesomeIcon icon = {faUserCircle} className= "userPic"/> */}
                 <img src = {currentPic} alt="profile picture"/>
-                {/* <br/> */}
                 <form onSubmit={handleImageSubmit}>
                     <input type="file" 
                            accept="image/png, image/jpeg" 
@@ -183,11 +187,6 @@ useEffect(() => {
                     <br/>
                     <input type="submit" value="Upload image"></input> 
                 </form>
-                {/* <button className="editpfp">
-                     <FontAwesomeIcon icon = {faFeatherPointed} className= "quill"/>
-                    {/* <img src={quill} alt="Edit Profile Picture"> </img> */}
-                    {/* onClick = {editProfilePicture} *
-                </button> */}
             </div> 
             <div className="names">
                 <form onSubmit={handleSubmit}>
@@ -196,6 +195,7 @@ useEffect(() => {
                      <input 
                         type="text" 
                         name="name" 
+                        // placeholder="name" 
                         value={inputs.name || " "} 
                         onChange={handleChange}
                     />
@@ -207,6 +207,7 @@ useEffect(() => {
                         name="bio" 
                         value={inputs.bio || " "} 
                         onChange={handleChange}
+                        // placeholder={currentInputs.bio}
                     />
                     </label>
                      <label>Connect Facebook
@@ -216,6 +217,7 @@ useEffect(() => {
                         name="facebook" 
                         value={inputs.facebook || " "} 
                         onChange={handleChange}
+                        // placeholder={currentInputs.facebook}
                     />
                      </label>
                      <label>Connect Twitter
@@ -225,6 +227,7 @@ useEffect(() => {
                         name="twitter" 
                         value={inputs.twitter || " "} 
                         onChange={handleChange}
+                        // placeholder={currentInputs.twitter}
                     />
                      </label>
                      <label>Connect Instagram
@@ -234,6 +237,7 @@ useEffect(() => {
                         name="instagram" 
                         value={inputs.instagram || " "} 
                         onChange={handleChange}
+                        // placeholder={currentInputs.instagram}
                     />
                      </label>
                  <input type="submit" value="Update details" />
@@ -305,7 +309,7 @@ useEffect(() => {
                     <button onClick= {handleLightMode}>
                         Light Mode
                     </button>
-                    <button onClick= {handleDarkMode}>
+                    <button onClick= {handleDarkMode} >
                         Dark Mode
                     </button>
                 </div>

@@ -120,7 +120,7 @@ test-react:
   script:
   - echo "Running React tests..."
   - cd $BASE_DIR/poemfrontend
-  - npm install react-scripts --save-dev
+  - npm install
   - npm run test:ci
   - cd $BASE_DIR
   - echo "Finished React tests."
