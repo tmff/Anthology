@@ -358,3 +358,36 @@ class EditModeView(APIView):
             print('error', serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class TaggedPoemViewSet(viewsets.ModelViewSet):
+    queryset = Poem.objects.all()
+    serializer_class = SearchPoemSerializer
+
+    def get_queryset(self):
+        qs = Poem.objects.all()
+        tags = self.request.query_params.get('tags.title') 
+        if tags is not None:
+            qs = qs.filter(tags__title__icontains=tags)
+        return qs
+    
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        qs = User.objects.all()
+        username = self.request.query_params.get('username') 
+        if username is not None:
+            qs = qs.filter(username__icontains=username)
+        return qs
+
+
+class PostsViewSet(viewsets.ModelViewSet):
+    queryset = Poem.objects.all()
+    serializer_class = SearchPoemSerializer
+
+    def get_queryset(self):
+        qs = Poem.objects.all()
+        title = self.request.query_params.get('title') 
+        if title is not None:
+            qs = qs.filter(title__icontains=title)
+        return qs
