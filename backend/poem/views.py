@@ -256,7 +256,6 @@ class LikePoemView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
 
         # Find the poem
-        print(request.data)
         if request.data['poem_id'] is None:
             return Response({'error': 'A poem ID must be specified.'}, status=400)
 
@@ -289,7 +288,35 @@ class UnlikePoemView(generics.DestroyAPIView):
 
         like.delete()
         return Response({'status': 'Like removed.', 'likes': poem.get_like_count()}, status=200)
-        
+
+
+class CommentPoemView(generics.CreateAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = CommentSerializer
+
+    def create(self, request, *args, **kwargs):
+
+        # Get the content
+        if not exists(request.data, 'comment'):
+            return Response({'error': 'Comment content should be specified.'}, status=400)
+
+        # Find the poem
+        if not exists(request.data, 'poem_id'):
+            return Response({'error': 'A poem ID must be specified.'}, status=400)
+
+        poem = Poem.objects.get(id=request.data['poem_id'])
+        if not poem:
+            return Response({'error': 'Poem not found.'}, status=400)
+
+        commentStr = request.data['comment']
+
+        comment = Comment(poem=poem, user=request.user, content=commentStr)
+        comment.save()
+
+        return Response(status=204)
+
+
 class EditProfileView(APIView):
     serializer_class = ProfileSerializer
     authentication_classes = (TokenAuthentication,)
@@ -358,6 +385,7 @@ class EditModeView(APIView):
             print('error', serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class TaggedPoemViewSet(viewsets.ModelViewSet):
     queryset = Poem.objects.all()
     serializer_class = SearchPoemSerializer
@@ -368,7 +396,8 @@ class TaggedPoemViewSet(viewsets.ModelViewSet):
         if tags is not None:
             qs = qs.filter(tags__title__icontains=tags)
         return qs
-    
+
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -391,3 +420,11 @@ class PostsViewSet(viewsets.ModelViewSet):
         if title is not None:
             qs = qs.filter(title__icontains=title)
         return qs
+
+
+def exists(dict, key):
+    try:
+        dict[key]
+        return True
+    except KeyError:
+        return False

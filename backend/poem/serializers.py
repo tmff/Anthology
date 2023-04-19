@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
-from .models import Poem, Profile, Like, Bookmark, FriendRequest, Tag
+from .models import Comment, Poem, Profile, Like, Bookmark, FriendRequest, Tag
 from rest_framework.authtoken.models import Token
 
 
@@ -170,15 +170,24 @@ class LikeSerializer(serializers.ModelSerializer):
     poem_id = serializers.IntegerField()
     user = UserRelatedField(source='user.user', read_only=True)
 
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ['user', 'content']
+
+
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['name', 'bio', 'facebook', 'twitter', 'instagram']
 
+
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['profile_picture']
+
 
 class ModeSerializer(serializers.ModelSerializer):
     class Meta:
