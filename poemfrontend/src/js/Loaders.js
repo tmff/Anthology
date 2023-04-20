@@ -1,4 +1,4 @@
-
+import api from 'Api';
 import Cookies from 'universal-cookie';
 import { redirect } from 'react-router-dom';
 
@@ -31,6 +31,11 @@ export async function loader() {
     if (cookies.get("Token") != null) return redirect("/friends");
   
     return null;
+  }
+
+  export async function poemLoader({ params }) {
+    const poem = await api.get(`/poem/${params.poemId}`);
+    return { poem };
   }
   
   export default standardLoader;

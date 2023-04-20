@@ -15,4 +15,16 @@ const api = axios.create({
     }, ...axios.defaults.transformRequest]
 });
 
+export async function promptLike(poemId, liked) {
+
+    return new Promise(resolve => {
+        const request = liked ? api.delete('/remove-poem-like', { data: { poem_id: poemId } }) : api.post('/like-poem', { poem_id: poemId });
+        request.then((res) => {
+            resolve(res.data.likes);
+        }).catch((err) => {
+            console.log(err);
+        });
+    });
+}
+
 export default api;

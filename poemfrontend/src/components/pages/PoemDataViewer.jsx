@@ -2,9 +2,19 @@ import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Comment from "../Comment";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { promptLike as promptLikeAPI } from "../js/Api"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCommentDots, faHeart as faSolidHeart, faPaperPlane, faUserCircle, faBookmark as faSolidBookmark, faVolumeHigh} from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faRegularHeart, faBookmark as faRegularBookmark } from '@fortawesome/free-regular-svg-icons';
+
+import '../../css/Poem.css';
+import '../../css/PoemDataViewer.css';
 
 const PoemDataViewer = (props) => {
+
+    // Load data
+    const content = useLoaderData();
     
     // States
     const [title, setTitle] = useState("");
@@ -12,7 +22,8 @@ const PoemDataViewer = (props) => {
     const [author, setAuthor] = useState("");
     const [authorProfile, setAuthorProfile] = useState("profile_pictures/default.jpg");
     const [comments, setComments] = useState([]);
-    const poemId = props.poemId;
+    const [liked, setLiked] = useState([]);
+    const [likes, setLikes] = useState(0);
 
     // Functions
     const navigate = useNavigate();
@@ -20,11 +31,29 @@ const PoemDataViewer = (props) => {
     // Initial calls to the API
     useEffect(() => {
 
+        // If the content is filled already...
+        if (content) {
+            setProperties(content);
+            return;
+        }
+
+
     })
 
     // Reactive calls to the API
     function promptLike() {
         
+        setLiked(!liked);
+
+       // promptLikeAPI(poemId, liked).then(likes => {
+       //     setLikes(likes);
+       // });
+    }
+
+    function setProperties(data) {
+        setTitle(data.title);
+        setContent([data.line1, data.line2, data.line3]);
+        setAuthor(data.author);
     }
 
     // HTML itself
@@ -47,7 +76,8 @@ const PoemDataViewer = (props) => {
                         <div className="author">
                             <p onClick={ navigate(`/author/${author}`) }>{ author }</p>
                             <div className="button-container">
-
+                                <FontAwesomeIcon icon={liked ?  faSolidHeart : faRegularHeart} className="button-icon" onClick={ promptLike } data-tooltip-id="like-tooltip" />
+                                {likes}
                             </div>
                         </div>
                     </div>
@@ -69,19 +99,6 @@ const PoemDataViewer = (props) => {
             </div>
         </div>
     )
-}
-
-PoemDataViewer.propTypes = {
-    content: PropTypes.shape({
-        title: PropTypes.string,
-        line1: PropTypes.string,
-        line2: PropTypes.string,
-        line3: PropTypes.string,
-        author: PropTypes.string,
-        like_count: PropTypes.number,
-        is_liked: PropTypes.bool,
-    }),
-    id: PropTypes.string,
 }
 
 export default PoemDataViewer;

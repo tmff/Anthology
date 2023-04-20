@@ -1,5 +1,5 @@
-import api from "../js/Api"
-import { useState, useEffect} from 'react';
+import api, { promptLike as promptLikeAPI } from "../js/Api"
+import { useState, useEffect } from 'react';
 import Cookies from 'universal-cookie';
 import '../css/Poem.css'
 import { Tooltip } from 'react-tooltip';
@@ -7,7 +7,7 @@ import 'react-tooltip/dist/react-tooltip.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentDots, faHeart as faSolidHeart, faPaperPlane, faUserCircle, faBookmark as faSolidBookmark, faVolumeHigh} from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faRegularHeart, faBookmark as faRegularBookmark } from '@fortawesome/free-regular-svg-icons';
-import {useSpeechSynthesis} from 'react-speech-kit';
+import { useSpeechSynthesis } from 'react-speech-kit';
 import axios from "axios";
 
 //Pass in id of poem that you want to get
@@ -67,12 +67,9 @@ export const PoemViewer = (props) => {
 
         // Send an API request
         const poemId = props.content.poem_id;
-        const request = liked ? api.delete('/remove-poem-like', { data: { poem_id: poemId } }) : api.post('/like-poem', { poem_id: poemId });
-        request.then((res) => {
-            console.log(res.data);
-            setLikes(res.data.likes);
-        }).catch((err) => {
-            console.log(err);
+
+        promptLikeAPI(poemId, liked).then((likes) => {
+            setLikes(likes);
         });
     }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './css/index.css';
-import App, { loader as appLoader, standardLoader, loginLoader } from './js/Loaders';
+import App, { loader as appLoader, standardLoader, loginLoader, poemLoader } from './js/Loaders';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Title } from './components/Greeting';
@@ -18,6 +18,7 @@ import { TheReadingRoom } from './components/pages/TheReadingRoom';
 import NotFoundPage  from './components/pages/NotFound';
 import { UserProfile } from './components/pages/UserProfile';
 import { Highlight } from './components/pages/Highlight';
+import PoemDataViewer from './components/pages/PoemDataViewer';
 
 export const router = createBrowserRouter([
   {
@@ -82,6 +83,11 @@ export const router = createBrowserRouter([
   {
     path: "privacy",
     element: <Base component={ <GDPR />}></Base>,
+  },
+  {
+    path: "/poem/:poemId",
+    element: <Base component={ <PoemDataViewer /> }></Base>,
+    loader: poemLoader,
   },
   {
     path: "*",
