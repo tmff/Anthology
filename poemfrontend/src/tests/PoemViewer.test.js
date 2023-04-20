@@ -1,6 +1,7 @@
 import { render, screen , cleanup} from '@testing-library/react';
 import '@testing-library/jest-dom'
 import {PoemViewer} from '../components/PoemViewer';
+import { MemoryRouter } from 'react-router-dom';
 
 afterEach(cleanup);
 
@@ -21,13 +22,13 @@ const poemObj = {
 }
 
 test('poem viewer render test', () => {
-    render(<PoemViewer content={poemObj}/>);
+    render(<MemoryRouter><PoemViewer content={poemObj}/></MemoryRouter>);
     const poemViewerElement = screen.getByTestId('poem-viewer');
     expect(poemViewerElement).toBeInTheDocument();
 });
 
 test('poem viewer content test', () => {
-    render(<PoemViewer content={poemObj}/>);
+    render(<MemoryRouter><PoemViewer content={poemObj}/></MemoryRouter>);
     const poemViewerElement = screen.getByTestId('poem-viewer');
 
     expect(poemViewerElement).toHaveTextContent(poemObj.title);
@@ -35,14 +36,14 @@ test('poem viewer content test', () => {
 });
 
 test('poem viewer author', () => {
-    render(<PoemViewer content={poemObj}/>);
+    render(<MemoryRouter><PoemViewer content={poemObj}/></MemoryRouter>);
     const poemViewerElement = screen.getByTestId('poem-viewer');
 
     expect(poemViewerElement).toHaveTextContent(poemObj.author.username);
 });
 
 test('poem viewer highlight',() => {
-    render(<PoemViewer content={poemObj} highlighted={true}/>);
+    render(<MemoryRouter><PoemViewer content={poemObj} highlighted={true}/></MemoryRouter>);
     const poemViewerElement = screen.getByTestId('coloured-top');
     //check that the highlighted class is applied
     expect(poemViewerElement).toHaveClass('highlighted');
