@@ -6,8 +6,8 @@ from django.conf import settings
 
 router = routers.DefaultRouter()
 router.register(r'poems', PoemView)
-router.register(r'get-friends-poems', PoemFriendListView, basename='get-friends-poems')
-router.register(r'get-highlight-choice', HighlightChoiceView, basename='get-highlight-choice')
+router.register(r'get-friends-poems/?', PoemFriendListView, basename='get-friends-poems')
+router.register(r'get-highlight-choice/?', HighlightChoiceView, basename='get-highlight-choice')
 router.register(r'pending-request', PendingRequestView, basename='pending-request')
 router.register(r'get-users', UserViewSet, basename='get-users')
 router.register(r'get-tagged-poems', TaggedPoemViewSet, basename='get-tagged-poems')
