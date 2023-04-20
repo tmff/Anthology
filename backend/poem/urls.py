@@ -23,6 +23,7 @@ urlpatterns = [
   path("accept-friend-request", PendingRequestResponseView.as_view()),
   path("like-poem", LikePoemView.as_view()),
   path("remove-poem-like", UnlikePoemView.as_view()),
+  path("send-comment", CommentPoemView.as_view()),
   path("edit-profile", EditProfileView.as_view()),
   path("edit-picture", EditPictureView.as_view()),
   path("edit-mode", EditModeView.as_view())
