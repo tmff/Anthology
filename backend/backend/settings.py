@@ -148,4 +148,4 @@ CORS_ALLOWED_ORIGINS = [
    'https://anthology.bham.team'
 ]
 
-APPEND_SLASH = False
+APPEND_SLASH = False 
