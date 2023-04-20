@@ -1,4 +1,4 @@
-import api from 'Api';
+import api from './Api';
 import Cookies from 'universal-cookie';
 import { redirect } from 'react-router-dom';
 
@@ -34,7 +34,7 @@ export async function loader() {
   }
 
   export async function poemLoader({ params }) {
-    const poem = await api.get(`/poem/${params.poemId}`);
+    const poem = await api.get(`/poems/${params.poemId}`);
     return { poem };
   }
   

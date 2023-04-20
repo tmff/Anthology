@@ -9,6 +9,7 @@ import { faCommentDots, faHeart as faSolidHeart, faPaperPlane, faUserCircle, faB
 import { faHeart as faRegularHeart, faBookmark as faRegularBookmark } from '@fortawesome/free-regular-svg-icons';
 // import {useSpeechSynthesis} from 'react-speech-kit';
 import axios from "axios";
+import { NavLink } from "react-router-dom";
 
 //Pass in id of poem that you want to get
 export const PoemViewer = (props) => {
@@ -89,11 +90,13 @@ export const PoemViewer = (props) => {
     return(
         <div data-testid="poem-viewer">
             <div className="poem">
+
             <div data-testid="coloured-top" className={props.highlighted ? "colored-block highlighted" : "colored-block"}>
-                <h4>{title}</h4>
-                <p>{line1}<br/>{line2}<br/>{line3}</p>
-                <FontAwesomeIcon icon={bookmarked ? faSolidBookmark : faRegularBookmark} className="bookmark-icon" onClick={ promptBookmark } data-tooltip-id="bookmark-tooltip" />
+                <NavLink to={ "/poem/" + props.content.poem_id }><h4>{ title }</h4></NavLink>
+                <p>{ line1 }<br/>{ line2 }<br/>{ line3 }</p>
+                <FontAwesomeIcon icon={ bookmarked ? faSolidBookmark : faRegularBookmark } className="bookmark-icon" onClick={ promptBookmark } data-tooltip-id="bookmark-tooltip" />
             </div>
+            
             <div className="light-block">
                 <div className="profile-info">
                 <FontAwesomeIcon icon={faUserCircle} className="profile-icon" />

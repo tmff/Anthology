@@ -8,8 +8,6 @@
 }
 
 
-
-
 .viewer{
     padding: 50px;
     border: 10px solid var(--uranian-blue);
@@ -162,6 +160,10 @@
   margin-right: 5px;
   justify-content: center;
   padding: 10px;
+}
+
+a {
+  color: white;
 }
 
 /* .speaker {
