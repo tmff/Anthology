@@ -147,3 +147,5 @@ CORS_ALLOWED_ORIGINS = [
    'https://team16-22.bham.team',
    'https://anthology.bham.team'
 ]
+
+APPEND_SLASH = False
