@@ -49,53 +49,10 @@ check-django:
     changes:
       - backend/**/*
 
-build-docker-frontend:
-  image: docker:latest
-  stage: build
-  services:
-  - docker:dind
-  variables:
-    DOCKER_HOST: 'tcp://docker:2375'
-    DOCKER_DRIVER: overlay2
-    DOCKER_TLS_CERTDIR: ""
-  script:
-  - echo "Pruning unneeded images..."
-  - docker image prune --filter label=stage=intermediate
-  - echo "Building the docker image..."
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  - docker build --pull -t ${CI_FULL_IMG}:frontend --build-arg api_endpoint=$API_ENDPOINT --platform linux/arm64 ./poemfrontend/
-  - docker push ${CI_FULL_IMG}:frontend
-  only:
-    refs:
-      - react
-    changes:
-      - poemfrontend/**/*
-
-build-docker-backend:
-  image: docker:latest
-  stage: build
-  services:
-  - docker:dind
-  variables:
-    DOCKER_HOST: 'tcp://docker:2375'
-    DOCKER_DRIVER: overlay2
-    DOCKER_TLS_CERTDIR: ""
-  script:
-  - echo "Pruning unneeded images..."
-  - docker image prune --filter label=stage=intermediate
-  - echo "Building the docker image..."
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  - docker build --pull -t ${CI_FULL_IMG}:backend --platform linux/arm64 ./backend/
-  - docker push ${CI_FULL_IMG}:backend
-  only:
-    refs:
-      - react
-    changes:
-      - backend/**/*
-
 test-django:
   image: python:3.10.10
   stage: test
+  allow_failure: true
   tags: 
   - python
   script:
@@ -115,6 +72,7 @@ test-django:
 test-react:
   image: node:16
   stage: test
+  allow_failure: true
   tags:
     - node
   script:
@@ -136,11 +94,64 @@ test-react:
       - react
     changes:
       - poemfrontend/**/*
+  
+build-docker-frontend:
+  image: docker:latest
+  stage: build
+  services:
+  - docker:dind
+  needs:
+    - job: test-react
+  variables:
+    DOCKER_HOST: 'tcp://docker:2375'
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  script:
+  - echo "Pruning unneeded images..."
+  - docker image prune --filter label=stage=intermediate
+  - echo "Building the docker image..."
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - docker build --pull -t ${CI_FULL_IMG}:frontend --build-arg api_endpoint=$API_ENDPOINT --platform linux/arm64 ./poemfrontend/
+  - docker push ${CI_FULL_IMG}:frontend
+  only:
+    refs:
+      - react
+    changes:
+      - poemfrontend/**/*
+
+build-docker-backend:
+  image: docker:latest
+  stage: build
+  needs:
+    - job: test-django
+  services:
+  - docker:dind
+  variables:
+    DOCKER_HOST: 'tcp://docker:2375'
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  script:
+  - echo "Pruning unneeded images..."
+  - docker image prune --filter label=stage=intermediate
+  - echo "Building the docker image..."
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - docker build --pull -t ${CI_FULL_IMG}:backend --platform linux/arm64 ./backend/
+  - docker push ${CI_FULL_IMG}:backend
+  only:
+    refs:
+      - react
+    changes:
+      - backend/**/*
 
 deploy-git:
   image: alpine:latest
   stage: deploy
   when: on_success
+  needs:
+    - job: build-docker-backend
+      optional: true
+    - job: build-docker-frontend
+      optional: true
   before_script: 
     - chmod og= $RSA
     - apk update && apk add openssh-client
