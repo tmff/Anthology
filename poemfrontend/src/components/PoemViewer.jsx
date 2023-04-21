@@ -5,9 +5,8 @@ import '../css/Poem.css'
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCommentDots, faHeart as faSolidHeart, faPaperPlane, faUserCircle, faBookmark as faSolidBookmark } from '@fortawesome/free-solid-svg-icons';
+import { faCommentDots, faHeart as faSolidHeart, faPaperPlane, faUserCircle, faBookmark as faSolidBookmark, faVolumeHigh } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faRegularHeart, faBookmark as faRegularBookmark } from '@fortawesome/free-regular-svg-icons';
-// import {useSpeechSynthesis} from 'react-speech-kit';
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 
@@ -20,7 +19,7 @@ export const PoemViewer = (props) => {
     const [bookmarked, setBookmarked] = useState(false);
     const [likes, setLikes] = useState(0)
     const [comments, setComments] = useState(0)
-    // const {speak} = useSpeechSynthesis();
+
 
     useEffect(() => {
         const cancelToken = axios.CancelToken.source();
@@ -80,12 +79,23 @@ export const PoemViewer = (props) => {
         setBookmarked(!bookmarked);
     }
 
-    // function readPoem () {
-    //     speak({text: title, rate: 0.85})
-    //     speak({text: line1, rate: 0.85})
-    //     speak({text: line2, rate: 0.85})
-    //     speak({text: line3, rate: 0.85})
-    // }
+    const readPoem = () => {
+        const synth = window.speechSynthesis;
+        const utterTitle = new SpeechSynthesisUtterance(title);
+        const utterLine1 = new SpeechSynthesisUtterance(line1);
+        const utterLine2 = new SpeechSynthesisUtterance(line2);
+        const utterLine3 = new SpeechSynthesisUtterance(line3);
+
+        utterTitle.rate = 0.85;
+        utterLine1.rate = 0.85;
+        utterLine2.rate = 0.85;
+        utterLine3.rate = 0.85;
+
+        synth.speak(utterTitle);
+        synth.speak(utterLine1);
+        synth.speak(utterLine2);
+        synth.speak(utterLine3);
+    };
     
     return(
         <div data-testid="poem-viewer">
@@ -108,7 +118,7 @@ export const PoemViewer = (props) => {
                 {likes}
                 <FontAwesomeIcon icon={faCommentDots} className="button-icon" data-tooltip-id="comment-tooltip" />
                 {comments}
-                {/* <FontAwesomeIcon icon = {faVolumeHigh} className="button-icon" data-tooltip-id= "speech-tooltip" onClick= {readPoem} /> */}
+                <FontAwesomeIcon icon = {faVolumeHigh} className="button-icon" data-tooltip-id= "speech-tooltip" onClick= {readPoem} />
 
                 <FontAwesomeIcon icon={faPaperPlane} className="button-icon" data-tooltip-id="share-tooltip" />
 
@@ -116,7 +126,7 @@ export const PoemViewer = (props) => {
                 <Tooltip id="comment-tooltip" content="Comments" />
                 <Tooltip id="share-tooltip" content="Share" />
                 <Tooltip id="bookmark-tooltip" content="Bookmark" />
-                {/* <Tooltip id="speech-tooltip" content= "Read poem out loud" /> */}
+                <Tooltip id="speech-tooltip" content= "Read poem out loud" />
                 </div>
             </div>
             </div>
