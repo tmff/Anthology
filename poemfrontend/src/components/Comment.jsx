@@ -1,20 +1,25 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 
+import '../css/PoemDataViewer.css';
 
 export const Comment = (props) => {
 
-    const username = props.content.username; 
-    const comment = props.content.comment;
-    const profileImg = props.content.profile_image;
+    const [username, setUsername] = useState(""); 
+    const [comment, setComment] = useState("");
+    const [showReplies, setShowReplies] = useState(false);
 
-    const navigate = useNavigate();
+    useEffect(() => {
+        setUsername(props.content.username);
+        setComment(props.content.comment);
+    })
 
     return (
         <div className="comment-container">
-            <img src={ profileImg } alt="./profile_pictures/default.jpg" onClick={ navigate(`/author/${username}`) } />
             <div className="name-and-comment">
-                <h3 onClick={ navigate(`/author/${username}`) }>{ username }</h3>
-                <p>{ comment }</p>
+                <NavLink to={ `/author/${username}` }><b>{ username }</b></NavLink>  
+                <br />{ comment }
+                
             </div>
         </div>
     )

@@ -4,10 +4,18 @@ from .views import *
 from django.conf.urls.static import static
 from django.conf import settings 
 
-router = routers.DefaultRouter()
+
+class BetterRouter(routers.DefaultRouter):
+
+    def __init__(self, *args, **kwargs):
+        super(routers.DefaultRouter, self).__init__(*args, **kwargs)
+        self.trailing_slash = '/?'
+
+
+router = BetterRouter()
 router.register(r'poems', PoemView)
-router.register(r'get-friends-poems/?', PoemFriendListView, basename='get-friends-poems')
-router.register(r'get-highlight-choice/?', HighlightChoiceView, basename='get-highlight-choice')
+router.register(r'get-friends-poems', PoemFriendListView, basename='get-friends-poems')
+router.register(r'get-highlight-choice', HighlightChoiceView, basename='get-highlight-choice')
 router.register(r'pending-request', PendingRequestView, basename='pending-request')
 router.register(r'get-users', UserViewSet, basename='get-users')
 router.register(r'get-tagged-poems', TaggedPoemViewSet, basename='get-tagged-poems')
@@ -26,7 +34,8 @@ urlpatterns = [
   path("send-comment", CommentPoemView.as_view()),
   path("edit-profile", EditProfileView.as_view()),
   path("edit-picture", EditPictureView.as_view()),
-  path("edit-mode", EditModeView.as_view())
+  path("edit-mode", EditModeView.as_view()),
+  path("get-comments/<int:poem_id>/", FetchCommentsPoemView.as_view({'get': 'list'}))
 ]
 
 if settings.DEBUG:

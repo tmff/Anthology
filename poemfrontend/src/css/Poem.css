@@ -80,10 +80,11 @@
 
 .light-block {
   background-color: #fff;
-  padding: 0px;
+  padding-bottom: 5px;
   margin-bottom: 0px;
   height: 85px;
   border-radius: 0 0 10px 10px;
+  right: 0;
 }
 
 .bookmark-icon {

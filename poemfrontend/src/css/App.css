@@ -10,6 +10,10 @@
   flex-direction: column;
 }
 
+a {
+  text-decoration-style: bold;
+}
+
 #light {
   background: linear-gradient(var(--uranian-blue), var(--royal-purple));;
 }

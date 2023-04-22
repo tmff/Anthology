@@ -110,7 +110,7 @@ export const PoemViewer = (props) => {
             <div className="light-block">
                 <div className="profile-info">
                 <FontAwesomeIcon icon={faUserCircle} className="profile-icon" />
-                <p className="username">{author.username}</p>
+                <NavLink to={ "/author/" + author.username }><p className="username">{author.username}</p></NavLink> 
                 </div>
                 <div className="buttons">
 

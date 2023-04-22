@@ -1,23 +1,106 @@
+.widget-container {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    max-height: 35em;
+}
+
+.top-bar {
+    display: flex;
+}
 
 .data-container {
     display: flex;
-    justify-content: center;
-    gap: 50px;
-    min-height: 30em;
+    align-items: center;
+    gap: 20px;
+    max-height: 30em;
+    padding: 3px 10px 10px 10px;
+    border-bottom: 1px solid gray;
+    border-radius: 10px;
 }
 
-.data-container .colored-block {
-    border-radius: 10px;
+.poem {
     min-width: 24em;
+}
+
+.comments-container {
+    height: 25em;
+    gap: 20px;
+    display: grid;
+    overflow: scroll;
+}
+
+.colored-block {
+    min-height: 100%;
+    justify-items: center;
 }
 
 .user-interactive-container {
     border-radius: 10px;
-    min-width: 24em;
+    min-width: 25em;
+    min-height: 32em;
     background-color: rgba(255, 255, 255, 0.911);
     color: black;
+    padding: 20px;
+    position: relative;
+}
+
+.profile-picture {
+    border-radius: 100px;
+    max-width: 70px;
+    max-height: 70px;
+}
+
+.input-container {
+    align-items: center;
+    display: flex;
+    border-top: 1px solid gray;
+    border-radius: 10px;
+    padding: 3px 10px 3px 10px;
+    bottom: 5px;
+    position: absolute;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+}
+
+.author {
+    display: grid;
+    margin: 5px 10px;
+    gap: 5px;
+    align-items: left;
+    text-align: left;
 }
 
 .button-icon {
+    font-size: 1.3em;
+}
+
+.author p {
+    margin: 0px;
+}
+
+.comment-input {
+    min-width: 22em;
+}
+
+.send-icon {
+    padding: 10px;
     font-size: 1.4em;
+}
+
+.comment {
+    display: grid;
+    text-align: left;
+}
+
+.name-and-comment {
+    padding-bottom: 10px;
+}
+
+.name-and-comment a {
+    color: black;
+    text-decoration-style: none;
 }

@@ -314,7 +314,23 @@ class CommentPoemView(generics.CreateAPIView):
         comment = Comment(poem=poem, user=request.user, content=commentStr)
         comment.save()
 
-        return Response(status=204)
+        return Response({'author': request.user.username, 'comment': commentStr}, status=200)
+
+
+class FetchCommentsPoemView(viewsets.ModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = CommentSerializer
+    model = Comment
+    queryset = Comment.objects.all()
+
+    def get(self, *args, **kwargs):
+
+        # Find the poem
+        print(kwargs)
+        print(args)
+        comments = Comment.objects.filter(poem__id=kwargs.get("poem_id"))
+        return comments
 
 
 class EditProfileView(APIView):
