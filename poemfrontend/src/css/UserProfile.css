@@ -1,107 +1,23 @@
-.user-profile-view {
-  text-align: center;
-  padding: 10px;
-  /* display: flex; */
-  /* border: 1px solid white; */
-  /* border-radius: 10px; */
-  /* margin: 10px; */
-}
-
-.profile-picture {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-  position: absolute;
-  left: 25%;
-  margin: auto;
-  top:15%;
-  border: 3px solid white;
-}
-
 .username-title {
   position: absolute;
+  align-self: left;
+  justify-self: left;
   top: 0%;
-  text-align: center;
-  justify-content: center;
-  /* font-weight: 2000; */
+  /* text-align: center; */
   color: var(--royal-purple);
 }
 
-.current-user-menu {
-    position: absolute;
-    top: 0%;
-    right: 0%;
+img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid white;
 }
-
-.current-user-profile {
-    position: absolute;
-    top: 0%;
-    right: 0%;
-    padding-top: 10px;
-    padding-right: 10px;
-    width: 20%;
-    height: 20%;
-}
-
-img { 
-    width: 100px;
-    height: 100px;
-    border-radius: 50%; 
-}
-
-.followers{
-  position: absolute;
-  left: 35%;
-  top: 130px;
-  display:inline-block;
-}
-
-.follower-label, .following-label, .follower-count, .following-count {
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.follower-count, .following-count {
-  position: relative;
-  left: -4%; /* center that mf */
-}
-
-
-.Blurb h2{
-  /* position: relative; */
-  /* text-align: center; */
-  /* justify-content: center; */
-  position: absolute;
-  top: 190px;
-  left: 35%;
-  font-style: italic;
-  font-size: large;
-}
-
-/* .Blurb { 
-  position: absolute;
-  top: 110px;
-  left: 60%;
-  padding: 5px;
-} */
-
-/* .Blurb h2{
-  font-size: 400;
-}
-
-.Blurb h3{
-  font-style: italic;
-} */
 .socialMedia {
-  position: static;
-  left:35%;
-  top: 200px;
   padding: 10px;
   border-radius: 2px;
   display: flex;
 }
-
 /* Set a specific color for each brand */
 /* Facebook */
 .facebook {
@@ -109,62 +25,42 @@ img {
   flex: 33.33%;
   padding: 1px;
 }
-
 .fa-facebook {
   background: #3B5998;
   color: white;
 }
-
 /* Twitter */
 .twitter {
   padding: inherit;
   flex: 33.33%;
   padding: 1px;
 }
-
 .fa-twitter {
   background: #55ACEE;
   color: white;
-
 }
-
 .instagram {
   padding: inherit;
   flex: 33.33%;
   padding: 1px;
 }
-
 .fa-instagram {
   background: #125688;
   color: white;
 }
+
 .btn {
   background-color: DodgerBlue;
-  /* Blue background */
   border: none;
-  /* Remove borders */
-  color: white;
   /* White text */
-  padding: 12px 16px;
+  color: white;
   /* Some padding */
+  padding: 12px 16px;
   font-size: 16px;
-  /* Set a font size */
-  cursor: pointer;
   /* Mouse pointer on hover */
+  cursor: pointer;
 }
 
-.edit-profile-btn {
-  padding: 20px;
-  padding-top: 10px; padding-bottom: 10px;
-  position: absolute;
-  top:130px;
-  left: 50%;
-  font-size: medium;
-}
-
-.edit-profile-btn:hover {
-  background-color: #d8d8d2;
-}
 /* Darker background on mouse-over */
 .btn:hover {
   background-color: RoyalBlue;
@@ -184,4 +80,90 @@ img {
   opacity: 0.7;
 }
 
+@media screen and (min-width: 1200px) {
+  .profile-container {
+    padding: 20px 15%;
+  }
+  .user-details {
+    background: none;
+    /* padding:20px; */
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  .profile-picture {
+    object-fit: cover;
+    position: absolute;
+    left: 25%;
+    top: 15%;
+  }
+  .followers {
+    position: fixed;
+    left: 35%;
+    top: 15%;
+    display: inline-block;
+    padding: 10px;
+    flex: 33.33%;
+  }
+  .follower-label, .following-label, .follower-count, .following-count {
+    font-size: 20px;
+    font-weight: 700;
+  }
 
+  .follower-count, .following-count {
+    position: relative;
+    left: -4%; /* Positions the 0's better */
+  }
+
+  .socialMedia {
+    position: fixed;
+    left:35%;
+    top: 25%;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  .edit-profile-btn {
+    padding: 20px;
+    padding-top: 10px; padding-bottom: 10px;
+    
+    position: fixed;
+    top: 130px;
+    left: 50%;
+    font-size: medium;
+  }
+
+  .Blurb {
+    color: white;
+    justify-content: left;
+    position: fixed;
+    left: 50%;
+    top: 25%;
+    padding: 0px 150px;
+    border: 3px solid white;
+    border-radius: 5px;
+    display: inline-block;
+  }
+
+  .Blurb h2 {
+    padding: 0px;
+  }
+  .Blurb p {
+    padding:0px;
+  }
+
+  .top-poem-container {
+    overflow: scroll;
+    position: relative;
+    top: 60%;
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .profile-picture {
+    position: fixed;
+    top: 15%;
+    left: 5%;
+  }
+  
+}
