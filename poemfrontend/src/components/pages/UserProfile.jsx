@@ -72,45 +72,47 @@ export const UserProfile = (props) => {
                 <h1 className='username-title'>
                     {name}'s Anthology
                 </h1>
-                <Dropdown /> 
+                {/* <Dropdown />  */}
             </header>
 
             <body>
-                <div className="profilePictures">
-                    <img src= {picture} alt= "profile picture"/>
-                </div>
+                <img src= {picture} alt= "profile picture" className="profile-picture"/>
 
                 <div className="followers">
                     <table>
                         <tr>
-                            <td>Followers: &nbsp;  &nbsp; </td>
-                            <td>Following: &nbsp;  &nbsp; </td>
+                            <td className="follower-label">Followers: &nbsp;  &nbsp; </td>
+                            <td className="following-label">Following: &nbsp;  &nbsp; </td>
                         </tr>
                         <tr>
-                            <td>{followerCount}</td>
-                            <td>{followingCount}</td>
+                            <td className="follower-count">{followerCount}</td>
+                            <td className="following-count">{followingCount}</td>
                         </tr>
                     </table>
+                </div>
 
+                <div className="edit-profile-link">
+                    <a href="/edit-profile">
+                        <button className="edit-profile-btn">Edit Profile</button>
+                    </a>
                 </div>
 
                 <div className="Blurb">
-                    <h2> Blurb</h2>
-                    <h3>{blurb}</h3>
+                    <h2>{blurb}</h2>
                 </div>
 
                 <div className="socialMedia">
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-                <div className="facebook">
-                    <a href={facebook} class="fa fa-facebook"></a>
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+                    <div className="facebook">
+                        <a href={facebook} class="fa fa-facebook"></a>
+                    </div>
+                    <div className="twitter">
+                        <a href={twitter} class="fa fa-twitter"></a>
+                    </div>
+                    <div className="instagram">
+                        <a href={instagram} class="fa fa-instagram"></a>
+                    </div>
                 </div>
-                <div className="twitter">
-                    <a href={twitter} class="fa fa-twitter"></a>
-                </div>
-                <div className="instagram">
-                    <a href={instagram} class="fa fa-instagram"></a>
-                </div>
-            </div>
             </body>
         </div>
     )
