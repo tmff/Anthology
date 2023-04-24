@@ -20,10 +20,6 @@ class Migration(migrations.Migration):
                 ('time_created', models.DateTimeField(default=datetime.datetime.now)),
             ],
         ),
-        migrations.RemoveField(
-            model_name='comment',
-            name='time_created',
-        ),
         migrations.AddField(
             model_name='poem',
             name='theme',
