@@ -317,7 +317,7 @@ class CommentPoemView(generics.CreateAPIView):
         comment = Comment(poem=poem, user=request.user, content=commentStr)
         comment.save()
 
-        return Response({'author': request.user.username, 'comment': commentStr}, status=200)
+        return Response({'author': request.user.username, 'comment': commentStr, 'id': comment.id}, status=200)
 
 
 class BookmarkPoemView(generics.CreateAPIView):
@@ -391,6 +391,24 @@ class FetchCommentsPoemView(viewsets.ModelViewSet):
         return comments
 
 
+class DeleteCommentView(generics.DestroyAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, *args, **kwargs):
+        if not exists(request.data, 'comment_id'):
+            return Response({'error': 'A comment ID must be specified.'}, status=400)
+
+        comment = Comment.objects.get(id=request.data['comment_id'])
+
+        # If the wrong user is trying to delete the comment, tell them to get lost
+        if comment.user.id != request.user.id:
+            return Response({'error': 'You\'re trying to delete a comment you didn\'t write. Why?'}, status=403)
+
+        comment.delete()
+        return Response(status=204)
+
+
 class EditProfileView(APIView):
     serializer_class = ProfileSerializer
     authentication_classes = (TokenAuthentication,)
@@ -402,7 +420,7 @@ class EditProfileView(APIView):
         serializer = ProfileSerializer(profile, context={'request': request})
         return Response(serializer.data)
 
-    def post (self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         profile = Profile.objects.get(user=self.request.user.id)
         print("inside post")
         print(request.data)
@@ -413,7 +431,7 @@ class EditProfileView(APIView):
         else:
             print('error', serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
 
 class EditPictureView(APIView):
     serializer_class = ImageSerializer

@@ -173,10 +173,21 @@ class LikeSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+    self = serializers.SerializerMethodField()
 
     class Meta:
         model = Comment
-        fields = ['user', 'content']
+        fields = ['id', 'user', 'content', 'self']
+
+    def get_self(self, comment):
+
+        request = self.context.get("request")
+        if not request or not hasattr(request, "user"):
+            return False
+        
+        user = request.user
+
+        return comment.is_self(user)
 
 
 class BookmarkSerializer(serializers.ModelSerializer):

@@ -33,6 +33,7 @@ urlpatterns = [
   path("like-poem", LikePoemView.as_view()),
   path("remove-poem-like", UnlikePoemView.as_view()),
   path("send-comment", CommentPoemView.as_view()),
+  path("delete-comment", DeleteCommentView.as_view()),
   path("bookmark", BookmarkPoemView.as_view()),
   path("remove-bookmark", RemoveBookmarkPoemView.as_view()),
   path("edit-profile", EditProfileView.as_view()),

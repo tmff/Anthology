@@ -120,6 +120,9 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
 
+    def is_self(self, user) -> bool:
+        return self.user == user
+
 
 class Reply(Comment):
     parent_comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='parent_comment_to_reply')
