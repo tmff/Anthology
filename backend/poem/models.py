@@ -127,9 +127,13 @@ class Comment(models.Model):
     poem = models.ForeignKey(Poem, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
+    time_created = models.DateTimeField(default=datetime.datetime.now)
 
     def is_self(self, user) -> bool:
         return self.user == user
+    
+    def get_reply_count(self) -> int:
+        return Reply.objects.aggregate(count=Count('pk', filter=Q(parent_comment=self)))["count"]
 
 
 class Reply(Comment):
