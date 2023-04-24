@@ -129,11 +129,13 @@
   align-items: center;
   color: black;
 }
+
 /* Styling for poem icons */
 .poem .button-icon {
-  margin: 0 10px 0 10px;
-  font-size: 1.2em;
+  margin: 0 5px 0 10px;
+  font-size: 1.1em;
   color: black;
+  padding: 0px;
 }
 
 .poem .button-icon:hover {
@@ -165,6 +167,12 @@
 
 a {
   color: white;
+}
+
+button .button-icon {
+  background-color: rgba(255, 255, 255, 0);
+  padding: 0px;
+  margin: 0px;
 }
 
 /* .speaker {

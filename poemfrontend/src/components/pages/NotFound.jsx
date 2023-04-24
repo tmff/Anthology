@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PageNotFound from "../profileImgs/monkey.png";
-import '../../css/NotFoundPage.css';
 
 class NotFoundPage extends React.Component {
     render(){
+
+        import('../../css/NotFoundPage.css');
+        
         return (
             <div className='notfound-page'>
                 <img className='monkey' src={PageNotFound} />

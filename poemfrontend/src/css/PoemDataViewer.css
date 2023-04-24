@@ -76,6 +76,9 @@
 
 .button-icon {
     font-size: 1.3em;
+    background-color: rgba(255, 255, 255, 0);
+    padding: 0px;
+    margin: 10px;
 }
 
 .author p {
@@ -84,11 +87,6 @@
 
 .comment-input {
     min-width: 22em;
-}
-
-.send-icon {
-    padding: 10px;
-    font-size: 1.4em;
 }
 
 .comment {

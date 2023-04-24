@@ -1,7 +1,6 @@
 import api, { promptLike as promptLikeAPI } from "../js/Api"
 import { useState, useEffect } from 'react';
 import Cookies from 'universal-cookie';
-import '../css/Poem.css'
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,6 +8,8 @@ import { faCommentDots, faHeart as faSolidHeart, faPaperPlane, faUserCircle, faB
 import { faHeart as faRegularHeart, faBookmark as faRegularBookmark } from '@fortawesome/free-regular-svg-icons';
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+
+import '../css/Poem.css'
 
 //Pass in id of poem that you want to get
 export const PoemViewer = (props) => {
@@ -20,8 +21,10 @@ export const PoemViewer = (props) => {
     const [likes, setLikes] = useState(0)
     const [comments, setComments] = useState(0)
 
-
     useEffect(() => {
+
+        import("../css/Poem.css");
+
         const cancelToken = axios.CancelToken.source();
         if(!props.id){
             setPoemContent(props.content);
@@ -114,13 +117,23 @@ export const PoemViewer = (props) => {
                 </div>
                 <div className="buttons">
 
-                <FontAwesomeIcon icon={liked ?  faSolidHeart : faRegularHeart} className="button-icon" onClick={ promptLike } data-tooltip-id="like-tooltip" />
+                <button className="button-icon" onClick={ () => promptLike() }>
+                    <FontAwesomeIcon icon={liked ?  faSolidHeart : faRegularHeart} className="button-icon" data-tooltip-id="like-tooltip" />
+                </button>
                 {likes}
-                <FontAwesomeIcon icon={faCommentDots} className="button-icon" data-tooltip-id="comment-tooltip" />
-                {comments}
-                <FontAwesomeIcon icon = {faVolumeHigh} className="button-icon" data-tooltip-id= "speech-tooltip" onClick= {readPoem} />
 
-                <FontAwesomeIcon icon={faPaperPlane} className="button-icon" data-tooltip-id="share-tooltip" />
+                <NavLink className="button-icon" to={ `/poem/${props.content.poem_id}` }>
+                    <FontAwesomeIcon icon={faCommentDots} data-tooltip-id="comment-tooltip" />
+                </NavLink>
+                {comments}
+
+                <button className="button-icon" onClick={ () => readPoem() }>
+                    <FontAwesomeIcon icon = {faVolumeHigh} className="button-icon" data-tooltip-id= "speech-tooltip" onClick= { readPoem } />
+                </button>
+                
+                <button className="button-icon" >
+                    <FontAwesomeIcon icon={faPaperPlane} data-tooltip-id="share-tooltip" />
+                </button>
 
                 <Tooltip id="like-tooltip" content="Like" />
                 <Tooltip id="comment-tooltip" content="Comments" />

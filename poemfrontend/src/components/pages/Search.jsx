@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../js/Api';
-import '../../css/Search.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentDots, faHeart, faPaperPlane, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 
 export const Search = () => {
+
+  import('../../css/Search.css');
+
   const [searchType, setSearchType] = useState('users'); // default to searching for users
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);

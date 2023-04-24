@@ -9,14 +9,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentDots, faHeart as faSolidHeart, faPaperPlane, faUserCircle, faBookmark as faSolidBookmark, faVolumeHigh, faSpinner} from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faRegularHeart, faBookmark as faRegularBookmark, faPaperPlaneTop } from '@fortawesome/free-regular-svg-icons';
 import axios from "axios";
+import React from "react";
 
-import '../../css/Poem.css';
-import '../../css/PoemDataViewer.css';
 
 const PoemDataViewer = (props) => {
 
     // Load data
     const content = useLoaderData();
+
+    import('../../css/Poem.css');
+    import('../../css/PoemDataViewer.css');
     
     // States
     const [title, setTitle] = useState("");
@@ -32,6 +34,7 @@ const PoemDataViewer = (props) => {
     const [commentSending, setCommentSending] = useState(false);
     const [comments, setComments] = useState([{ author: "joemama123", comment: "yo ass so fat" }, { author: "joemama123", comment: "you gonna do smth bout it?" }]);
     const [commentInput, setCommentInput] = useState("");
+    const [commentCount, setCommentCount] = useState("");
 
     // Functions
     const navigate = useNavigate();
@@ -50,7 +53,6 @@ const PoemDataViewer = (props) => {
         if (poemId === -1) return;
         
         api.get(`/get-comments/${poemId}/`).then((res) => {
-            console.log(res);
 
             setComments(res.data.map(comment => {
                 return { author: comment.user.username, comment: comment.content };
@@ -67,9 +69,13 @@ const PoemDataViewer = (props) => {
         setLikes(data.like_count);
         setLiked(data.is_liked);
         setPoemID(data.id);
+        setCommentCount(data.comment_count);
     }
 
     function postComment(data) {
+
+        if (commentSending) return;
+        if (commentInput.length === 0) return;
 
         setCommentSending(true);
 
@@ -91,9 +97,6 @@ const PoemDataViewer = (props) => {
     var obj;
     return (
         <div>
-            <div className="top-bar">
-                <button className="back-arrow" />
-            </div>
             <div className="widget-container">
                 <PoemViewer key={ poemId } content={obj = {
                                 title:title,
@@ -102,7 +105,7 @@ const PoemDataViewer = (props) => {
                                 poem_id:poemId,
                                 is_liked:liked,
                                 like_count:likes,
-                                comment_count:comments.length,
+                                comment_count:commentCount,
                                 is_bookmarked:bookmarked,
                             }
                         }
@@ -128,7 +131,9 @@ const PoemDataViewer = (props) => {
                     <div className="input-container">
                         <input className="comment-input" onChange={ (e) => setCommentInput(e.target.value) } />
 
-                        { commentSending ? <FontAwesomeIcon icon={ faSpinner } className="button-icon send-icon" spinPulse /> : <FontAwesomeIcon icon={ faPaperPlane } className="button-icon send-icon" onClick={ () => postComment() } />}
+                        <button onClick={ () => postComment() } className="button-icon send-icon" >
+                            { commentSending ? <FontAwesomeIcon icon={ faSpinner } spinPulse /> : <FontAwesomeIcon icon={ faPaperPlane } className="button-icon send-icon" />}
+                        </button>
                         
                     </div>
                 </div>

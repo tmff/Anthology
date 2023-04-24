@@ -1,4 +1,3 @@
-import '../css/App.css';
 import { Footer } from './Footer';
 import Sidebar from './Sidebar';
 import api from "../js/Api";
@@ -7,6 +6,8 @@ import { useState, useEffect } from 'react';
 
 export const Base = (props) => {
   const [currentTheme, setCurrentTheme] = useState ()
+
+  import('../css/App.css');
 
   useEffect(() => {
     const cancelToken = axios.CancelToken.source();
