@@ -120,7 +120,10 @@ export const PoemViewer = (props) => {
             <div data-testid="coloured-top" className={props.highlighted ? "colored-block highlighted" : "colored-block"}>
                 <NavLink to={ "/poem/" + props.content.poem_id }><h4>{ title }</h4></NavLink>
                 <p>{ line1 }<br/>{ line2 }<br/>{ line3 }</p>
-                <FontAwesomeIcon icon={ bookmarked ? faSolidBookmark : faRegularBookmark } className="bookmark-icon" onClick={ promptBookmark } data-tooltip-id="bookmark-tooltip" />
+
+                <button className="bookmark-icon" onClick={ () => promptBookmark }>
+                    <FontAwesomeIcon icon={ bookmarked ? faSolidBookmark : faRegularBookmark } data-tooltip-id="bookmark-tooltip" />
+                </button>
             </div>
             
             <div className="light-block">

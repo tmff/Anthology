@@ -90,9 +90,11 @@
 .bookmark-icon {
   position: absolute;
   top: 20px;
-  bottom:10px;
   right: 20px;
   font-size: 20px;
+  background: none;
+  padding: 0px;
+  color: white;
 }
 
 .bookmark-icon:hover {
