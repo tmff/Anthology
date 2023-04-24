@@ -20,6 +20,7 @@ export const PoemViewer = (props) => {
     const [bookmarked, setBookmarked] = useState(false);
     const [likes, setLikes] = useState(0)
     const [comments, setComments] = useState(0)
+    const [copiedLink, setCopiedLink] = useState(false);
 
     useEffect(() => {
 
@@ -82,6 +83,15 @@ export const PoemViewer = (props) => {
         setBookmarked(!bookmarked);
     }
 
+    function copyLink() {
+
+        setCopiedLink(true);
+
+        navigator.clipboard.writeText(`${window.location.origin}/poem/${props.content.poem_id}`);
+
+        setTimeout(() => setCopiedLink(false), 3000);
+    }
+
     const readPoem = () => {
         const synth = window.speechSynthesis;
         const utterTitle = new SpeechSynthesisUtterance(title);
@@ -131,13 +141,15 @@ export const PoemViewer = (props) => {
                     <FontAwesomeIcon icon = {faVolumeHigh} className="button-icon" data-tooltip-id= "speech-tooltip" onClick= { readPoem } />
                 </button>
                 
-                <button className="button-icon" >
-                    <FontAwesomeIcon icon={faPaperPlane} data-tooltip-id="share-tooltip" />
+                <button className="button-icon" onClick={ () => copyLink() } >
+                    <FontAwesomeIcon icon={faPaperPlane} data-tooltip-id="share-tooltip" data-tooltip-content={ copiedLink ? "Copied poem link to your clipboard!" : "Share" } />
                 </button>
 
                 <Tooltip id="like-tooltip" content="Like" />
                 <Tooltip id="comment-tooltip" content="Comments" />
-                <Tooltip id="share-tooltip" content="Share" />
+                <Tooltip id="share-tooltip" render={({ content }) => (
+                    <span>{ content }</span>
+                )} />
                 <Tooltip id="bookmark-tooltip" content="Bookmark" />
                 <Tooltip id="speech-tooltip" content= "Read poem out loud" />
                 </div>
