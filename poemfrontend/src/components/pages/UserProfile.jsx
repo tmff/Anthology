@@ -98,10 +98,10 @@ export const UserProfile = (props) => {
                                     <button className="edit-profile-btn">Edit Profile</button>
                                 </a>
                             </div>
-                        </div>
-                        <div className="Blurb">
-                            <h2>Blurb:</h2>
-                            <p>{blurb}</p>
+                            <div className="Blurb">
+                                {/* <h2>Blurb:</h2> */}
+                                <p>{blurb}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
