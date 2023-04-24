@@ -40,6 +40,61 @@ class FriendView(viewsets.ModelViewSet):
     #     friends = profile.friends.count()
     #     return friends
 
+class ReadingRoomPoemView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = PoemSerializer
+
+    def get_queryset(self, *args, **kwargs):
+
+        #Get today's date and theme
+        today = datetime.date.today()
+
+        #Get public users
+        public_profiles = Poem.objects.filter(
+            Q(author__profile__is_private=False) | 
+            Q(author__profile__is_private__isnull=True)
+        )
+        try:
+            #Get popular poems of today's theme
+            popular_poems = Poem.objects.filter(theme__date_created__date=today).annotate(
+                win_rate=ExpressionWrapper(
+                    F('matches_won') * 100 / F('matches_played'),
+                    output_field=FloatField()
+                )
+            ).order_by('-win_rate')[:10] #top 10 popular poems today
+
+            #Get other poems from today's theme
+            non_popular_poems = Poem.objects.filter(theme__date_created__date=today).exclude(id=popular_poem.id)
+
+            #Get all previous themes, excluding today
+            prev_themes = Theme.objects.exclude(date_created__date=today)
+        except Poem.DoesNotExist:
+            popular_poems = None
+            non_popular_poems = None
+            prev_themes = None
+
+        queryset = {
+            'public_profiles' : public_profiles,
+            'popular_poems': popular_poems,
+            'non_popular_poems': non_popular_poems,
+            'prev_themes': prev_themes,
+        }
+        return queryset
+        
+    def get(self, request):
+        queryset = self.get_queryset()
+        
+        # Serialize the data and return the response
+        data = {
+            'popular_poems': PoemSerializer(queryset['popular_poems'], many=True).data,
+            'non_popular_poems': PoemSerializer(queryset['non_popular_poems'], many=True).data,
+            'prev_themes': ThemeSerializer(queryset['prev_themes'], many=True).data,
+            'public_profiles': PublicProfileSerializer(queryset['public_profiles'], many=True).data,
+            }
+    
+        return Response(data, status=200)
+
 
 class PoemFriendListView(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
@@ -256,7 +311,6 @@ class LikePoemView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
 
         # Find the poem
-        print(request.data)
         if request.data['poem_id'] is None:
             return Response({'error': 'A poem ID must be specified.'}, status=400)
 
@@ -289,7 +343,109 @@ class UnlikePoemView(generics.DestroyAPIView):
 
         like.delete()
         return Response({'status': 'Like removed.', 'likes': poem.get_like_count()}, status=200)
+
+
+class CommentPoemView(generics.CreateAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = CommentSerializer
+
+    def create(self, request, *args, **kwargs):
+
+        # Get the content
+        if not exists(request.data, 'comment'):
+            return Response({'error': 'Comment content should be specified.'}, status=400)
+
+        # Find the poem
+        if not exists(request.data, 'poem_id'):
+            return Response({'error': 'A poem ID must be specified.'}, status=400)
+
+        poem = Poem.objects.get(id=request.data['poem_id'])
+        if not poem:
+            return Response({'error': 'Poem not found.'}, status=400)
+
+        commentStr = request.data['comment']
+
+        if commentStr.strip() == "":
+            return Response({'status': 'Comment content must not be empty.'}, status=400)
+
+        comment = Comment(poem=poem, user=request.user, content=commentStr)
+        comment.save()
+
+        return Response({'author': request.user.username, 'comment': commentStr}, status=200)
+
+
+class BookmarkPoemView(generics.CreateAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = BookmarkSerializer
+    
+    def create(self, request, *args, **kwargs):
+
+        # Get the poem ID
+        if not exists(request.data, 'poem_id'):
+            return Response({'error': 'A poem ID must be specified.'}, status=400)
         
+        poem = Poem.objects.get(id=request.data['poem_id'])
+        if not poem:
+            return Response({'error': 'Poem not found.'}, status=400)
+        
+        bookmark = Bookmark(poem=poem, user=request.user)
+        bookmark.save()
+
+        return Response(status=204)
+
+
+class RemoveBookmarkPoemView(generics.DestroyAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, *args, **kwargs):
+
+        # Find the poem
+        if not exists(request.data, 'poem_id'):
+            return Response({'error': 'A poem ID must be specified.'}, status=400)
+
+        poem = Poem.objects.get(id=request.data['poem_id'])
+        if not poem:
+            return Response({'error': 'Poem not found.'}, status=400)
+        
+        bookmark = Bookmark.objects.filter(poem=poem, user=request.user)
+        if not bookmark:
+            return Response({'error': 'Poem not bookmarked.'}, status=400)
+        
+        bookmark.delete()
+        return Response(status=204)
+
+
+class FetchBookmarkedPoemsView(viewsets.ModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = BookmarkSerializer
+    model = Bookmark
+    queryset = Bookmark.objects.all()
+
+    def get(self, *args, **kwargs):
+
+        # Find the bookmarks
+        bookmarks = Bookmark.objects.filter(user=self.request.user)
+        return bookmarks
+
+
+class FetchCommentsPoemView(viewsets.ModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = CommentSerializer
+    model = Comment
+    queryset = Comment.objects.all()
+
+    def get(self, *args, **kwargs):
+
+        # Find the poem
+        comments = Comment.objects.filter(poem__id=kwargs.get("poem_id"))
+        return comments
+
+
 class EditProfileView(APIView):
     serializer_class = ProfileSerializer
     authentication_classes = (TokenAuthentication,)
@@ -358,3 +514,46 @@ class EditModeView(APIView):
             print('error', serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class TaggedPoemViewSet(viewsets.ModelViewSet):
+    queryset = Poem.objects.all()
+    serializer_class = SearchPoemSerializer
+
+    def get_queryset(self):
+        qs = Poem.objects.all()
+        tags = self.request.query_params.get('tags.title') 
+        if tags is not None:
+            qs = qs.filter(tags__title__icontains=tags)
+        return qs
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        qs = User.objects.all()
+        username = self.request.query_params.get('username') 
+        if username is not None:
+            qs = qs.filter(username__icontains=username)
+        return qs
+
+
+class PostsViewSet(viewsets.ModelViewSet):
+    queryset = Poem.objects.all()
+    serializer_class = SearchPoemSerializer
+
+    def get_queryset(self):
+        qs = Poem.objects.all()
+        title = self.request.query_params.get('title') 
+        if title is not None:
+            qs = qs.filter(title__icontains=title)
+        return qs
+
+
+def exists(dict, key):
+    try:
+        dict[key]
+        return True
+    except KeyError:
+        return False

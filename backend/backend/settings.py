@@ -150,3 +150,5 @@ CORS_ALLOWED_ORIGINS = [
    'https://anthology.bham.team',
    'http://localhost:3000'
 ]
+
+APPEND_SLASH = False 

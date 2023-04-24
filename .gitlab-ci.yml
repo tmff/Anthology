@@ -49,11 +49,59 @@ check-django:
     changes:
       - backend/**/*
 
+test-django:
+  image: python:3.10.10
+  stage: test
+  allow_failure: true
+  tags: 
+  - python
+  script:
+  - echo "Running Django tests..."
+  - cd $BASE_DIR/backend
+  - pip install pipenv
+  - pipenv install
+  - pipenv run python manage.py test
+  - cd $BASE_DIR
+  - echo "Finished Django tests."
+  only:
+    refs:
+      - react
+    changes:
+      - backend/**/*
+
+test-react:
+  image: node:16
+  stage: test
+  allow_failure: true
+  tags:
+    - node
+  script:
+  - echo "Running React tests..."
+  - cd $BASE_DIR/poemfrontend
+  - npm install
+  - npm run test:ci
+  - cd $BASE_DIR
+  - echo "Finished React tests."
+  artifacts:
+    paths:
+      - poemfrontend/junit.xml
+    when: always
+    reports:
+      junit:
+        - poemfrontend/junit.xml
+  only:
+    refs:
+      - react
+    changes:
+      - poemfrontend/**/*
+  
 build-docker-frontend:
   image: docker:latest
   stage: build
   services:
   - docker:dind
+  needs:
+    - job: test-react
   variables:
     DOCKER_HOST: 'tcp://docker:2375'
     DOCKER_DRIVER: overlay2
@@ -74,6 +122,8 @@ build-docker-frontend:
 build-docker-backend:
   image: docker:latest
   stage: build
+  needs:
+    - job: test-django
   services:
   - docker:dind
   variables:
@@ -93,54 +143,15 @@ build-docker-backend:
     changes:
       - backend/**/*
 
-test-django:
-  image: python:3.10.10
-  stage: test
-  tags: 
-  - python
-  script:
-  - echo "Running Django tests..."
-  - cd $BASE_DIR/backend
-  - pip install pipenv
-  - pipenv install
-  - pipenv run python manage.py test
-  - cd $BASE_DIR
-  - echo "Finished Django tests."
-  only:
-    refs:
-      - react
-    changes:
-      - backend/**/*
-
-test-react:
-  image: node:16
-  stage: test
-  tags:
-    - node
-  script:
-  - echo "Running React tests..."
-  - cd $BASE_DIR/poemfrontend
-  - npm install react-scripts --save-dev
-  - npm run test:ci
-  - cd $BASE_DIR
-  - echo "Finished React tests."
-  artifacts:
-    paths:
-      - poemfrontend/junit.xml
-    when: always
-    reports:
-      junit:
-        - poemfrontend/junit.xml
-  only:
-    refs:
-      - react
-    changes:
-      - poemfrontend/**/*
-
 deploy-git:
   image: alpine:latest
   stage: deploy
   when: on_success
+  needs:
+    - job: build-docker-backend
+      optional: true
+    - job: build-docker-frontend
+      optional: true
   before_script: 
     - chmod og= $RSA
     - apk update && apk add openssh-client

@@ -3,6 +3,7 @@ import React, {useState ,useEffect} from "react";
 import api from '../../js/Api.js';
 import { PoemViewer } from "../PoemViewer.jsx";
 import '../../css/Highlight.css'
+import { Button } from "bootstrap";
 
 
 
@@ -68,7 +69,7 @@ export const Highlight = (props) => {
         console.log(poems[0].author)
         setDisplay(
             <div className="container">
-                <div onClick={chooseOne}>
+                <div>
                     <PoemViewer content={obj1 = {
                         title:poems[0].title,
                         content:poems[0].content,
@@ -79,8 +80,11 @@ export const Highlight = (props) => {
                         comment_count:poems[0].comment_count,
                         is_bookmarked:poems[0].is_bookmarked,
                     }} />
+                    <div>
+                        <button onClick={chooseOne}>Vote!</button>
+                    </div>
                 </div>
-                <div onClick={chooseTwo}>
+                <div>
                     <PoemViewer content={obj2 = {
                         title:poems[1].title,
                         content:poems[1].content,
@@ -91,6 +95,9 @@ export const Highlight = (props) => {
                         comment_count:poems[1].comment_count,
                         is_bookmarked:poems[1].is_bookmarked,
                     }}/>
+                    <div>
+                        <button onClick={chooseTwo}>Vote!</button>
+                    </div>
                 </div>
             </div>
         )

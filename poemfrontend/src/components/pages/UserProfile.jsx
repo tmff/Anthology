@@ -5,9 +5,8 @@ import '../../css/UserProfile.css';
 import axios from "axios";
 
 export const UserProfile = (props) => {
-    const [username, setUserName] = useState('');
-    const [name, setName] = useState('');
-    const [blurb, setBlurb] = useState('A fledgling Edgar Allen Poe.');
+    const [name, setName] = useState('User');
+    const [blurb, setBlurb] = useState('A fledgling Edgar Allen Poe');
     const [facebook, setFacebook] = useState('')
     const [twitter, setTwitter] = useState('')
     const [instagram, setInstagram] = useState('')
@@ -47,20 +46,6 @@ export const UserProfile = (props) => {
                 }
             })
             console.log("loaded")
-
-            // api.get("/get-friends", {cancelToken: cancelToken.token})
-            // .then((res) => {
-            //     setFriends(res.data)
-            //     console.log(res.data)
-            // })
-            // .catch((err) => {
-            //     if(axios.isCancel(err)){
-            //         console.log("cancelled")
-            //     }else{
-            //         console.log(err)
-            //     }
-            // })
-            // console.log("loaded")
 
         return () => {
             cancelToken.cancel();

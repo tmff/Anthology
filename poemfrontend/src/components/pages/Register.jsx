@@ -2,10 +2,12 @@ import api from "../../js/Api"
 import React, { useState } from "react";
 import Cookies from 'universal-cookie';
 import { Link, useNavigate } from "react-router-dom";
-import '../../css/LogReg.css'
 
 
 export const Register = (props) => {
+
+    import('../../css/LogReg.css');
+
     const [email, setEmail] = useState('');
     const [username,setUsername] = useState('');
     const [pwd, setPwd] = useState('');
