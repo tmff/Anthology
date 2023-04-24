@@ -80,13 +80,13 @@ export const UserProfile = (props) => {
                     <div className="socialMedia">
                         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
                         <div className="facebook">
-                            <a href={facebook} class="fa fa-facebook"></a>
+                            <a href={facebook} class="fa fa-facebook" target="_blank"></a>
                         </div>
                         <div className="twitter">
-                            <a href={twitter} class="fa fa-twitter"></a>
+                            <a href={twitter} class="fa fa-twitter" target="_blank"></a>
                         </div>
                         <div className="instagram">
-                            <a href={instagram} class="fa fa-instagram"></a>
+                            <a href={instagram} class="fa fa-instagram" target="_blank"></a>
                         </div>
                     </div>
                     <div className="edit-profile-link">

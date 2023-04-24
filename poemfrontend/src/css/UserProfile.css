@@ -1,7 +1,7 @@
 .username-title {
   position: absolute;
-  align-self: left;
-  justify-self: left;
+  /* align-self: left; */
+  /* justify-self: left; */
   top: 0%;
   /* text-align: center; */
   color: var(--royal-purple);
