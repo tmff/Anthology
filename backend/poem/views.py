@@ -423,13 +423,9 @@ class FetchBookmarkedPoemsView(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = BookmarkSerializer
     model = Bookmark
-    queryset = Bookmark.objects.all()
 
-    def get(self, *args, **kwargs):
-
-        # Find the bookmarks
-        bookmarks = Bookmark.objects.filter(user=self.request.user)
-        return bookmarks
+    def get_queryset(self):
+        return Bookmark.objects.filter(user=self.request.user)
 
 
 class FetchCommentsPoemView(viewsets.ModelViewSet):
@@ -437,13 +433,54 @@ class FetchCommentsPoemView(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = CommentSerializer
     model = Comment
-    queryset = Comment.objects.all()
 
-    def get(self, *args, **kwargs):
+    def get_queryset(self):
 
         # Find the poem
-        comments = Comment.objects.filter(poem__id=kwargs.get("poem_id"))
+        comments = Comment.objects.filter(poem__id=self.kwargs["poem_id"]).exclude(is_reply=True)
         return comments
+
+
+class CreateReplyView(generics.CreateAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    
+    def create(self, request, *args, **kwargs):
+
+        # Get the content
+        if not exists(request.data, 'reply'):
+            return Response({'error': 'Reply content should be specified.'}, status=400)
+
+        # Find the poem
+        if not exists(request.data, 'comment_id'):
+            return Response({'error': 'A comment ID must be specified.'}, status=400)
+
+        comment = Comment.objects.get(id=request.data['comment_id'])
+        if not comment:
+            return Response({'error': 'Comment not found.'}, status=400)
+
+        commentStr = request.data['reply']
+
+        if commentStr.strip() == "":
+            return Response({'status': 'Reply content must not be empty.'}, status=400)
+
+        reply = Reply(poem=comment.poem, parent_comment=comment, user=request.user, content=commentStr, is_reply=True)
+        reply.save()
+
+        return Response({'author': request.user.username, 'comment': commentStr, 'id': comment.id}, status=200)
+
+
+class FetchRepliesCommentView(viewsets.ModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = ReplySerializer
+    model = Reply
+
+    def get_queryset(self):
+
+        # Find the reply
+        replies = Reply.objects.filter(parent_comment__id=self.kwargs["comment_id"])
+        return replies
 
 
 class DeleteCommentView(generics.DestroyAPIView):
@@ -509,6 +546,7 @@ class EditPictureView(APIView):
         else:
             print('error', serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class EditModeView(APIView):
     serializer_class = ModeSerializer

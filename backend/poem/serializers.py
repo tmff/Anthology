@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
-from .models import Comment, Poem, Profile, Like, Bookmark, FriendRequest, Tag, Theme
+from .models import Comment, Poem, Profile, Like, Bookmark, FriendRequest, Tag, Theme, Reply
 from rest_framework.authtoken.models import Token
 
 
@@ -174,10 +174,11 @@ class LikeSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     self = serializers.SerializerMethodField()
+    reply_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Comment
-        fields = ['id', 'user', 'content', 'self']
+        fields = ['id', 'user', 'content', 'self', 'reply_count']
 
     def get_self(self, comment):
 
@@ -188,6 +189,28 @@ class CommentSerializer(serializers.ModelSerializer):
         user = request.user
 
         return comment.is_self(user)
+    
+    def get_reply_count(self, comment):
+        return comment.get_reply_count()
+
+
+class ReplySerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    self = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Reply
+        fields = ['id', 'user', 'content', 'self']
+
+    def get_self(self, reply):
+
+        request = self.context.get("request")
+        if not request or not hasattr(request, "user"):
+            return False
+        
+        user = request.user
+
+        return reply.is_self(user)
 
 
 class BookmarkSerializer(serializers.ModelSerializer):

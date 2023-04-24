@@ -128,10 +128,11 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     time_created = models.DateTimeField(default=datetime.datetime.now)
+    is_reply = models.BooleanField(default=False)
 
     def is_self(self, user) -> bool:
         return self.user == user
-    
+
     def get_reply_count(self) -> int:
         return Reply.objects.aggregate(count=Count('pk', filter=Q(parent_comment=self)))["count"]
 
