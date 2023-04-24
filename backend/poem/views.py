@@ -423,13 +423,9 @@ class FetchBookmarkedPoemsView(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = BookmarkSerializer
     model = Bookmark
-    queryset = Bookmark.objects.all()
 
-    def get(self, *args, **kwargs):
-
-        # Find the bookmarks
-        bookmarks = Bookmark.objects.filter(user=self.request.user)
-        return bookmarks
+    def get_queryset(self):
+        return Bookmark.objects.filter(user=self.request.user)
 
 
 class FetchCommentsPoemView(viewsets.ModelViewSet):
@@ -550,6 +546,7 @@ class EditPictureView(APIView):
         else:
             print('error', serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class EditModeView(APIView):
     serializer_class = ModeSerializer
