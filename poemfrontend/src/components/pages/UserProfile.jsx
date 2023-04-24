@@ -117,8 +117,11 @@ export const UserProfile = (props) => {
                 </div>
 
                 <div className="top-poem-container">
-                    <div className="top-poem">
+                    <div className="top-poem-label">
                         {name}'s Top Poems
+                    </div>
+                    <div>
+                        {/* <TopPoems/> */}
                     </div>
                 </div>
             </body>
