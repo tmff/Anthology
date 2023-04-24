@@ -30,11 +30,13 @@ ALLOWED_HOSTS = [
     'team16-22.bham.team',
     'anthology.bham.team',
     'teamproject-app',
+    'localhost',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
         'https://team16-22.bham.team',
         'https://anthology.bham.team',
+        'http://localhost:3000',
 ]
 
 # Application definition
@@ -145,7 +147,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
    'https://team16-22.bham.team',
-   'https://anthology.bham.team'
+   'https://anthology.bham.team',
+   'http://localhost:3000'
 ]
 
 APPEND_SLASH = False 
