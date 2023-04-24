@@ -179,6 +179,14 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ['user', 'content']
 
 
+class BookmarkSerializer(serializers.ModelSerializer):
+    poem = PoemSerializer(read_only=True)
+
+    class Meta:
+        model = Bookmark
+        fields = ['poem']
+
+
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile

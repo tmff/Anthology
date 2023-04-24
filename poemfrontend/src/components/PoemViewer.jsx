@@ -1,4 +1,4 @@
-import api, { promptLike as promptLikeAPI } from "../js/Api"
+import api, { promptLike as promptLikeAPI, promptBookmark as promptBookmarkAPI } from "../js/Api"
 import { useState, useEffect } from 'react';
 import Cookies from 'universal-cookie';
 import { Tooltip } from 'react-tooltip';
@@ -27,14 +27,14 @@ export const PoemViewer = (props) => {
         import("../css/Poem.css");
 
         const cancelToken = axios.CancelToken.source();
-        if(!props.id){
+        if (!props.id) {
             setPoemContent(props.content);
             setAuthor(props.content.author);
             setLiked(props.content.is_liked);
             setLikes(props.content.like_count);
             setComments(props.content.comment_count);
-        }
-        else{
+            setBookmarked(props.content.is_bookmarked);
+        } else {
             var path = "/poems/" + props.id;
             api.get(path, {cancelToken: cancelToken.token})
             .then((res) => {
@@ -81,6 +81,9 @@ export const PoemViewer = (props) => {
 
         // Set the new state
         setBookmarked(!bookmarked);
+
+        // Send an API request
+        promptBookmarkAPI(props.content.poem_id, bookmarked);
     }
 
     function copyLink() {
@@ -138,7 +141,7 @@ export const PoemViewer = (props) => {
                 {comments}
 
                 <button className="button-icon" onClick={ () => readPoem() }>
-                    <FontAwesomeIcon icon = {faVolumeHigh} className="button-icon" data-tooltip-id= "speech-tooltip" onClick= { readPoem } />
+                    <FontAwesomeIcon icon = {faVolumeHigh} className="button-icon" data-tooltip-id= "speech-tooltip" />
                 </button>
                 
                 <button className="button-icon" onClick={ () => copyLink() } >

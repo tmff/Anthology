@@ -27,4 +27,16 @@ export async function promptLike(poemId, liked) {
     });
 }
 
+export async function promptBookmark(poemId, bookmarked) {
+
+    return new Promise(resolve => {
+        const request = bookmarked ? api.delete('/remove-bookmark', { data: { poem_id: poemId } }) : api.post('/bookmark', { poem_id: poemId });
+        request.then((res) => {
+            resolve();
+        }).catch((err) => {
+            console.log(err);
+        });
+    });
+}
+
 export default api;

@@ -320,6 +320,63 @@ class CommentPoemView(generics.CreateAPIView):
         return Response({'author': request.user.username, 'comment': commentStr}, status=200)
 
 
+class BookmarkPoemView(generics.CreateAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = BookmarkSerializer
+    
+    def create(self, request, *args, **kwargs):
+
+        # Get the poem ID
+        if not exists(request.data, 'poem_id'):
+            return Response({'error': 'A poem ID must be specified.'}, status=400)
+        
+        poem = Poem.objects.get(id=request.data['poem_id'])
+        if not poem:
+            return Response({'error': 'Poem not found.'}, status=400)
+        
+        bookmark = Bookmark(poem=poem, user=request.user)
+        bookmark.save()
+
+        return Response(status=204)
+
+
+class RemoveBookmarkPoemView(generics.DestroyAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, *args, **kwargs):
+
+        # Find the poem
+        if not exists(request.data, 'poem_id'):
+            return Response({'error': 'A poem ID must be specified.'}, status=400)
+
+        poem = Poem.objects.get(id=request.data['poem_id'])
+        if not poem:
+            return Response({'error': 'Poem not found.'}, status=400)
+        
+        bookmark = Bookmark.objects.filter(poem=poem, user=request.user)
+        if not bookmark:
+            return Response({'error': 'Poem not bookmarked.'}, status=400)
+        
+        bookmark.delete()
+        return Response(status=204)
+
+
+class FetchBookmarkedPoemsView(viewsets.ModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = BookmarkSerializer
+    model = Bookmark
+    queryset = Bookmark.objects.all()
+
+    def get(self, *args, **kwargs):
+
+        # Find the bookmarks
+        bookmarks = Bookmark.objects.filter(user=self.request.user)
+        return bookmarks
+
+
 class FetchCommentsPoemView(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = [IsAuthenticated]

@@ -70,6 +70,7 @@ const PoemDataViewer = (props) => {
         setLiked(data.is_liked);
         setPoemID(data.id);
         setCommentCount(data.comment_count);
+        setBookmarked(data.is_bookmarked);
     }
 
     function postComment(data) {
