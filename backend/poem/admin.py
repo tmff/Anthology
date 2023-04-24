@@ -2,11 +2,14 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
-from .models import Poem,Tag,Profile,FriendRequest
+from .models import Poem,Tag,Profile,FriendRequest, Theme
 # Register your models here.
 
 class PoemAdmin(admin.ModelAdmin):
     list_display = ('title','content')
+
+class ThemeAdmin(admin.ModelAdmin):
+    list_display = ('theme', 'time_created')
 
 class TagAdmin(admin.ModelAdmin):
     list_display = ('title',)
@@ -29,3 +32,4 @@ admin.site.register(Profile)
 admin.site.register(Tag,TagAdmin)
 admin.site.register(User,UserAdmin)
 admin.site.register(FriendRequest,RequestAdmin)
+admin.site.register(Theme, ThemeAdmin)

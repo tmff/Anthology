@@ -39,7 +39,9 @@ urlpatterns = [
   path("edit-profile", EditProfileView.as_view()),
   path("edit-picture", EditPictureView.as_view()),
   path("edit-mode", EditModeView.as_view()),
-  path("get-comments/<int:poem_id>/", FetchCommentsPoemView.as_view({'get': 'list'}))
+  path("get-comments/<int:poem_id>/", FetchCommentsPoemView.as_view({'get': 'list'})),
+  path("get-theme", ReadingRoomPoemView.as_view())
+
 ]
 
 if settings.DEBUG:

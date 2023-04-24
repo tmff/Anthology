@@ -40,6 +40,61 @@ class FriendView(viewsets.ModelViewSet):
     #     friends = profile.friends.count()
     #     return friends
 
+class ReadingRoomPoemView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = PoemSerializer
+
+    def get_queryset(self, *args, **kwargs):
+
+        #Get today's date and theme
+        today = datetime.date.today()
+
+        #Get public users
+        public_profiles = Poem.objects.filter(
+            Q(author__profile__is_private=False) | 
+            Q(author__profile__is_private__isnull=True)
+        )
+        try:
+            #Get popular poems of today's theme
+            popular_poems = Poem.objects.filter(theme__date_created__date=today).annotate(
+                win_rate=ExpressionWrapper(
+                    F('matches_won') * 100 / F('matches_played'),
+                    output_field=FloatField()
+                )
+            ).order_by('-win_rate')[:10] #top 10 popular poems today
+
+            #Get other poems from today's theme
+            non_popular_poems = Poem.objects.filter(theme__date_created__date=today).exclude(id=popular_poem.id)
+
+            #Get all previous themes, excluding today
+            prev_themes = Theme.objects.exclude(date_created__date=today)
+        except Poem.DoesNotExist:
+            popular_poems = None
+            non_popular_poems = None
+            prev_themes = None
+
+        queryset = {
+            'public_profiles' : public_profiles,
+            'popular_poems': popular_poems,
+            'non_popular_poems': non_popular_poems,
+            'prev_themes': prev_themes,
+        }
+        return queryset
+        
+    def get(self, request):
+        queryset = self.get_queryset()
+        
+        # Serialize the data and return the response
+        data = {
+            'popular_poems': PoemSerializer(queryset['popular_poems'], many=True).data,
+            'non_popular_poems': PoemSerializer(queryset['non_popular_poems'], many=True).data,
+            'prev_themes': ThemeSerializer(queryset['prev_themes'], many=True).data,
+            'public_profiles': PublicProfileSerializer(queryset['public_profiles'], many=True).data,
+            }
+    
+        return Response(data, status=200)
+
 
 class PoemFriendListView(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
