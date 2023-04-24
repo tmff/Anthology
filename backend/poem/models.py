@@ -54,6 +54,13 @@ class Tag(models.Model):
     def __str__(self):
         return self.title
 
+class Theme(models.Model):
+    theme = models.CharField(max_length=120)
+    time_created = models.DateTimeField(default=datetime.datetime.now)
+
+    def __str__(self):
+        return self.theme
+
 
 """
 Represents a poem.
@@ -74,6 +81,7 @@ class Poem(models.Model):
     time_created = models.DateTimeField(default=datetime.datetime.now)
     is_published = models.BooleanField(default=False)
     tags = models.ForeignKey(Tag, on_delete=models.SET_NULL, null=True)
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE, null=True)
 
     # Highlighting
     matches_played = models.IntegerField(default=0)

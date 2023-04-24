@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
-from .models import Comment, Poem, Profile, Like, Bookmark, FriendRequest, Tag
+from .models import Comment, Poem, Profile, Like, Bookmark, FriendRequest, Tag, Theme
 from rest_framework.authtoken.models import Token
 
 
@@ -209,6 +209,11 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = ['title']
+
+class ThemeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Theme
+        fields = ['theme', 'day']
 
 class SearchPoemSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True)
