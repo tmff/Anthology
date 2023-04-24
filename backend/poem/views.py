@@ -311,6 +311,9 @@ class CommentPoemView(generics.CreateAPIView):
 
         commentStr = request.data['comment']
 
+        if commentStr.strip() == "":
+            return Response({'status': 'Comment content must not be empty.'}, status=400)
+
         comment = Comment(poem=poem, user=request.user, content=commentStr)
         comment.save()
 
@@ -327,8 +330,6 @@ class FetchCommentsPoemView(viewsets.ModelViewSet):
     def get(self, *args, **kwargs):
 
         # Find the poem
-        print(kwargs)
-        print(args)
         comments = Comment.objects.filter(poem__id=kwargs.get("poem_id"))
         return comments
 
