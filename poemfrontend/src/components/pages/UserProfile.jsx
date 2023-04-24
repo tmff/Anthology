@@ -18,7 +18,6 @@ export const UserProfile = (props) => {
         const cancelToken = axios.CancelToken.source();
             api.get("/edit-profile", {cancelToken: cancelToken.token})
             .then((res) => {
-                setUserName(res.data.username);
                 setName(res.data.name);
                 setBlurb(res.data.bio);
                 setFacebook(res.data.facebook)
