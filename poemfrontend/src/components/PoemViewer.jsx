@@ -121,7 +121,7 @@ export const PoemViewer = (props) => {
                 <NavLink to={ "/poem/" + props.content.poem_id }><h4>{ title }</h4></NavLink>
                 <p>{ line1 }<br/>{ line2 }<br/>{ line3 }</p>
 
-                <button className="bookmark-icon" onClick={ () => promptBookmark }>
+                <button className="bookmark-icon" onClick={ () => promptBookmark() }>
                     <FontAwesomeIcon icon={ bookmarked ? faSolidBookmark : faRegularBookmark } data-tooltip-id="bookmark-tooltip" />
                 </button>
             </div>
