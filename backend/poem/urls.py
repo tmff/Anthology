@@ -45,7 +45,10 @@ urlpatterns = [
   path("get-comments/<int:poem_id>/", FetchCommentsPoemView.as_view({'get': 'list'})),
   path("get-replies/<int:comment_id>/", FetchRepliesCommentView.as_view({'get': 'list'})),
   path("send-reply", CreateReplyView.as_view()),
-  path("get-theme", ReadingRoomPoemView.as_view())
+  path("get-theme", ReadingRoomPoemView.as_view()),
+  path("get-users", UserViewSet.as_view({'get': 'list'})),
+  path("get-posts", PostsViewSet.as_view({'get': 'list'})),
+  path("get-tagged-poems", TaggedPoemViewSet.as_view({'get': 'list'})),
 
 ]
 
