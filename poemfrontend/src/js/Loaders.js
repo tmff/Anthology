@@ -34,7 +34,7 @@ export async function loader() {
   }
 
   export async function poemLoader({ params }) {
-    const poem = await api.get(`/poems/${params.poemId}`);
+    const poem = await api.get(`/poems/${params.poemId}/`);
     return { poem };
   }
   
