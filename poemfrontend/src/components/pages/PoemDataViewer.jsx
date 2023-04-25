@@ -54,7 +54,7 @@ const PoemDataViewer = (props) => {
         // Request comments
         if (poemId === -1) return;
         
-        api.get(`/get-comments/${poemId}/`).then((res) => {
+        api.get(`/get-comments/${poemId}`).then((res) => {
 
             setComments(res.data.map(comment => {
                 return { 
