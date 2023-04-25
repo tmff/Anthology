@@ -1,4 +1,7 @@
 server {
+    listen 443 ssl default_server;
+    listen [::]:443 ssl default_server;
+
     ssl_certificate /etc/ssl/team16-22.bham.team/fullchain1.pem;
     ssl_certificate_key /etc/ssl/team16-22.bham.team/privkey1.pem;
     ssl_protocols TLSv1.2 TLSv1.3;

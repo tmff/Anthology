@@ -1,4 +1,6 @@
 server {
+    listen 443 ssl default_server;
+    listen [::]:443 ssl default_server;
 
     ssl_certificate /etc/ssl/anthology.bham.team/fullchain1.pem;
     ssl_certificate_key /etc/ssl/anthology.bham.team/privkey1.pem;
