@@ -33,7 +33,7 @@ const PoemDataViewer = (props) => {
 
     // Comments
     const [commentSending, setCommentSending] = useState(false);
-    const [comments, setComments] = useState([{ author: "joemama123", comment: "yo ass so fat" }, { author: "joemama123", comment: "you gonna do smth bout it?" }]);
+    const [comments, setComments] = useState([]);
     const [commentInput, setCommentInput] = useState("");
     const [commentCount, setCommentCount] = useState("");
     const [[replyingCommentId, replyingToAuthor], setReplyingTo] = useState([null, null]);
