@@ -13,7 +13,7 @@ def upload_path(instance, filename):
 # access with freds_department = u.Author.department for example
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(default="", max_length=120)
+    ##name = models.CharField(default="", max_length=120) name is contained within the user model
     bio = models.TextField(default="")
     facebook = models.URLField(default="",max_length=200, blank=True)
     twitter = models.URLField(default="",max_length=200, blank=True) 
@@ -54,6 +54,13 @@ class Tag(models.Model):
     def __str__(self):
         return self.title
 
+class Theme(models.Model):
+    theme = models.CharField(max_length=120)
+    time_created = models.DateTimeField(default=datetime.datetime.now)
+
+    def __str__(self):
+        return self.theme
+
 
 """
 Represents a poem.
@@ -74,6 +81,7 @@ class Poem(models.Model):
     time_created = models.DateTimeField(default=datetime.datetime.now)
     is_published = models.BooleanField(default=False)
     tags = models.ForeignKey(Tag, on_delete=models.SET_NULL, null=True)
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE, null=True)
 
     # Highlighting
     matches_played = models.IntegerField(default=0)
@@ -97,6 +105,9 @@ class Poem(models.Model):
     def get_bookmark_count(self) -> int:
         return Bookmark.objects.aggregate(count=Count('pk', filter=Q(poem=self)))["count"]
 
+    def get_favourite_count(self) -> int:
+        return Favourite.objects.aggregate(count=Count('pk', filter=Q(poem=self)))["count"]
+
     def get_comment_count(self) -> int:
         return Comment.objects.aggregate(count=Count('pk', filter=Q(poem=self)))["count"]
 
@@ -119,6 +130,14 @@ class Comment(models.Model):
     poem = models.ForeignKey(Poem, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
+    time_created = models.DateTimeField(default=datetime.datetime.now)
+    is_reply = models.BooleanField(default=False)
+
+    def is_self(self, user) -> bool:
+        return self.user == user
+
+    def get_reply_count(self) -> int:
+        return Reply.objects.aggregate(count=Count('pk', filter=Q(parent_comment=self)))["count"]
 
 
 class Reply(Comment):
@@ -128,6 +147,16 @@ class Reply(Comment):
 class Like(models.Model):
     poem = models.ForeignKey(Poem, on_delete=models.CASCADE)  # If the poem is deleted, remove this statistic
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # If the user is deleted, remove this statistic
+
+
+class Favourite(models.Model):
+    poem = models.ForeignKey(Poem, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def get_poem(self) -> Poem:
+        return self.poem
+    def get_user(self) -> User:
+        return self.user
 
 
 @receiver(post_save, sender=User)

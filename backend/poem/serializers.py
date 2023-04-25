@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
-from .models import Comment, Poem, Profile, Like, Bookmark, FriendRequest, Tag
+from .models import Comment, Poem, Profile, Like, Bookmark, FriendRequest, Tag, Theme, Reply, Favourite
 from rest_framework.authtoken.models import Token
 
 
@@ -20,11 +20,12 @@ class PoemSerializer(serializers.ModelSerializer):
     is_liked = serializers.SerializerMethodField()
     like_count = serializers.SerializerMethodField()
     is_bookmarked = serializers.SerializerMethodField()
+    is_favourited = serializers.SerializerMethodField()
     comment_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Poem
-        fields = ('id', 'title', 'content', 'author', 'is_liked', 'like_count', 'is_bookmarked', 'comment_count')
+        fields = ('id', 'title', 'content', 'author', 'is_liked', 'like_count', 'is_bookmarked', 'is_favourited', 'comment_count')
 
     def get_is_liked(self, poem):
         user = None
@@ -43,6 +44,19 @@ class PoemSerializer(serializers.ModelSerializer):
 
     def get_like_count(self, poem):
         return poem.get_like_count()
+
+    def get_is_favourited(self, poem):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+        if not user:
+            return False 
+        try:
+            result = Favourite.objects.get(poem=poem, user=user)
+            return True
+        except Favourite.DoesNotExist:
+            return False
 
     def get_is_bookmarked(self, poem):
         user = None
@@ -172,9 +186,61 @@ class LikeSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    self = serializers.SerializerMethodField()
+    reply_count = serializers.SerializerMethodField()
+
     class Meta:
         model = Comment
-        fields = ['user', 'content']
+        fields = ['id', 'user', 'content', 'self', 'reply_count']
+
+    def get_self(self, comment):
+
+        request = self.context.get("request")
+        if not request or not hasattr(request, "user"):
+            return False
+        
+        user = request.user
+
+        return comment.is_self(user)
+    
+    def get_reply_count(self, comment):
+        return comment.get_reply_count()
+
+
+class ReplySerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    self = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Reply
+        fields = ['id', 'user', 'content', 'self']
+
+    def get_self(self, reply):
+
+        request = self.context.get("request")
+        if not request or not hasattr(request, "user"):
+            return False
+        
+        user = request.user
+
+        return reply.is_self(user)
+
+
+class BookmarkSerializer(serializers.ModelSerializer):
+    poem = PoemSerializer(read_only=True)
+
+    class Meta:
+        model = Bookmark
+        fields = ['poem']
+
+
+class FavouriteSerializer(serializers.ModelSerializer):
+    poem = PoemSerializer(read_only=True)
+
+    class Meta:
+        model = Favourite 
+        fields = ['poem']
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -199,6 +265,11 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = ['title']
+
+class ThemeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Theme
+        fields = ['theme', 'day']
 
 class SearchPoemSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True)

@@ -80,21 +80,38 @@
 
 .light-block {
   background-color: #fff;
-  padding: 0px;
+  padding-bottom: 5px;
   margin-bottom: 0px;
   height: 85px;
   border-radius: 0 0 10px 10px;
+  right: 0;
 }
 
 .bookmark-icon {
   position: absolute;
   top: 20px;
-  bottom:10px;
   right: 20px;
   font-size: 20px;
+  background: none;
+  padding: 0px;
+  color: white;
 }
 
 .bookmark-icon:hover {
+  transform: scale(1.1);
+  transition: 0.2s;
+}
+
+.favourite-icon {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 20px;
+  background: none;
+  padding: 0px;
+  color: white;
+}
+.favourite-icon:hover{
   transform: scale(1.1);
   transition: 0.2s;
 }
@@ -128,11 +145,13 @@
   align-items: center;
   color: black;
 }
+
 /* Styling for poem icons */
 .poem .button-icon {
-  margin: 0 10px 0 10px;
-  font-size: 1.2em;
+  margin: 0 5px 0 10px;
+  font-size: 1.1em;
   color: black;
+  padding: 0px;
 }
 
 .poem .button-icon:hover {
@@ -164,6 +183,12 @@
 
 a {
   color: white;
+}
+
+button .button-icon {
+  background-color: rgba(255, 255, 255, 0);
+  padding: 0px;
+  margin: 0px;
 }
 
 /* .speaker {

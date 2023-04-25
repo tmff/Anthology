@@ -2,9 +2,11 @@ import api from "../../js/Api"
 import React, { useState } from "react";
 import Cookies from 'universal-cookie';
 import { Link, useNavigate } from "react-router-dom";
-import '../../css/LogReg.css'
 
 export const Login = (props) => {
+
+    import('../../css/LogReg.css');
+
     const [username, setUsername] = useState('');
     const [pwd, setPwd] = useState('');
     const [errText,setErrText] = useState('');

@@ -19,6 +19,7 @@ import NotFoundPage  from './components/pages/NotFound';
 import { UserProfile } from './components/pages/UserProfile';
 import { Highlight } from './components/pages/Highlight';
 import PoemDataViewer from './components/pages/PoemDataViewer';
+import { Bookmarks } from './components/pages/Bookmarks';
 
 export const router = createBrowserRouter([
   {
@@ -88,6 +89,11 @@ export const router = createBrowserRouter([
     path: "/poem/:poemId",
     element: <Base component={ <PoemDataViewer /> }></Base>,
     loader: poemLoader,
+  },
+  {
+    path: "/bookmarks",
+    element: <Base component={ <Bookmarks /> }></Base>,
+    loader: standardLoader,
   },
   {
     path: "*",

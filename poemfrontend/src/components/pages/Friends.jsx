@@ -82,7 +82,7 @@ export const Friends = (props) => {
                     }
                 >
                     <div>
-                        {poems.map((item) => {console.log(item); return (             
+                        {poems.map((item) => { return (             
                             <PoemViewer key={item.id} content={obj = {
                                 title:item.title,
                                 content:item.content,
