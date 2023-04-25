@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../js/Api';
+import '../../css/Search.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCommentDots, faHeart, faPaperPlane, faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { faBookmark } from '@fortawesome/free-regular-svg-icons';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { NavLink } from 'react-router-dom';
 
 export const Search = () => {
-
-  import('../../css/Search.css');
-
   const [searchType, setSearchType] = useState('users'); // default to searching for users
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   //const [postSearchOption, setPostSearchOption] = useState('title');
+
 
   useEffect(() => {
     if (searchTerm.trim() === '') {
@@ -44,7 +43,6 @@ export const Search = () => {
 
 
 
-
   function display(searchType){
     if(searchType === 'users'){
       return(
@@ -55,7 +53,9 @@ export const Search = () => {
               {searchResults.map((user) => (
                 <div key={user.id} className='user-search-block'>
                   <div className='profile-info'>
-                    <FontAwesomeIcon icon={faUserCircle} className="profile-icon" />
+                    <NavLink>
+                      <FontAwesomeIcon icon={faUserCircle} className="profile-icon"/>
+                    </NavLink>
                     <p className='username' key={user.id}>{user.username}</p>
                   </div>
                 </div>
@@ -73,22 +73,24 @@ export const Search = () => {
           <ul>
             <div className='posts-users-container'>
               {searchResults.map((post) => (
-                <div key={post.id + '_title'}>
+                <div key={post.id + '_title'} className='card-container'>
                   <div className="colored-block">
-                    <h4>{post.title}</h4>
+                    <NavLink to={ `/poem/${post.id}`}><h4>{ post.title }</h4></NavLink>
                     <p key={post.id + '_content'}>{post.content}</p>
-                    <FontAwesomeIcon icon={faBookmark} className="bookmark-icon" />
+                    {/* <FontAwesomeIcon icon={faBookmark} className="bookmark-icon"/> */}
                   </div>
                   <div className="light-block">
                     <div className="profile-info">
-                        <FontAwesomeIcon icon={faUserCircle} className="profile-icon" />
-                        <p className="username">{`${post.author && post.author.username}`}</p>
+                      <NavLink>
+                        <FontAwesomeIcon icon={faUserCircle} className="profile-icon"/>
+                      </NavLink>
+                      <p className="username">{`${post.author && post.author.username}`}</p>
                     </div>
-                    <div className="buttons">
-                        <FontAwesomeIcon icon={faHeart} className="button-icon" />
-                        <FontAwesomeIcon icon={faCommentDots} className="button-icon" />
-                        <FontAwesomeIcon icon={faPaperPlane} className="button-icon" />
-                    </div>
+                    {/* <div className="buttons">
+                      <FontAwesomeIcon icon={faHeart} className="button-icon"/>
+                      <FontAwesomeIcon icon={faCommentDots} className="button-icon" />
+                      <FontAwesomeIcon icon={faPaperPlane} className="button-icon" />
+                    </div> */}
                   </div>
                 </div>
               ))}
@@ -105,22 +107,24 @@ export const Search = () => {
           <ul>
             <div className='posts-users-container'>
               {searchResults.map((post) => (
-                <div key={post.id + '_tags.title'}>
+                <div key={post.id + '_tags.title'} className='card-container'>
                   <div className="colored-block">
-                    <h4>{post.title}</h4>
+                    <NavLink to={ `/poem/${post.id}`}><h4>{ post.title }</h4></NavLink>
                     <p key={post.id + '_content'}>{post.content}</p>
-                    <FontAwesomeIcon icon={faBookmark} className="bookmark-icon" />
+                    {/* <FontAwesomeIcon icon={faBookmark} className="bookmark-icon" /> */}
                   </div>
                   <div className="light-block">
                     <div className="profile-info">
-                        <FontAwesomeIcon icon={faUserCircle} className="profile-icon" />
-                        <p className="username">{`${post.author && post.author.username}`}</p>
+                      <NavLink>
+                        <FontAwesomeIcon icon={faUserCircle} className="profile-icon"/>
+                      </NavLink>
+                      <p className="username">{`${post.author && post.author.username}`}</p>
                     </div>
-                    <div className="buttons">
+                    {/* <div className="buttons">
                         <FontAwesomeIcon icon={faHeart} className="button-icon" />
                         <FontAwesomeIcon icon={faCommentDots} className="button-icon" />
                         <FontAwesomeIcon icon={faPaperPlane} className="button-icon" />
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               ))}
