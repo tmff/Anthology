@@ -40,61 +40,107 @@ class FriendView(viewsets.ModelViewSet):
     #     friends = profile.friends.count()
     #     return friends
 
-class ReadingRoomPoemView(APIView):
+class TagView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = TagSerializer
+
+    def get(self, request):
+
+        #Get poem_id
+        poem_id = request.query_params.get('poem_id')
+        if not poem_id:
+            return Response({'error': 'poem_id query parameter is required.'}, status=400)
+        try:
+            poem = Poem.objects.get(id=poem_id)
+        except Poem.DoesNotExist:
+            return Response({'error': 'Poem with specified ID does not exist.'}, status=404)
+
+        #Get tag objects referencing specific poem
+        tags = Tag.objects.filter(poem=poem)
+        serializer = TagSerializer(tags, many=True)
+        return Response(serializer.data)
+
+class DisplayTodayTheme(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = ThemeSerializer
+
+    def get(self, request, *args, **kwargs):
+
+        #Get today's date
+        today = datetime.date.today()
+
+        try:
+            #Get theme created today
+            theme = Theme.objects.get(time_created__date=today)
+        except Theme.DoesNotExist:
+            return Response({'error': 'No theme found for today.'}, status=404)
+
+        serializer = ThemeSerializer(theme)
+        return Response(serializer.data)
+
+
+class PopularPoemsToday(APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = [IsAuthenticated]
     serializer_class = PoemSerializer
 
-    def get_queryset(self, *args, **kwargs):
+    def get(self, request):
 
-        #Get today's date and theme
+        #Get today's date
+        today = date.today()
+
+        popular_poems = Poem.objects.filter(
+            Q(author__profile__is_private=False) |
+            Q(author__profile__is_private__isnull=True),
+            time_created__date=today
+        ).annotate(
+            win_rate=ExpressionWrapper(
+                F('matches_won') * 100 / F('matches_played'),
+                output_field=FloatField()
+            )
+        ).order_by('-win_rate')[:10]
+
+        serializer = PoemSerializer(popular_poems, many=True)
+        return Response(serializer.data)
+
+
+class LatestPoemsToday(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = PoemSerializer
+    
+    def get(self,request):
+        #Get today's date
         today = datetime.date.today()
 
-        #Get public users
-        public_profiles = Poem.objects.filter(
-            Q(author__profile__is_private=False) | 
-            Q(author__profile__is_private__isnull=True)
-        )
         try:
-            #Get popular poems of today's theme
-            popular_poems = Poem.objects.filter(theme__date_created__date=today).annotate(
-                win_rate=ExpressionWrapper(
-                    F('matches_won') * 100 / F('matches_played'),
-                    output_field=FloatField()
-                )
-            ).order_by('-win_rate')[:10] #top 10 popular poems today
+            #Get theme created today
+            theme = Theme.objects.get(time_created__date=today)
+        except Theme.DoesNotExist:
+            return Response({'error': 'No theme created today.'}, status=404)
 
-            #Get other poems from today's theme
-            non_popular_poems = Poem.objects.filter(theme__date_created__date=today).exclude(id=popular_poem.id)
+        #Get today's latest poems with the same theme
+        poems = Poem.objects.filter(time_created__date=today, theme=theme)
+        serializer = PoemSerializer(poems, many=True)
+        return Response(serializer.data)
 
-            #Get all previous themes, excluding today
-            prev_themes = Theme.objects.exclude(date_created__date=today)
-        except Poem.DoesNotExist:
-            popular_poems = None
-            non_popular_poems = None
-            prev_themes = None
+class PrevPoems(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = PoemSerializer
 
-        queryset = {
-            'public_profiles' : public_profiles,
-            'popular_poems': popular_poems,
-            'non_popular_poems': non_popular_poems,
-            'prev_themes': prev_themes,
-        }
-        return queryset
-        
     def get(self, request):
-        queryset = self.get_queryset()
-        
-        # Serialize the data and return the response
-        data = {
-            'popular_poems': PoemSerializer(queryset['popular_poems'], many=True).data,
-            'non_popular_poems': PoemSerializer(queryset['non_popular_poems'], many=True).data,
-            'prev_themes': ThemeSerializer(queryset['prev_themes'], many=True).data,
-            'public_profiles': PublicProfileSerializer(queryset['public_profiles'], many=True).data,
-            }
-    
-        return Response(data, status=200)
 
+        #Get today's date
+        today = datetime.date.today()
+
+        #Get poems from previous themes
+        poems = Poem.objects.exclude(time_created__date=today).order_by('-time_created')
+        serializer = PoemSerializer(poems, many=True)
+        return Response(serializer.data)
+  
 
 class PoemFriendListView(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
