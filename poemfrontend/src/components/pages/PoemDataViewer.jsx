@@ -33,7 +33,7 @@ const PoemDataViewer = (props) => {
 
     // Comments
     const [commentSending, setCommentSending] = useState(false);
-    const [comments, setComments] = useState([{ author: "joemama123", comment: "yo ass so fat" }, { author: "joemama123", comment: "you gonna do smth bout it?" }]);
+    const [comments, setComments] = useState([]);
     const [commentInput, setCommentInput] = useState("");
     const [commentCount, setCommentCount] = useState("");
     const [[replyingCommentId, replyingToAuthor], setReplyingTo] = useState([null, null]);
@@ -54,7 +54,7 @@ const PoemDataViewer = (props) => {
         // Request comments
         if (poemId === -1) return;
         
-        api.get(`/get-comments/${poemId}/`).then((res) => {
+        api.get(`/get-comments/${poemId}`).then((res) => {
 
             setComments(res.data.map(comment => {
                 return { 
