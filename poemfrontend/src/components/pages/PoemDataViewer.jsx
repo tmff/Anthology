@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import api, { promptLike as promptLikeAPI } from "../../js/Api"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCommentDots, faHeart as faSolidHeart, faPaperPlane, faUserCircle, faBookmark as faSolidBookmark, faVolumeHigh, faSpinner} from '@fortawesome/free-solid-svg-icons';
-import { faHeart as faRegularHeart, faBookmark as faRegularBookmark, faPaperPlaneTop } from '@fortawesome/free-regular-svg-icons';
+import { faCommentDots, faHeart as faSolidHeart, faPaperPlane, faUserCircle, faBookmark as faSolidBookmark, faStar as faSolidStar, faVolumeHigh, faSpinner} from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faRegularHeart, faBookmark as faRegularBookmark, faStar as faRegularStar, faPaperPlaneTop } from '@fortawesome/free-regular-svg-icons';
 import axios from "axios";
 import React from "react";
 

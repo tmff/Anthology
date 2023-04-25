@@ -102,6 +102,20 @@
   transition: 0.2s;
 }
 
+.favourite-icon {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 20px;
+  background: none;
+  padding: 0px;
+  color: white;
+}
+.favourite-icon:hover{
+  transform: scale(1.1);
+  transition: 0.2s;
+}
+
 .poem {
   margin: 20px;
   border-radius: 10px;
