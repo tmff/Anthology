@@ -7,4 +7,21 @@ server {
     ssl_protocols TLSv1.2 TLSv1.3;
 
     server_name team16-22.bham.team;
+
+    root /usr/share/nginx/html;
+
+    location / {
+        try_files $uri $uri/ /index.html$is_args$args;
+    }
+
+    location /api/ {
+        proxy_pass http://teamproject-app:8000/;
+    }
+
+    location /django-admin/ {
+        proxy_pass http://teamproject-app:8000/django-admin/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
 }
