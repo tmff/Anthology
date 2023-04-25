@@ -3,7 +3,7 @@
   top: 0%;
   left:40%;
   margin-bottom: 20px;
-  color: var(--royal-purple);
+  color: var(--cornflower-blue);
 }
 
 /* Scuff fix */
@@ -14,8 +14,9 @@ footer {
 }
 
 img {
-  width: 200px;
-  height: 200px;
+  image-resolution: 100%;
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
   border: 2px solid white;
 }
@@ -83,13 +84,7 @@ img {
     display: flex;
     align-items: flex-start;
   }
-  .ud-right {
-    /* margin-left: 10px; */
-  }
   .profile-picture {
-    object-fit: cover;
-    position: relative;
-    top: 30%;
     /* margin: 5px; */
     margin-right: 20px;
   }
@@ -161,9 +156,9 @@ img {
 }
 @media screen and (max-width: 600px){
   .profile-picture {
-    position: fixed;
-    top: 15%;
-    left: 5%;
+    /* position: fixed; */
+    /* top: 15%; */
+    /* left: 5%; */
   }
   
 }

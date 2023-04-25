@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Dropdown from '../Dropdown'
 import api from "../../js/Api";
 import '../../css/UserProfile.css';
 import axios from "axios";
@@ -58,7 +57,6 @@ export const UserProfile = (props) => {
                 <h1 className='username-title'>
                     {name}'s Anthology
                 </h1>
-                {/* <Dropdown />  */}
             </header>
             <body>
                 <div className="profile-container">

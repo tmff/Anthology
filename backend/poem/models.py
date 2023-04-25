@@ -105,6 +105,9 @@ class Poem(models.Model):
     def get_bookmark_count(self) -> int:
         return Bookmark.objects.aggregate(count=Count('pk', filter=Q(poem=self)))["count"]
 
+    def get_favourite_count(self) -> int:
+        return Favourite.objects.aggregate(count=Count('pk', filter=Q(poem=self)))["count"]
+
     def get_comment_count(self) -> int:
         return Comment.objects.aggregate(count=Count('pk', filter=Q(poem=self)))["count"]
 
@@ -144,6 +147,16 @@ class Reply(Comment):
 class Like(models.Model):
     poem = models.ForeignKey(Poem, on_delete=models.CASCADE)  # If the poem is deleted, remove this statistic
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # If the user is deleted, remove this statistic
+
+
+class Favourite(models.Model):
+    poem = models.ForeignKey(Poem, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def get_poem(self) -> Poem:
+        return self.poem
+    def get_user(self) -> User:
+        return self.user
 
 
 @receiver(post_save, sender=User)
