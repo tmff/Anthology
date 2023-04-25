@@ -427,6 +427,55 @@ class FetchBookmarkedPoemsView(viewsets.ModelViewSet):
     def get_queryset(self):
         return Bookmark.objects.filter(user=self.request.user)
 
+class FavouritePoemView(generics.CreateAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = FavouriteSerializer
+    
+    def create(self, request, *args, **kwargs):
+
+        # Get the poem ID
+        if not exists(request.data, 'poem_id'):
+            return Response({'error': 'A poem ID must be specified.'}, status=400)
+        
+        poem = Poem.objects.get(id=request.data['poem_id'])
+        if not poem:
+            return Response({'error': 'Poem not found.'}, status=400)
+        
+        favourite = Favourite(poem=poem, user=request.user)
+        favourite.save()
+
+        return Response(status=204)
+
+class RemoveFavouritePoemView(generics.DestroyAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, *args, **kwargs):
+
+        # Find the poem
+        if not exists(request.data, 'poem_id'):
+            return Response({'error': 'A poem ID must be specified.'}, status=400)
+
+        poem = Poem.objects.get(id=request.data['poem_id'])
+        if not poem:
+            return Response({'error': 'Poem not found.'}, status=400)
+        
+        favourite = Favourite.objects.filter(poem=poem, user=request.user)
+        if not favourite:
+            return Response({'error': 'Poem not favourited.'}, status=400)
+        
+        favourite.delete()
+        return Response(status=204)
+
+class FetchFavouritePoemsView(viewsets.ModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [IsAuthenticated]
+    serializer_class = FavouriteSerializer
+    model = Favourite
+
+    def get_queryset(self):
+        return Favourite.objects.filter(user=self.request.user)
 
 class FetchCommentsPoemView(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)

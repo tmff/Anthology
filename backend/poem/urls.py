@@ -21,6 +21,7 @@ router.register(r'get-users', UserViewSet, basename='get-users')
 router.register(r'get-tagged-poems', TaggedPoemViewSet, basename='get-tagged-poems')
 router.register(r'get-posts', PostsViewSet, basename='get-posts')
 router.register(r'get-bookmarks', FetchBookmarkedPoemsView, basename='get-bookmarks')
+router.register(r'get-favourites', FetchFavouritePoemsView, basename='get-favourites')
 
 urlpatterns = [
   path("", include(router.urls)),
@@ -36,6 +37,8 @@ urlpatterns = [
   path("delete-comment", DeleteCommentView.as_view()),
   path("bookmark", BookmarkPoemView.as_view()),
   path("remove-bookmark", RemoveBookmarkPoemView.as_view()),
+  path("favourite", FavouritePoemView.as_view()),
+  path("remove-favourite", RemoveFavouritePoemView.as_view()),
   path("edit-profile", EditProfileView.as_view()),
   path("edit-picture", EditPictureView.as_view()),
   path("edit-mode", EditModeView.as_view()),

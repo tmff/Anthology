@@ -29,6 +29,7 @@ const PoemDataViewer = (props) => {
     const [likes, setLikes] = useState(0);
     const [poemId, setPoemID] = useState(-1);
     const [bookmarked, setBookmarked] = useState(false);
+    const [favourited, setFavourited] = useState(false);
 
     // Comments
     const [commentSending, setCommentSending] = useState(false);
@@ -78,6 +79,7 @@ const PoemDataViewer = (props) => {
         setPoemID(data.id);
         setCommentCount(data.comment_count);
         setBookmarked(data.is_bookmarked);
+        setFavourited(data.is_favourited);
     }
 
     function removeComment(commentId) {
@@ -140,6 +142,7 @@ const PoemDataViewer = (props) => {
                                 like_count:likes,
                                 comment_count:commentCount,
                                 is_bookmarked:bookmarked,
+                                is_favourited:favourited,
                             }
                         }
                         highlighted={ false }
