@@ -9,7 +9,7 @@ server {
     server_name anthology.bham.team;
 
     location / {
-        try_files $uri $uri/ /index.html$is_args$args =404;
+        proxy_pass https://team16-22.bham.team/;
     }
 
     location /api/ {
