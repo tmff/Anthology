@@ -48,7 +48,7 @@ export const Comment = (props) => {
 
     function fetchReplies() {
 
-        api.get("/get-replies/" + id + "/").then(res => {
+        api.get("/get-replies/" + id).then(res => {
             setReplies(res.data.map(reply => {
                 return { 
                     author: reply.user.username, 
