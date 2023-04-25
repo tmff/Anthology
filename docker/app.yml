@@ -29,7 +29,6 @@ services:
     image: teamproject:frontend
     volumes:
       - ~/volumes/teamproject-1/nginx/data:/etc/ssl
-      - ~/volumes/teamproject-1/nginx/html:/usr/share/nginx/html
     depends_on:
       - teamproject-app
     environment:
