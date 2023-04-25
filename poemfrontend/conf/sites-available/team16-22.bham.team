@@ -7,7 +7,7 @@ http {
         ssl_certificate_key /etc/ssl/team16-22.bham.team/privkey1.pem;
         ssl_protocols TLSv1.2 TLSv1.3;
 
-        server_name frontend;
+        server_name team16-22.bham.team;
         root /usr/share/nginx/html;
 
         location / {
