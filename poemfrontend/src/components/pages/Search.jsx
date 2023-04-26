@@ -53,10 +53,10 @@ export const Search = () => {
               {searchResults.map((user) => (
                 <div key={user.id} className='user-search-block'>
                   <div className='profile-info'>
+                    <FontAwesomeIcon icon={faUserCircle} className="profile-icon"/>
                     <NavLink to={ "/author/" + user.username }>
-                      <FontAwesomeIcon icon={faUserCircle} className="profile-icon"/>
+                      <p className='username' key={user.id}>{user.username}</p>                    
                     </NavLink>
-                    <p className='username' key={user.id}>{user.username}</p>
                   </div>
                 </div>
               ))}
@@ -81,10 +81,10 @@ export const Search = () => {
                   </div>
                   <div className="light-block">
                     <div className="profile-info">
+                      <FontAwesomeIcon icon={faUserCircle} className="profile-icon"/>
                       <NavLink to={ "/author/" + post.author.username }>
-                        <FontAwesomeIcon icon={faUserCircle} className="profile-icon"/>
+                        <p className="username">{`${post.author && post.author.username}`}</p>
                       </NavLink>
-                      <p className="username">{`${post.author && post.author.username}`}</p>
                     </div>
                     {/* <div className="buttons">
                       <FontAwesomeIcon icon={faHeart} className="button-icon"/>
@@ -115,10 +115,10 @@ export const Search = () => {
                   </div>
                   <div className="light-block">
                     <div className="profile-info">
+                      <FontAwesomeIcon icon={faUserCircle} className="profile-icon"/>
                       <NavLink to={ "/author/" + post.author.username }>
-                        <FontAwesomeIcon icon={faUserCircle} className="profile-icon"/>
+                        <p className="username">{`${post.author && post.author.username}`}</p>
                       </NavLink>
-                      <p className="username">{`${post.author && post.author.username}`}</p>
                     </div>
                     {/* <div className="buttons">
                         <FontAwesomeIcon icon={faHeart} className="button-icon" />
