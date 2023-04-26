@@ -13,17 +13,6 @@ Button {
     
 }
 
-
-.light-block {
-    background-color: #fff;
-    padding-bottom: 5px;
-    margin-bottom: 0px;
-    height: 70px;
-    border-radius: 0 0 10px 10px;
-    right: 0;
-}
-
-
 .profile-info {
     display: flex;
     align-items: center;
@@ -57,21 +46,12 @@ Button {
     color: #055c6b;
 }
 
-
 .profile-icon {
     color: black;
     font-size: 2rem;
     margin-right: 5px;
     justify-content: center;
     padding: 10px;
-}
-
-.bookmark-icon {
-    position: absolute;
-    top: 20px;
-    bottom:10px;
-    right: 20px;
-    font-size: 20px;
 }
 
 .poem .username {
@@ -81,15 +61,6 @@ Button {
     color: black;
     text-align: left;
     margin-left: 5px;
-}
-
-
-
-.colored-block {
-    background-color: #055c6b;
-    padding: 20px;
-    margin-bottom: 0px;
-    position: relative;
 }
 
 .user-search-block{

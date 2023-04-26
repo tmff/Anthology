@@ -4,6 +4,7 @@ import '../../css/Search.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
+import { PoemViewer } from "../PoemViewer";
 
 export const Search = () => {
   const [searchType, setSearchType] = useState('users'); // default to searching for users
@@ -42,6 +43,7 @@ export const Search = () => {
   }, [searchTerm, searchType]);
 
 
+  var obj;
 
   function display(searchType){
     if(searchType === 'users'){
@@ -73,26 +75,16 @@ export const Search = () => {
           <ul>
             <div className='posts-users-container'>
               {searchResults.map((post) => (
-                <div key={post.id + '_title'} className='card-container'>
-                  <div className="colored-block">
-                    <NavLink to={ `/poem/${post.id}`}><h4>{ post.title }</h4></NavLink>
-                    <p key={post.id + '_content'}>{post.content}</p>
-                    {/* <FontAwesomeIcon icon={faBookmark} className="bookmark-icon"/> */}
-                  </div>
-                  <div className="light-block">
-                    <div className="profile-info">
-                      <FontAwesomeIcon icon={faUserCircle} className="profile-icon"/>
-                      <NavLink to={ "/author/" + post.author.username }>
-                        <p className="username">{`${post.author && post.author.username}`}</p>
-                      </NavLink>
-                    </div>
-                    {/* <div className="buttons">
-                      <FontAwesomeIcon icon={faHeart} className="button-icon"/>
-                      <FontAwesomeIcon icon={faCommentDots} className="button-icon" />
-                      <FontAwesomeIcon icon={faPaperPlane} className="button-icon" />
-                    </div> */}
-                  </div>
-                </div>
+                <PoemViewer key={post.id} content={obj = {
+                            title:post.title,
+                            content:post.content,
+                            author:post.author,
+                            poem_id:post.id,
+                            is_liked:post.is_liked,
+                            like_count:post.like_count,
+                            comment_count:post.comment_count,
+                            is_bookmarked:post.is_bookmarked,
+                        }}/>
               ))}
             </div>
           </ul>
