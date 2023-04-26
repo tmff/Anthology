@@ -92,6 +92,7 @@ export const Friends = (props) => {
                                 like_count:item.like_count,
                                 comment_count:item.comment_count,
                                 is_bookmarked:item.is_bookmarked,
+                                is_favourited:item.is_favourited,
                             }}
                             highlighted={highlightedPoem === item.id ? true : false}
                             />

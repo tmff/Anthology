@@ -4,7 +4,7 @@ import { Comment } from "../Comment";
 import { PoemViewer } from "../PoemViewer";
 import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import api, { promptLike as promptLikeAPI } from "../../js/Api"
+import api, { promptLike as promptLikeAPI, promptFavourite as promptFavouriteAPI } from "../../js/Api"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentDots, faHeart as faSolidHeart, faPaperPlane, faUserCircle, faBookmark as faSolidBookmark, faStar as faSolidStar, faVolumeHigh, faSpinner} from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faRegularHeart, faBookmark as faRegularBookmark, faStar as faRegularStar, faPaperPlaneTop } from '@fortawesome/free-regular-svg-icons';

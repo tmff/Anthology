@@ -153,6 +153,7 @@ export const PoemViewer = (props) => {
                 <button className="button-icon" onClick={ () => promptFavourite() }>
                     <FontAwesomeIcon icon={favourited ? faSolidStar : faRegularStar} className="button-icon" data-tooltip-id="favourite-tooltip" />
                 </button>
+                
                 <button className="button-icon" onClick={ () => readPoem() }>
                     <FontAwesomeIcon icon = {faVolumeHigh} className="button-icon" data-tooltip-id= "speech-tooltip" />
                 </button>
@@ -167,7 +168,7 @@ export const PoemViewer = (props) => {
                     <span>{ content }</span>
                 )} />
                 <Tooltip id="bookmark-tooltip" content="Bookmark" />
-                <Tooltip id="favourite-tooltip" content="Favourite" />
+                <Tooltip id="favourite-tooltip" content="Favourite - Show this poem on your profile!" />
                 <Tooltip id="speech-tooltip" content= "Read poem out loud" />
                 </div>
             </div>

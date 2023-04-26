@@ -81,7 +81,7 @@
 .light-block {
   background-color: #fff;
   padding-bottom: 5px;
-  margin-bottom: 0px;
+  margin-bottom: 2px;
   height: 85px;
   border-radius: 0 0 10px 10px;
   right: 0;
@@ -98,20 +98,6 @@
 }
 
 .bookmark-icon:hover {
-  transform: scale(1.1);
-  transition: 0.2s;
-}
-
-.favourite-icon {
-  position: absolute;
-  top: 20px;
-  right: 25px;
-  font-size: 20px;
-  background: none;
-  padding: 0px;
-  color: white;
-}
-.favourite-icon:hover{
   transform: scale(1.1);
   transition: 0.2s;
 }
