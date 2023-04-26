@@ -32,12 +32,12 @@ export const Search = () => {
         })
         .catch((err) => console.log(err));
     } else if(searchType === 'tags') {
-      api.get(`/get-tagged-poems?tags.title=${searchTerm}`)
-      .then((res) => {
-        console.log(res.data);
-        setSearchResults(res.data);
-      })
-      .catch((err) => console.log(err));
+        api.get(`/get-tagged-poems?tags.title=${searchTerm}`)
+        .then((res) => {
+          console.log(res.data);
+          setSearchResults(res.data);
+        })
+        .catch((err) => console.log(err));
     }
   }, [searchTerm, searchType]);
 
@@ -53,7 +53,7 @@ export const Search = () => {
               {searchResults.map((user) => (
                 <div key={user.id} className='user-search-block'>
                   <div className='profile-info'>
-                    <NavLink>
+                    <NavLink to={ "/author/" + user.username }>
                       <FontAwesomeIcon icon={faUserCircle} className="profile-icon"/>
                     </NavLink>
                     <p className='username' key={user.id}>{user.username}</p>
@@ -81,7 +81,7 @@ export const Search = () => {
                   </div>
                   <div className="light-block">
                     <div className="profile-info">
-                      <NavLink>
+                      <NavLink to={ "/author/" + post.author.username }>
                         <FontAwesomeIcon icon={faUserCircle} className="profile-icon"/>
                       </NavLink>
                       <p className="username">{`${post.author && post.author.username}`}</p>
@@ -115,7 +115,7 @@ export const Search = () => {
                   </div>
                   <div className="light-block">
                     <div className="profile-info">
-                      <NavLink>
+                      <NavLink to={ "/author/" + post.author.username }>
                         <FontAwesomeIcon icon={faUserCircle} className="profile-icon"/>
                       </NavLink>
                       <p className="username">{`${post.author && post.author.username}`}</p>
@@ -144,10 +144,6 @@ export const Search = () => {
 
   const handleSearchTermChange = (event) => {
     setSearchTerm(event.target.value);
-    // if(searchTerm.startsWith('#')) {
-    //   setSearchType('tags');
-    // }
-  
   };
 
   return (
