@@ -45,7 +45,7 @@ urlpatterns = [
   path("get-comments/<int:poem_id>", FetchCommentsPoemView.as_view({'get': 'list'})),
   path("get-replies/<int:comment_id>", FetchRepliesCommentView.as_view({'get': 'list'})),
   path("send-reply", CreateReplyView.as_view()),
-  path("get-tags/<int:poem_id>/", TagView.as_view()),
+  path("get-tags/<int:poem_id>", TagView.as_view()),
   path("get-theme", DisplayTodayTheme.as_view()),
   path("get-popular", PopularPoemsToday.as_view()),
   path("get-others", LatestPoemsToday.as_view()),
