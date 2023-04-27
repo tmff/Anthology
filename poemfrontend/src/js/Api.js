@@ -39,16 +39,4 @@ export async function promptBookmark(poemId, bookmarked) {
     });
 }
 
-export async function promptFavourite(poemId, favourited) {
-
-    return new Promise(resolve => {
-        const request = favourited ? api.delete('/remove-favourite', { data: { poem_id: poemId } }) : api.post('/favourite', { poem_id: poemId });
-        request.then((res) => {
-            resolve(res.data.favourited);
-        }).catch((err) => {
-            console.log(err);
-        });
-    });
-}
-
 export default api;

@@ -181,5 +181,3 @@ deploy-git:
     changes:
       - backend/**/*
       - poemfrontend/**/*
-      - docker/app.yml
-      - .gitlab-ci.yml

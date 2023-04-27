@@ -81,7 +81,7 @@
 .light-block {
   background-color: #fff;
   padding-bottom: 5px;
-  margin-bottom: 2px;
+  margin-bottom: 0px;
   height: 85px;
   border-radius: 0 0 10px 10px;
   right: 0;
@@ -167,9 +167,9 @@
   padding: 10px;
 }
 
-/* a {
+a {
   color: white;
-} */
+}
 
 button .button-icon {
   background-color: rgba(255, 255, 255, 0);

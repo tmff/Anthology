@@ -1,4 +1,4 @@
-Button {
+.button-icon {
     border: none;
     background-color: white;
     margin: 0.5rem 0;
@@ -8,25 +8,6 @@ Button {
     color:rgb(98, 97, 97);
 }
 
-.card-container{
-    display: grid;
-    
-}
-
-.profile-info {
-    display: flex;
-    align-items: center;
-
-}
-
-.buttons {
-    display: flex;
-    align-items: center;
-    position: relative;
-    color: black;
-}
-
-
 .posts-users-container{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -34,7 +15,7 @@ Button {
 }
 
 .username {
-    display: grid;
+    display: flex;
     margin-top: 4px;
     margin-bottom: 0px;
     color: black;
@@ -46,12 +27,26 @@ Button {
     color: #055c6b;
 }
 
+.profile-info {
+    display: flex;
+    align-items: center;
+
+}
+
 .profile-icon {
     color: black;
     font-size: 2rem;
     margin-right: 5px;
     justify-content: center;
     padding: 10px;
+}
+
+.bookmark-icon {
+    position: absolute;
+    top: 20px;
+    bottom:10px;
+    right: 20px;
+    font-size: 20px;
 }
 
 .poem .username {
@@ -61,6 +56,18 @@ Button {
     color: black;
     text-align: left;
     margin-left: 5px;
+}
+
+.colored-block {
+    background-color: #055c6b;
+    padding: 20px;
+    margin-bottom: 0px;
+    position: relative;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
 }
 
 .user-search-block{
@@ -77,6 +84,12 @@ Button {
     grid-gap: 10px; 
 }
 
+.light-block {
+    background-color: #fff;
+    padding: 0px;
+    margin-bottom: 0px;
+    height: 75px;
+}
 
 .search-container{
     flex-direction: column;

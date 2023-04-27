@@ -2,12 +2,12 @@ import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Comment } from "../Comment";
 import { PoemViewer } from "../PoemViewer";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import api, { promptLike as promptLikeAPI, promptFavourite as promptFavouriteAPI } from "../../js/Api"
+import api, { promptLike as promptLikeAPI } from "../../js/Api"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCommentDots, faHeart as faSolidHeart, faPaperPlane, faUserCircle, faBookmark as faSolidBookmark, faStar as faSolidStar, faVolumeHigh, faSpinner} from '@fortawesome/free-solid-svg-icons';
-import { faHeart as faRegularHeart, faBookmark as faRegularBookmark, faStar as faRegularStar, faPaperPlaneTop } from '@fortawesome/free-regular-svg-icons';
+import { faCommentDots, faHeart as faSolidHeart, faPaperPlane, faUserCircle, faBookmark as faSolidBookmark, faVolumeHigh, faSpinner} from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faRegularHeart, faBookmark as faRegularBookmark, faPaperPlaneTop } from '@fortawesome/free-regular-svg-icons';
 import axios from "axios";
 import React from "react";
 
@@ -29,20 +29,18 @@ const PoemDataViewer = (props) => {
     const [likes, setLikes] = useState(0);
     const [poemId, setPoemID] = useState(-1);
     const [bookmarked, setBookmarked] = useState(false);
-    const [favourited, setFavourited] = useState(false);
 
     // Comments
     const [commentSending, setCommentSending] = useState(false);
-    const [comments, setComments] = useState([]);
+    const [comments, setComments] = useState([{ author: "joemama123", comment: "yo ass so fat" }, { author: "joemama123", comment: "you gonna do smth bout it?" }]);
     const [commentInput, setCommentInput] = useState("");
     const [commentCount, setCommentCount] = useState("");
-    const [[replyingCommentId, replyingToAuthor], setReplyingTo] = useState([null, null]);
 
     // Functions
     const navigate = useNavigate();
     
     // Initial calls to the API
-    useMemo(() => {
+    useEffect(() => {
 
         console.log(content.poem.data);
 
@@ -54,16 +52,10 @@ const PoemDataViewer = (props) => {
         // Request comments
         if (poemId === -1) return;
         
-        api.get(`/get-comments/${poemId}`).then((res) => {
+        api.get(`/get-comments/${poemId}/`).then((res) => {
 
             setComments(res.data.map(comment => {
-                return { 
-                    author: comment.user.username, 
-                    comment: comment.content, 
-                    self: comment.self, 
-                    id: comment.id, 
-                    reply_count: comment.reply_count,
-                };
+                return { author: comment.user.username, comment: comment.content };
             }))
         })
 
@@ -79,20 +71,6 @@ const PoemDataViewer = (props) => {
         setPoemID(data.id);
         setCommentCount(data.comment_count);
         setBookmarked(data.is_bookmarked);
-        setFavourited(data.is_favourited);
-    }
-
-    function removeComment(commentId) {
-        setComments(comments.filter(comment => comment.id !== commentId));
-    }
-
-    function promptReply(commentId, commentAuthor) {
-
-        if (replyingCommentId === commentId && replyingToAuthor === commentAuthor) {
-            setReplyingTo([null, null]);
-        } else {
-            setReplyingTo([commentId, commentAuthor]);
-        }
     }
 
     function postComment(data) {
@@ -102,18 +80,6 @@ const PoemDataViewer = (props) => {
 
         setCommentSending(true);
 
-        // If we're replying to someone, then send as a reply
-        if (replyingCommentId && replyingToAuthor) {
-            api.post("/send-reply", {
-                comment_id: replyingCommentId,
-                reply: commentInput,
-            }).then((response) => {
-                setCommentSending(false);
-                setCommentInput("");
-            });
-            return;
-        }
-
         api.post("/send-comment", {
             poem_id: poemId,
             comment: commentInput,
@@ -122,7 +88,7 @@ const PoemDataViewer = (props) => {
             setCommentInput("");
 
             // Add a new comment
-            comments.push({ author: response.data.author, comment: response.data.comment, self: true, id: response.data.id });
+            comments.push({ author: response.data.author, comment: response.data.comment });
         }).catch(() => {
             setCommentSending(false);
         }) 
@@ -142,7 +108,6 @@ const PoemDataViewer = (props) => {
                                 like_count:likes,
                                 comment_count:commentCount,
                                 is_bookmarked:bookmarked,
-                                is_favourited:favourited,
                             }
                         }
                         highlighted={ false }
@@ -154,12 +119,9 @@ const PoemDataViewer = (props) => {
                             <div className="comment">
                                 {
                                     comments.map(comment => {
-                                        return <Comment key={ comment.id } removeComment={ removeComment } promptReply={ promptReply } content={obj = {
-                                            username: comment.author,
-                                            comment: comment.comment,
-                                            self: comment.self,
-                                            id: comment.id,
-                                            reply_count: comment.reply_count,
+                                        return <Comment content={obj = {
+                                            username:comment.author,
+                                            comment:comment.comment,
                                         }}/>
                                     })
                                 }
@@ -167,20 +129,13 @@ const PoemDataViewer = (props) => {
                         </InfiniteScroll>
                     </div>
                     
-                    <div className="comment-input-container">
+                    <div className="input-container">
+                        <input className="comment-input" onChange={ (e) => setCommentInput(e.target.value) } />
 
-                        <div className="reply-context" >
-                            <p>{ replyingCommentId && replyingToAuthor ? `Replying to ${replyingToAuthor}` : null }</p>
-                        </div> 
-
-                        <div className="input-container">
-
-                            <input className="comment-input" onChange={ (e) => setCommentInput(e.target.value) } />
-
-                            <button onClick={ () => postComment() } className="button-icon send-icon" >
-                                { commentSending ? <FontAwesomeIcon icon={ faSpinner } spinPulse /> : <FontAwesomeIcon icon={ faPaperPlane } className="button-icon send-icon" />}
-                            </button>
-                        </div>
+                        <button onClick={ () => postComment() } className="button-icon send-icon" >
+                            { commentSending ? <FontAwesomeIcon icon={ faSpinner } spinPulse /> : <FontAwesomeIcon icon={ faPaperPlane } className="button-icon send-icon" />}
+                        </button>
+                        
                     </div>
                 </div>
             </div>

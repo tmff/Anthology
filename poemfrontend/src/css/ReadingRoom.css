@@ -1,25 +1,18 @@
-
-h3 {
-  text-align: left !important;
-}
-.fix{
-  width: 90%;
-}
-.title h1 {
-  text-align:center;
-  margin-top: -10px;
-}
-.subtitle h4 {
+h1,
+h4 {
   text-align: center;
 }
 
+h3 {
+  text-align: left;
+}
 .highlight {
   color:  #055c6b;
   font-weight: bold;
 }
 
 /* Styling for poem tags */
-.tag-container {
+.poem-tags {
   margin-bottom: 20px;
   text-align: left;
 }

@@ -4,6 +4,7 @@
   min-height: 100vh;
   align-items: center;
   justify-content: center;
+  color:  white;
   background: linear-gradient(var(--uranian-blue), var(--royal-purple));
   padding-bottom: 10px;
   flex-direction: column;
@@ -14,16 +15,11 @@ a {
 }
 
 #light {
-  /* background: linear-gradient(var(--uranian-blue), var(--royal-purple));; */
-  background: #afd1ed;
-  color:  black;
+  background: linear-gradient(var(--uranian-blue), var(--royal-purple));;
 }
 
 #dark {
-  /* background: linear-gradient(var(--royal-purple), var(--vista-blue));; */
-  /* background: #291f21; */
-  background: #092136;
-  color:  white;
+  background: linear-gradient(var(--royal-purple), var(--vista-blue));;
 }
 
 footer {

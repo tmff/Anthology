@@ -1,11 +1,11 @@
-import api, { promptLike as promptLikeAPI, promptBookmark as promptBookmarkAPI, promptFavourite as promptFavouriteAPI } from "../js/Api"
+import api, { promptLike as promptLikeAPI, promptBookmark as promptBookmarkAPI } from "../js/Api"
 import { useState, useEffect } from 'react';
 import Cookies from 'universal-cookie';
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCommentDots, faHeart as faSolidHeart, faPaperPlane, faUserCircle, faBookmark as faSolidBookmark, faVolumeHigh ,faStar as faSolidStar} from '@fortawesome/free-solid-svg-icons';
-import { faHeart as faRegularHeart, faBookmark as faRegularBookmark, faStar as faRegularStar } from '@fortawesome/free-regular-svg-icons';
+import { faCommentDots, faHeart as faSolidHeart, faPaperPlane, faUserCircle, faBookmark as faSolidBookmark, faVolumeHigh } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faRegularHeart, faBookmark as faRegularBookmark } from '@fortawesome/free-regular-svg-icons';
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 
@@ -18,7 +18,6 @@ export const PoemViewer = (props) => {
     const [author,setAuthor] = useState({username:""});
     const [liked, setLiked] = useState(false);
     const [bookmarked, setBookmarked] = useState(false);
-    const [favourited, setFavourited] = useState(false);
     const [likes, setLikes] = useState(0)
     const [comments, setComments] = useState(0)
     const [copiedLink, setCopiedLink] = useState(false);
@@ -35,7 +34,6 @@ export const PoemViewer = (props) => {
             setLikes(props.content.like_count);
             setComments(props.content.comment_count);
             setBookmarked(props.content.is_bookmarked);
-            setFavourited(props.content.is_favourited);
         } else {
             var path = "/poems/" + props.id;
             api.get(path, {cancelToken: cancelToken.token})
@@ -43,7 +41,6 @@ export const PoemViewer = (props) => {
                 setPoemContent(res.data);
                 setLiked(res.data.is_liked);
                 setBookmarked(res.data.is_bookmarked);
-                setFavourited(res.data.is_favourited);
             })
             .catch((err) => {
                 if(axios.isCancel(err)){
@@ -89,10 +86,6 @@ export const PoemViewer = (props) => {
         promptBookmarkAPI(props.content.poem_id, bookmarked);
     }
 
-    function promptFavourite() {
-        setFavourited(!favourited);
-        promptFavouriteAPI(props.content.poem_id, favourited);
-    }
     function copyLink() {
 
         setCopiedLink(true);
@@ -128,7 +121,7 @@ export const PoemViewer = (props) => {
                 <NavLink to={ "/poem/" + props.content.poem_id }><h4>{ title }</h4></NavLink>
                 <p>{ line1 }<br/>{ line2 }<br/>{ line3 }</p>
 
-                <button className="bookmark-icon" onClick={ () => promptBookmark() }>
+                <button className="bookmark-icon" onClick={ () => promptBookmark }>
                     <FontAwesomeIcon icon={ bookmarked ? faSolidBookmark : faRegularBookmark } data-tooltip-id="bookmark-tooltip" />
                 </button>
             </div>
@@ -150,10 +143,6 @@ export const PoemViewer = (props) => {
                 </NavLink>
                 {comments}
 
-                <button className="button-icon" onClick={ () => promptFavourite() }>
-                    <FontAwesomeIcon icon={favourited ? faSolidStar : faRegularStar} className="button-icon" data-tooltip-id="favourite-tooltip" />
-                </button>
-                
                 <button className="button-icon" onClick={ () => readPoem() }>
                     <FontAwesomeIcon icon = {faVolumeHigh} className="button-icon" data-tooltip-id= "speech-tooltip" />
                 </button>
@@ -168,7 +157,6 @@ export const PoemViewer = (props) => {
                     <span>{ content }</span>
                 )} />
                 <Tooltip id="bookmark-tooltip" content="Bookmark" />
-                <Tooltip id="favourite-tooltip" content="Favourite - Show this poem on your profile!" />
                 <Tooltip id="speech-tooltip" content= "Read poem out loud" />
                 </div>
             </div>

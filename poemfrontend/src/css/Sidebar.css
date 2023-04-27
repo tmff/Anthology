@@ -46,19 +46,12 @@
     height: 100%;
 }
 
-#light .bm-menu {
-    background: #afd1ed;
-    color: black;
+.bm-menu {
+    background: linear-gradient(var(--cornflower-blue), var(--royal-purple));
     padding: 2.5em 1.5em 0;
     font-size: 1.15em;
 }
 
-#dark .bm-menu {
-    background: #092136;
-    color: white;
-    padding: 2.5em 1.5em 0;
-    font-size: 1.15em;
-}
 /* 
  * Required if we want to change the animation of the sidebar
  */
@@ -73,18 +66,11 @@
 .bm-item {
     display: inline-block;
     font-weight: bold;
+    color: #ffffff;
     margin-bottom: 10px;
     text-align: left;
     text-decoration: none;
     transition: color 0.2s;
-}
-
-#light .bm-item {
-    color: black;
-}
-
-#dark .bm-item{
-    color: white;
 }
 
 .bm-item:hover {

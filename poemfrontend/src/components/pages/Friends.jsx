@@ -82,7 +82,7 @@ export const Friends = (props) => {
                     }
                 >
                     <div>
-                        {poems.map((item) => { return (             
+                        {poems.map((item) => {console.log(item); return (             
                             <PoemViewer key={item.id} content={obj = {
                                 title:item.title,
                                 content:item.content,
@@ -92,7 +92,6 @@ export const Friends = (props) => {
                                 like_count:item.like_count,
                                 comment_count:item.comment_count,
                                 is_bookmarked:item.is_bookmarked,
-                                is_favourited:item.is_favourited,
                             }}
                             highlighted={highlightedPoem === item.id ? true : false}
                             />
