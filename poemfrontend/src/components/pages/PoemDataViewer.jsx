@@ -42,7 +42,7 @@ const PoemDataViewer = (props) => {
     const navigate = useNavigate();
     
     // Initial calls to the API
-    useEffect(() => {
+    useMemo(() => {
 
         console.log(content.poem.data);
 
