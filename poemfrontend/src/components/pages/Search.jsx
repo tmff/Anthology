@@ -10,6 +10,7 @@ export const Search = () => {
   const [searchType, setSearchType] = useState('users'); // default to searching for users
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [tempSearch, setTempSearch] = useState('')
   //const [postSearchOption, setPostSearchOption] = useState('title');
 
 
@@ -23,6 +24,7 @@ export const Search = () => {
         .then((res) => {
           console.log(res.data);
           setSearchResults(res.data);
+          setTempSearch('users')
         })
         .catch((err) => console.log(err));
     } else if(searchType === 'posts'){
@@ -30,6 +32,7 @@ export const Search = () => {
         .then((res) => {
           console.log(res.data);
           setSearchResults(res.data);
+          setTempSearch('posts')
         })
         .catch((err) => console.log(err));
     } else if(searchType === 'tags') {
@@ -37,6 +40,7 @@ export const Search = () => {
         .then((res) => {
           console.log(res.data);
           setSearchResults(res.data);
+          setTempSearch('tags')
         })
         .catch((err) => console.log(err));
     }
@@ -46,7 +50,7 @@ export const Search = () => {
   var obj;
 
   function display(searchType){
-    if(searchType === 'users'){
+    if(tempSearch === 'users'){
       return(
         <div>
           {searchResults.length > 0 && (
@@ -56,7 +60,7 @@ export const Search = () => {
                 <div key={user.id} className='user-search-block'>
                   <div className='profile-info'>
                     <FontAwesomeIcon icon={faUserCircle} className="profile-icon"/>
-                    <NavLink to={ "/author/" + user.username }>
+                    <NavLink to={ "/profile/" + user.username }>
                       <p className='username' key={user.id}>{user.username}</p>                    
                     </NavLink>
                   </div>
@@ -68,7 +72,7 @@ export const Search = () => {
         </div>
       )
     }
-    else if(searchType === 'posts'){
+    else if(tempSearch === 'posts'){
       return(
         <div>
           {searchResults.length > 0 && (
@@ -92,33 +96,23 @@ export const Search = () => {
         </div> 
       )
     }
-    else if(searchType === 'tags'){
+    else if(tempSearch === 'tags'){
       return(
         <div>
           {searchResults.length > 0 && (
           <ul>
             <div className='posts-users-container'>
               {searchResults.map((post) => (
-                <div key={post.id + '_tags.title'} className='card-container'>
-                  <div className="colored-block">
-                    <NavLink to={ `/poem/${post.id}`}><h4>{ post.title }</h4></NavLink>
-                    <p key={post.id + '_content'}>{post.content}</p>
-                    {/* <FontAwesomeIcon icon={faBookmark} className="bookmark-icon" /> */}
-                  </div>
-                  <div className="light-block">
-                    <div className="profile-info">
-                      <FontAwesomeIcon icon={faUserCircle} className="profile-icon"/>
-                      <NavLink to={ "/author/" + post.author.username }>
-                        <p className="username">{`${post.author && post.author.username}`}</p>
-                      </NavLink>
-                    </div>
-                    {/* <div className="buttons">
-                        <FontAwesomeIcon icon={faHeart} className="button-icon" />
-                        <FontAwesomeIcon icon={faCommentDots} className="button-icon" />
-                        <FontAwesomeIcon icon={faPaperPlane} className="button-icon" />
-                    </div> */}
-                  </div>
-                </div>
+                <PoemViewer key={post.id} content={obj = {
+                            title:post.title,
+                            content:post.content,
+                            author:post.author,
+                            poem_id:post.id,
+                            is_liked:post.is_liked,
+                            like_count:post.like_count,
+                            comment_count:post.comment_count,
+                            is_bookmarked:post.is_bookmarked,
+                        }}/>
               ))}
             </div>
           </ul>
@@ -128,9 +122,16 @@ export const Search = () => {
     }
     
  }
+
+  // const resetSearchBox = (searchType) => {
+  //   if(searchType === 'posts'){
+  //     setTempSearch([])
+  //   }
+  // }
   
 
   const handleSearchTypeChange = (event) => {
+    //resetSearchBox(searchType)
     setSearchType(event.target.value);
   };
 
