@@ -181,7 +181,7 @@ class HighlightChoiceView(viewsets.ModelViewSet):
                 Q(author__profile__is_private=False) | 
                 Q(author__profile__is_private__isnull=True)
             )
-            queryset = queryset.filter(time_created__date=today).exclude(author__in=friends_users)
+            queryset = queryset.filter(time_created__date=today).exclude(author__in=friends_users).exclude(author=request.user)
             queryset = queryset.order_by('?')[:2]
         except:
             return Poem.objects.none()
