@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Comment } from "../Comment";
 import { PoemViewer } from "../PoemViewer";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import api, { promptLike as promptLikeAPI, promptFavourite as promptFavouriteAPI } from "../../js/Api"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
