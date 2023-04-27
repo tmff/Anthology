@@ -21,6 +21,7 @@ router.register(r'get-users', UserViewSet, basename='get-users')
 router.register(r'get-tagged-poems', TaggedPoemViewSet, basename='get-tagged-poems')
 router.register(r'get-posts', PostsViewSet, basename='get-posts')
 router.register(r'get-bookmarks', FetchBookmarkedPoemsView, basename='get-bookmarks')
+router.register(r'get-favourites', FetchFavouritePoemsView, basename='get-favourites')
 
 urlpatterns = [
   path("", include(router.urls)),
@@ -33,14 +34,25 @@ urlpatterns = [
   path("like-poem", LikePoemView.as_view()),
   path("remove-poem-like", UnlikePoemView.as_view()),
   path("send-comment", CommentPoemView.as_view()),
+  path("delete-comment", DeleteCommentView.as_view()),
   path("bookmark", BookmarkPoemView.as_view()),
   path("remove-bookmark", RemoveBookmarkPoemView.as_view()),
+  path("favourite", FavouritePoemView.as_view()),
+  path("remove-favourite", RemoveFavouritePoemView.as_view()),
   path("edit-profile", EditProfileView.as_view()),
   path("edit-picture", EditPictureView.as_view()),
   path("edit-mode", EditModeView.as_view()),
-  path("get-comments/<int:poem_id>/", FetchCommentsPoemView.as_view({'get': 'list'})),
-  path("get-theme", ReadingRoomPoemView.as_view())
-
+  path("get-comments/<int:poem_id>", FetchCommentsPoemView.as_view({'get': 'list'})),
+  path("get-replies/<int:comment_id>", FetchRepliesCommentView.as_view({'get': 'list'})),
+  path("send-reply", CreateReplyView.as_view()),
+  path("get-tags/<int:poem_id>", TagView.as_view()),
+  path("get-theme", DisplayTodayTheme.as_view()),
+  path("get-popular", PopularPoemsToday.as_view()),
+  path("get-others", LatestPoemsToday.as_view()),
+  path("get-prev", PrevPoems.as_view()),
+  path("get-users", UserViewSet.as_view({'get': 'list'})),
+  path("get-posts", PostsViewSet.as_view({'get': 'list'})),
+  path("get-tagged-poems", TaggedPoemViewSet.as_view({'get': 'list'})),
 ]
 
 if settings.DEBUG:

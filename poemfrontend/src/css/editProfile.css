@@ -8,34 +8,43 @@
 
 .profileContainer {
   padding: 10px;
-  border: 1px solid white;
   border-radius: 10px;
   margin: 10px;
-  /* background-color: white; */
-  /* color: black; */
-  /* width: 300px;
-    height: 600px; */
-}
-/* 
-#light.profileContainer {
-  background-color: white;
-  color: black;
 }
 
-#dark.profileContainer {
-  background-color: black;
-  color: white;
-} */
+#light .profileContainer {
+  border: 1px solid black;
+}
 
-
-
-.dark-mode {
-  background-color: black;
-  color: white;
+#dark .profileContainer {
+  border: 1px solid white;
 }
 
 .profilePicture {
   border-radius: 50px;
+}
+
+.profilePicture img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.profilePicture input[type="file"]  {
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+  min-width: 10em;
+
+}
+
+.profilePicture input[type="submit"]  {
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+  min-width: 10em;
 }
 
 .userPic {
@@ -53,12 +62,6 @@
 }
 
 .quill {
-  /* padding-right: 12px;
-  padding-bottom: 10x; */
-  /* display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%; */
   align-self: center; 
 }
 
@@ -67,6 +70,35 @@
   display: flex;
   flex-direction: column;
 
+}
+
+.names label{
+  text-align: center;
+}
+
+.names input[type="text"]  {
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+  /* justify-content: center;
+  display:flex; */
+
+}
+
+.names input[type="url"]  {
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+}
+
+.names input[type="submit"]  {
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+  min-width: 10em;
 }
 
 form {
@@ -101,16 +133,6 @@ form {
   border-color: white;
   border-radius: 10px;
   padding: 10px;
-}
-
-.names input[type="text"]  {
-  margin: 0.5rem 0;
-  padding: 1rem;
-  border: none;
-  border-radius: 10px;
-  justify-content: center;
-  display:flex;
-
 }
 
 .cog {

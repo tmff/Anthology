@@ -31,13 +31,14 @@
 }
 
 .colored-block {
-    min-height: 100%;
+    min-height: fit-content;
     justify-items: center;
 }
 
 .user-interactive-container {
     border-radius: 10px;
     min-width: 25em;
+    max-width: 25em;
     min-height: 32em;
     background-color: rgba(255, 255, 255, 0.911);
     color: black;
@@ -54,8 +55,6 @@
 .input-container {
     align-items: center;
     display: flex;
-    border-top: 1px solid gray;
-    border-radius: 10px;
     padding: 3px 10px 3px 10px;
     bottom: 5px;
     position: absolute;
@@ -95,10 +94,68 @@
 }
 
 .name-and-comment {
-    padding-bottom: 10px;
+    margin-top: 5px;
+    padding: 5px;
+    border-radius: 10px;
+    transition: ease-in 0.1s;
+    overflow-wrap: break-word;
+}
+
+.name-and-comment p {
+    margin: 2px;
 }
 
 .name-and-comment a {
     color: black;
     text-decoration-style: none;
+}
+
+.comment-button-container {
+    position: absolute;
+    right: 10px;
+}
+
+.comment-icon {
+    padding: 5px;
+    position: relative;
+    color: black;
+    margin: 1px;
+    background: none;
+}
+
+.comment-input-container {
+    display: grid;
+    border-top: 1px solid gray;
+    border-radius: 10px;
+}
+
+.reply-context p {
+    margin: 5px;
+}
+
+.comment-container {
+    display: flex;
+    position: relative;
+}
+
+.replies-header {
+    color: rgb(73, 73, 73);
+    font-size: 0.8em;
+}
+
+.replies-container {
+    margin-left: 20px;
+    display: grid;
+    position: relative;
+}
+
+.replies-container .name-and-comment {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.name-and-replies {
+    display: grid;
+    position: relative;
+    width: 100%;
 }
