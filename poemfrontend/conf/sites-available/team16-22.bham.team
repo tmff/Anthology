@@ -11,7 +11,7 @@ server {
     root /usr/share/nginx/html;
 
     location / {
-        try_files $uri $uri/ /index.html$is_args$args;
+        try_files $uri $uri/ /index.html;
     }
 
     location /api/ {
