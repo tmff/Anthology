@@ -13,7 +13,7 @@ def upload_path(instance, filename):
 # access with freds_department = u.Author.department for example
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    ##name = models.CharField(default="", max_length=120) name is contained within the user model
+    name = models.CharField(default="", max_length=120)
     bio = models.TextField(default="")
     facebook = models.URLField(default="",max_length=200, blank=True)
     twitter = models.URLField(default="",max_length=200, blank=True) 
@@ -36,9 +36,6 @@ class Profile(models.Model):
     
     def get_lastName(self):
         return self.user.last_name
-    
-    def get_bio(self):
-        return self.bio
 
 
 class FriendRequest(models.Model):
