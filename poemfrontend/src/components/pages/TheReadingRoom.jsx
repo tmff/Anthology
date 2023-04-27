@@ -94,9 +94,14 @@ export const TheReadingRoom = (props) => {
   //HTML 
   var obj;
   return (
-    <div>
-      <h1>The Reading Room</h1>
-      <h4>Discover poetry by other writers</h4>
+    <div className= "fix">
+ 
+        <div className="title"> 
+           <h1>The Reading Room</h1>
+           <h4 className="subtitle">Discover poetry by other writers</h4>
+        </div>
+
+
 
       <div className="row">
         <h3>Today's popular poems on <span className="highlight">{theme}</span></h3>
@@ -127,9 +132,9 @@ export const TheReadingRoom = (props) => {
               </div>
             ))
           ))}
+          </div>
       </div>
     </div>
-  </div>
 
       <div className="row">
         <h3>Discover other poems on <span className="highlight">{theme}</span></h3>
@@ -160,9 +165,9 @@ export const TheReadingRoom = (props) => {
               </div>
             ))
           ))}
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
       <div className="row">
         <h3>Discover previous poems</h3>
@@ -193,10 +198,11 @@ export const TheReadingRoom = (props) => {
               </div>
             ))
           ))}
-      </div>
+          </div>
+          </div>
+        </div>
+      
     </div>
-  </div>
-  </div>
   );
 }
 

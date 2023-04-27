@@ -1,11 +1,18 @@
-h1,
-h4 {
-  text-align: center;
-}
 
 h3 {
   text-align: left !important;
 }
+.fix{
+  width: 90%;
+}
+.title h1 {
+  text-align:center;
+  margin-top: -10px;
+}
+.subtitle h4 {
+  text-align: center;
+}
+
 .highlight {
   color:  #055c6b;
   font-weight: bold;

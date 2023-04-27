@@ -269,7 +269,7 @@ class TagSerializer(serializers.ModelSerializer):
 class ThemeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Theme
-        fields = ['theme', 'day']
+        fields = ['theme', 'time_created']
 
 class SearchPoemSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True)
